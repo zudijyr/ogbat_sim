@@ -3,33 +3,30 @@ import random
 
 class Unit:
     hp = 1
-    attack = 1
-    defense = 1
+    strength = 1
     agility = 1
     luck = 1
     intelligence = 1
 
 class Fighter(Unit):
     hp = 10
-    attack = 5
-    defense = 2
+    strength = 5
     agility = 10
     luck = 10
     intelligence = 5
 
 class Amazon(Unit):
     hp = 20
-    attack = 4
-    defense = 1
+    strength = 4
     agility = 10
     luck = 10
     intelligence = 7
 
-def does_it_hit(attacker, defender, type):
-    if type == "physical":
+def does_it_hit(attacker, defender, attack_type):
+    if attack_type == "physical":
         attack_speed = attacker.agility
         defend_speed = defender.agility
-    elif type == "magical":
+    elif attack_type == "magical":
         attack_speed = attacker.intelligence
         defend_speed = defender.intelligence
     attack_luck = attacker.luck
@@ -43,10 +40,24 @@ def does_it_hit(attacker, defender, type):
     else:
         return False
 
+def damage(attacker, defender, attack_type):
+    if attack_type == "physical":
+        attack_power = attacker.strength
+        defend_power = defender.strength
+    elif attack_type == "magical":
+        attack_power = attacker.intelligence
+        defend_power = defender.intelligence
+    attack_luck = attacker.luck
+    defend_luck = defender.luck
+    power_diff = attack_power - defend_power
+    luck_diff = attack_luck - defend_luck
+    rand = random.randint(1,10)
+    return max(rand + power_diff + luck_diff/2,1)
+
 def attack(attacker, defender):
     hit = does_it_hit(attacker, defender, "physical")
     if (hit):
-        defender.hp -= (attacker.attack - defender.defense)
+        defender.hp -= (damage(attacker,defender, "physical"))
 
 def battle():
     unit1 = Fighter()
