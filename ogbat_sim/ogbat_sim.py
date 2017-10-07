@@ -2,6 +2,7 @@ import sys
 import random
 from fighter import Fighter
 from amazon import Amazon
+from unit import Unit
 
 def does_it_hit(attacker, defender, attack_type):
     if attack_type == "physical":
@@ -41,13 +42,18 @@ def attack(attacker, defender):
         defender.hp -= (damage(attacker,defender, "physical"))
 
 def battle():
-    unit1 = Fighter()
-    unit2 = Amazon()
-    for x in range(3):
-        attack(unit1, unit2)
-        attack(unit2, unit1)
-    print(unit1.hp)
-    print(unit2.hp)
+    char1_1 = Fighter()
+    char1_2 = Amazon()
+    char2_1 = Fighter()
+    char2_2 = Amazon()
+    unit1 = Unit([char1_1,char1_2])
+    unit2 = Unit([char2_1,char2_2])
+    for x in unit1.characters:
+        attack(x, char2_1)
+    for x in unit2.characters:
+        attack(x, char1_1)
+    print(char1_1.hp)
+    print(char2_1.hp)
 
 def main(argv):
     battle()
