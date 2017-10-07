@@ -40,6 +40,9 @@ def attack(attacker, defender):
     hit = does_it_hit(attacker, defender, "physical")
     if (hit):
         defender.hp -= (damage(attacker,defender, "physical"))
+        if defender.hp <= 0:
+            defender.hp = 0
+            defender.is_alive = False
 
 def battle():
     char1_1 = Fighter()

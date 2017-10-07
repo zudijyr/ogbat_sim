@@ -4,3 +4,4 @@ class Character:
     agility = 1
     luck = 1
     intelligence = 1
+    is_alive = True
