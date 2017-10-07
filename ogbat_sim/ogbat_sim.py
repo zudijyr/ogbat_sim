@@ -39,7 +39,9 @@ def damage(attacker, defender, attack_type):
 def choose_target(attacker, defending_unit):
     lowest = 9999
     for character in defending_unit.characters:
-        if character.hp < lowest:
+        if character.is_alive == False:
+            pass
+        elif character.hp < lowest:
             lowest = character.hp
             target = character
     return target
@@ -54,19 +56,33 @@ def attack(attacker, defender):
 
 def battle():
     char1_1 = Fighter()
-    char1_2 = Amazon()
+    char1_2 = Fighter()
+    char1_3 = Amazon()
+    char1_4 = Amazon()
     char2_1 = Fighter()
-    char2_2 = Amazon()
-    unit1 = Unit([char1_1,char1_2])
-    unit2 = Unit([char2_1,char2_2])
+    char2_2 = Fighter()
+    char2_3 = Amazon()
+    char2_4 = Amazon()
+    unit1 = Unit([char1_1,char1_2,char1_3,char1_4])
+    unit2 = Unit([char2_1,char2_2,char2_3,char2_4])
     for x in unit1.characters:
-        target = choose_target(x,unit2)
-        attack(x, target)
+        if x.is_alive == False:
+            pass
+        else:
+            target = choose_target(x,unit2)
+            attack(x, target)
     for x in unit2.characters:
-        target = choose_target(x,unit1)
-        attack(x, target)
-    print(char1_1.hp)
-    print(char2_1.hp)
+        if x.is_alive == False:
+            pass
+        else:
+            target = choose_target(x,unit1)
+            attack(x, target)
+    for x in unit1.characters:
+        print(x)
+        print(x.hp)
+    for x in unit2.characters:
+        print(x)
+        print(x.hp)
 
 def main(argv):
     battle()
