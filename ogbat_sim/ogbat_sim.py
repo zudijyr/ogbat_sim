@@ -36,6 +36,14 @@ def damage(attacker, defender, attack_type):
     rand = random.randint(1,10)
     return max(int(rand + power_diff + luck_diff/2),1)
 
+def choose_target(attacker, defending_unit):
+    lowest = 9999
+    for character in defending_unit.characters:
+        if character.hp < lowest:
+            lowest = character.hp
+            target = character
+    return target
+
 def attack(attacker, defender):
     hit = does_it_hit(attacker, defender, "physical")
     if (hit):
@@ -52,9 +60,11 @@ def battle():
     unit1 = Unit([char1_1,char1_2])
     unit2 = Unit([char2_1,char2_2])
     for x in unit1.characters:
-        attack(x, char2_1)
+        target = choose_target(x,unit2)
+        attack(x, target)
     for x in unit2.characters:
-        attack(x, char1_1)
+        target = choose_target(x,unit1)
+        attack(x, target)
     print(char1_1.hp)
     print(char2_1.hp)
 
