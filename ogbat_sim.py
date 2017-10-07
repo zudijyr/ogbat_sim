@@ -1,22 +1,36 @@
 import sys
+import random
 
 class Unit:
-    hp = 0
-    attack = 0
-    defense = 0
+    hp = 1
+    attack = 1
+    defense = 1
+    agility = 1
 
 class Fighter(Unit):
     hp = 10
     attack = 5
     defense = 2
+    agility = 10
 
 class Amazon(Unit):
     hp = 20
     attack = 4
     defense = 1
+    agility = 10
+
+def does_it_hit(attack_speed, defend_speed):
+    diff = attack_speed - defend_speed
+    rand = random.randint(1,10)
+    if (rand <= diff + 5):
+        return True
+    else:
+        return False
 
 def attack(attacker, defender):
-    defender.hp -= (attacker.attack - defender.defense)
+    hit = does_it_hit(attacker.agility, defender.agility)
+    if (hit):
+        defender.hp -= (attacker.attack - defender.defense)
 
 def battle():
     unit1 = Fighter()
