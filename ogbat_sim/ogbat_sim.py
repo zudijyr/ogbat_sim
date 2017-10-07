@@ -4,7 +4,8 @@ from fighter import Fighter
 from amazon import Amazon
 from unit import Unit
 
-def does_it_hit(attacker, defender, attack_type):
+def does_it_hit(attacker, defender):
+    attack_type = attacker.attack_type
     if attack_type == "physical":
         attack_speed = attacker.agility
         defend_speed = defender.agility
@@ -22,7 +23,8 @@ def does_it_hit(attacker, defender, attack_type):
     else:
         return False
 
-def damage(attacker, defender, attack_type):
+def damage(attacker, defender):
+    attack_type = attacker.attack_type
     if attack_type == "physical":
         attack_power = attacker.strength
         defend_power = defender.strength
@@ -47,9 +49,9 @@ def choose_target(attacker, defending_unit):
     return target
 
 def attack(attacker, defender):
-    hit = does_it_hit(attacker, defender, "physical")
+    hit = does_it_hit(attacker, defender)
     if (hit):
-        defender.hp -= (damage(attacker,defender, "physical"))
+        defender.hp -= damage(attacker,defender)
         if defender.hp <= 0:
             defender.hp = 0
             defender.is_alive = False
