@@ -1,6 +1,6 @@
-from ogbat_sim.unit import Unit
+from character import Character
 
-class Amazon(Unit):
+class Amazon(Character):
     hp = 20
     strength = 4
     agility = 10

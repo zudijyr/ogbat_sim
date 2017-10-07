@@ -1,4 +1,4 @@
-class Unit:
+class Character:
     hp = 1
     strength = 1
     agility = 1

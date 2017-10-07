@@ -1,8 +1,7 @@
 import sys
 import random
-from ogbat_sim.unit import Unit
-from ogbat_sim.fighter import Fighter
-from ogbat_sim.amazon import Amazon
+from fighter import Fighter
+from amazon import Amazon
 
 def does_it_hit(attacker, defender, attack_type):
     if attack_type == "physical":
@@ -34,7 +33,7 @@ def damage(attacker, defender, attack_type):
     power_diff = attack_power - defend_power
     luck_diff = attack_luck - defend_luck
     rand = random.randint(1,10)
-    return max(rand + power_diff + luck_diff/2,1)
+    return max(int(rand + power_diff + luck_diff/2),1)
 
 def attack(attacker, defender):
     hit = does_it_hit(attacker, defender, "physical")

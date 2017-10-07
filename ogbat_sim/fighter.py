@@ -1,6 +1,6 @@
-from ogbat_sim.unit import Unit
+from character import Character
 
-class Fighter(Unit):
+class Fighter(Character):
     hp = 10
     strength = 5
     agility = 10
