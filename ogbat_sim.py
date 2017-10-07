@@ -1,26 +1,8 @@
 import sys
 import random
-
-class Unit:
-    hp = 1
-    strength = 1
-    agility = 1
-    luck = 1
-    intelligence = 1
-
-class Fighter(Unit):
-    hp = 10
-    strength = 5
-    agility = 10
-    luck = 10
-    intelligence = 5
-
-class Amazon(Unit):
-    hp = 20
-    strength = 4
-    agility = 10
-    luck = 10
-    intelligence = 7
+from ogbat_sim.unit import Unit
+from ogbat_sim.fighter import Fighter
+from ogbat_sim.amazon import Amazon
 
 def does_it_hit(attacker, defender, attack_type):
     if attack_type == "physical":
