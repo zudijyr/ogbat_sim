@@ -82,6 +82,10 @@ def attack(attacker, defender):
         if defender.hp <= 0:
             defender.hp = 0
             defender.is_alive = False
+    else:
+        output = "{0} misses {1}".format(attacker.name,defender.name)
+        print(output)
+        message.setText(output)
 
 def set_hp_text(unit1,unit2):
     hp1.setText(unit1.characters[0].hp)
