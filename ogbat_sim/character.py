@@ -1,4 +1,5 @@
 class Character:
+    name = "name"
     hp = 1
     strength = 1
     agility = 1
@@ -8,5 +9,6 @@ class Character:
     attack_type = 'physical'
     #same attack type regardless of row
     is_alive = True
-    def __init__(self):
+    def __init__(self, name):
         self.num_attacks_remaining = self.num_attacks
+        self.name = name

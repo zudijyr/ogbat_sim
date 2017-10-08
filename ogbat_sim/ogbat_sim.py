@@ -52,23 +52,25 @@ def attack(attacker, defender):
     attacker.num_attacks_remaining -= 1
     hit = does_it_hit(attacker, defender)
     if (hit):
-        defender.hp -= damage(attacker,defender)
+        dam = damage(attacker,defender)
+        print("{0} hits {1} for {2}".format(attacker.name,defender.name,dam))
+        defender.hp -= dam
         if defender.hp <= 0:
             defender.hp = 0
             defender.is_alive = False
 
 def battle():
-    char1_1 = Fighter()
-    char1_2 = Fighter()
-    char1_3 = Amazon()
-    char1_4 = Amazon()
-    char2_1 = Fighter()
-    char2_2 = Fighter()
-    char2_3 = Amazon()
-    char2_4 = Amazon()
+    char1_1 = Fighter("fighter 1_1")
+    char1_2 = Fighter("fighter 1_2")
+    char1_3 = Amazon("amazon 1_3")
+    char1_4 = Amazon("amazon 1_4")
+    char2_1 = Fighter("fighter 2_1")
+    char2_2 = Fighter("fighter 2_2")
+    char2_3 = Amazon("amazon 2_3")
+    char2_4 = Amazon("amazon 2_4")
     unit1 = Unit([char1_1,char1_2,char1_3,char1_4])
     unit2 = Unit([char2_1,char2_2,char2_3,char2_4])
-    for round in range(4):
+    for round in range(2):
         for x in unit1.characters:
             if x.is_alive == False or x.num_attacks_remaining == 0:
                 pass
@@ -82,10 +84,10 @@ def battle():
                 target = choose_target(x,unit1)
                 attack(x, target)
         for x in unit1.characters:
-            print(x)
+            print(x.name)
             print(x.hp)
         for x in unit2.characters:
-            print(x)
+            print(x.name)
             print(x.hp)
 
 def main(argv):
