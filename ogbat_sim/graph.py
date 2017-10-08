@@ -1,30 +1,45 @@
 from graphics import *
 
 def main():
-    win = GraphWin('Draw a Triangle', 900, 700)
-    #win.yUp() # right side up coordinates
-    win.setBackground('black')
+    win = GraphWin('Draw units', 700, 500)
+    win.setBackground('gray')
+
+    p2 = Point(350,250)
+    background = Image(p2,'tiles.gif')
+    background.draw(win)
+
     message = Text(Point(win.getWidth()/2, 30), 'Click on three points')
     message.setTextColor('red')
     message.setStyle('italic')
     message.setSize(20)
     message.draw(win)
 
-    # Get and draw three vertices of triangle
     p1 = win.getMouse()
-    p1.draw(win)
-    p2 = win.getMouse()
-    p2.draw(win)
-    p3 = win.getMouse()
-    p3.draw(win)
-    vertices = [p1, p2, p3]
+    image1 = Image(p1,'blue_fighter.gif')
+    image1.draw(win)
+    p1 = win.getMouse()
+    image2 = Image(p1,'blue_fighter.gif')
+    image2.draw(win)
+    p1 = win.getMouse()
+    image3 = Image(p1,'blue_amazon.gif')
+    image3.draw(win)
+    p1 = win.getMouse()
+    image4 = Image(p1,'blue_amazon.gif')
+    image4.draw(win)
 
-    # Use Polygon object to draw the triangle
-    triangle = Polygon(vertices)
-    triangle.setFill('gray')
-    triangle.setOutline('cyan')
-    triangle.setWidth(4)  # width of boundary line
-    triangle.draw(win)
+    p1 = win.getMouse()
+    image1 = Image(p1,'red_fighter.gif')
+    image1.draw(win)
+    p1 = win.getMouse()
+    image2 = Image(p1,'red_fighter.gif')
+    image2.draw(win)
+    p1 = win.getMouse()
+    image3 = Image(p1,'red_amazon.gif')
+    image3.draw(win)
+    p1 = win.getMouse()
+    image4 = Image(p1,'red_amazon.gif')
+    image4.draw(win)
+
 
     message.setText('Click anywhere to quit') # change text message
     win.getMouse()
