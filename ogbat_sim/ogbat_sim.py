@@ -95,7 +95,6 @@ def combat_round(all_chars,unit1,unit2):
     #    print(x.hp)
 
 def battle():
-    global blue_damage,red_damage,win,message
     char1_1 = Fighter("fighter 1_1","blue")
     char1_2 = Fighter("fighter 1_2","blue")
     char1_3 = Amazon("amazon 1_3","blue")
@@ -121,7 +120,6 @@ def battle():
         print("draw")
 
 def draw_stuff():
-    global win,message
     win.setBackground('gray')
 
     p2 = Point(350,250)
