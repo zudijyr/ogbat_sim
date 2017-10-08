@@ -1,11 +1,14 @@
 import sys
 import random
+from graphics import *
 from fighter import Fighter
 from amazon import Amazon
 from unit import Unit
 
 blue_damage = 0
 red_damage = 0
+win = GraphWin('Draw units', 700, 500)
+message = Text(Point(win.getWidth()/2, 30), 'Ogre Battle Fight Sim')
 
 def does_it_hit(attacker, defender):
     #TODO actual to-hit rules
@@ -60,7 +63,9 @@ def attack(attacker, defender):
     hit = does_it_hit(attacker, defender)
     if (hit):
         dam = damage(attacker,defender)
-        print("{0} hits {1} for {2}".format(attacker.name,defender.name,dam))
+        dam_output = "{0} hits {1} for {2}".format(attacker.name,defender.name,dam)
+        print(dam_output)
+        message.setText(dam_output)
         defender.hp -= dam
         if attacker.side == "blue":
             blue_damage += dam
@@ -75,6 +80,7 @@ def combat_round(all_chars,unit1,unit2):
         if x.is_alive == False or x.num_attacks_remaining == 0:
             pass
         else:
+            win.getMouse()
             if x.side == "blue":
                 target = choose_target(x,unit2)
             else:
@@ -89,7 +95,7 @@ def combat_round(all_chars,unit1,unit2):
     #    print(x.hp)
 
 def battle():
-    global blue_damage,red_damage
+    global blue_damage,red_damage,win,message
     char1_1 = Fighter("fighter 1_1","blue")
     char1_2 = Fighter("fighter 1_2","blue")
     char1_3 = Amazon("amazon 1_3","blue")
@@ -114,7 +120,42 @@ def battle():
     else:
         print("draw")
 
+def draw_stuff():
+    global win,message
+    win.setBackground('gray')
+
+    p2 = Point(350,250)
+    background = Image(p2,'tiles.gif')
+    background.draw(win)
+
+    message.setTextColor('red')
+    message.setStyle('italic')
+    message.setSize(20)
+    message.draw(win)
+
+    image1 = Image(Point(600,400),'blue_fighter.gif')
+    image1.draw(win)
+    image2 = Image(Point(650,380),'blue_fighter.gif')
+    image2.draw(win)
+    image3 = Image(Point(600,440),'blue_amazon.gif')
+    image3.draw(win)
+    image4 = Image(Point(640,420),'blue_amazon.gif')
+    image4.draw(win)
+
+    image5 = Image(Point(200,200),'red_fighter.gif')
+    image5.draw(win)
+    image6 = Image(Point(250,180),'red_fighter.gif')
+    image6.draw(win)
+    image7 = Image(Point(210,150),'red_amazon.gif')
+    image7.draw(win)
+    image8 = Image(Point(260,140),'red_amazon.gif')
+    image8.draw(win)
+
+    message.setText('Click anywhere to begin') # change text message
+    win.getMouse()
+
 def main(argv):
+    draw_stuff()
     battle()
 
 if __name__ == "__main__":
