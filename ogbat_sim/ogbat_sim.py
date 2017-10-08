@@ -62,6 +62,24 @@ def attack(attacker, defender):
             defender.hp = 0
             defender.is_alive = False
 
+def combat_round(all_chars,unit1,unit2):
+    for x in all_chars:
+        if x.is_alive == False or x.num_attacks_remaining == 0:
+            pass
+        else:
+            if x.side == "blue":
+                target = choose_target(x,unit2)
+            else:
+                target = choose_target(x,unit1)
+            attack(x, target)
+
+    for x in unit1.characters:
+        print(x.name)
+        print(x.hp)
+    for x in unit2.characters:
+        print(x.name)
+        print(x.hp)
+
 def battle():
     char1_1 = Fighter("fighter 1_1","blue")
     char1_2 = Fighter("fighter 1_2","blue")
@@ -73,26 +91,11 @@ def battle():
     char2_4 = Amazon("amazon 2_4","red")
     unit1 = Unit([char1_1,char1_2,char1_3,char1_4])
     unit2 = Unit([char2_1,char2_2,char2_3,char2_4])
-    all_chars = [char1_1,char1_2,char1_3,char1_4,char2_1,char2_2,char2_3,char2_4]
+    all_chars = unit1.characters + unit2.characters
     all_chars.sort(key=lambda x: x.agility, reverse=True)
     #TODO include some luck into sorting
-    for round in range(2):
-        for x in all_chars:
-            if x.is_alive == False or x.num_attacks_remaining == 0:
-                pass
-            else:
-                if x.side == "blue":
-                    target = choose_target(x,unit2)
-                else:
-                    target = choose_target(x,unit1)
-                attack(x, target)
-
-        for x in unit1.characters:
-            print(x.name)
-            print(x.hp)
-        for x in unit2.characters:
-            print(x.name)
-            print(x.hp)
+    for round_num in range(2):
+        combat_round(all_chars,unit1,unit2)
 
 def main(argv):
     battle()
