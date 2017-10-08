@@ -49,6 +49,7 @@ def choose_target(attacker, defending_unit):
     return target
 
 def attack(attacker, defender):
+    attacker.num_attacks_remaining -= 1
     hit = does_it_hit(attacker, defender)
     if (hit):
         defender.hp -= damage(attacker,defender)
@@ -67,24 +68,25 @@ def battle():
     char2_4 = Amazon()
     unit1 = Unit([char1_1,char1_2,char1_3,char1_4])
     unit2 = Unit([char2_1,char2_2,char2_3,char2_4])
-    for x in unit1.characters:
-        if x.is_alive == False:
-            pass
-        else:
-            target = choose_target(x,unit2)
-            attack(x, target)
-    for x in unit2.characters:
-        if x.is_alive == False:
-            pass
-        else:
-            target = choose_target(x,unit1)
-            attack(x, target)
-    for x in unit1.characters:
-        print(x)
-        print(x.hp)
-    for x in unit2.characters:
-        print(x)
-        print(x.hp)
+    for round in range(4):
+        for x in unit1.characters:
+            if x.is_alive == False or x.num_attacks_remaining == 0:
+                pass
+            else:
+                target = choose_target(x,unit2)
+                attack(x, target)
+        for x in unit2.characters:
+            if x.is_alive == False or x.num_attacks_remaining == 0:
+                pass
+            else:
+                target = choose_target(x,unit1)
+                attack(x, target)
+        for x in unit1.characters:
+            print(x)
+            print(x.hp)
+        for x in unit2.characters:
+            print(x)
+            print(x.hp)
 
 def main(argv):
     battle()

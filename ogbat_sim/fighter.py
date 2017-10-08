@@ -6,3 +6,5 @@ class Fighter(Character):
     agility = 10
     luck = 10
     intelligence = 5
+    num_attacks = 2
+    attack_type = 'physical'
