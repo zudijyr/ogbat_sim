@@ -8,17 +8,17 @@ from unit import Unit
 blue_damage = 0
 red_damage = 0
 win = GraphWin('Draw units', 700, 500)
+hp1 = Text(Point(0,0),"")
+hp2 = Text(Point(0,0),"")
+hp3 = Text(Point(0,0),"")
+hp4 = Text(Point(0,0),"")
+hp5 = Text(Point(0,0),"")
+hp6 = Text(Point(0,0),"")
+hp7 = Text(Point(0,0),"")
+hp8 = Text(Point(0,0),"")
 message = Text(Point(win.getWidth()/2, 30), 'Ogre Battle Fight Sim')
 current_rec = Rectangle(Point(0,0),Point(1,1))
 target_rec = Rectangle(Point(0,0),Point(1,1))
-hp1 = Text(Point(600,400), '0')
-hp2 = Text(Point(650,380), '0')
-hp3 = Text(Point(590,480), '0')
-hp4 = Text(Point(640,450), '0')
-hp5 = Text(Point(200,230), '0')
-hp6 = Text(Point(250,210), '0')
-hp7 = Text(Point(210,170), '0')
-hp8 = Text(Point(260,150), '0')
 
 def does_it_hit(attacker, defender):
     #TODO actual to-hit rules
@@ -105,6 +105,42 @@ def attack(attacker, defender):
         print(output)
         message.setText(output)
 
+def draw_hp_text(unit1,unit2):
+    global hp1,hp2,hp3,hp4,hp5,hp6,hp7,hp8
+    hp1 = Text(Point(unit1.characters[0].location.getX(), unit1.characters[0].location.getY()+30),unit1.characters[0].hp)
+    hp2 = Text(Point(unit1.characters[1].location.getX(), unit1.characters[1].location.getY()+30),unit1.characters[1].hp)
+    hp3 = Text(Point(unit1.characters[2].location.getX(), unit1.characters[2].location.getY()+30),unit1.characters[2].hp)
+    hp4 = Text(Point(unit1.characters[3].location.getX(), unit1.characters[3].location.getY()+30),unit1.characters[3].hp)
+    hp5 = Text(Point(unit2.characters[0].location.getX(), unit2.characters[0].location.getY()+30),unit2.characters[0].hp)
+    hp6 = Text(Point(unit2.characters[1].location.getX(), unit2.characters[1].location.getY()+30),unit2.characters[1].hp)
+    hp7 = Text(Point(unit2.characters[2].location.getX(), unit2.characters[2].location.getY()+30),unit2.characters[2].hp)
+    hp8 = Text(Point(unit2.characters[3].location.getX(), unit2.characters[3].location.getY()+30),unit2.characters[3].hp)
+    hp1.setTextColor('blue')
+    hp1.setSize(20)
+    hp1.draw(win)
+    hp2.setTextColor('blue')
+    hp2.setSize(20)
+    hp2.draw(win)
+    hp3.setTextColor('blue')
+    hp3.setSize(20)
+    hp3.draw(win)
+    hp4.setTextColor('blue')
+    hp4.setSize(20)
+    hp4.draw(win)
+
+    hp5.setTextColor('red')
+    hp5.setSize(20)
+    hp5.draw(win)
+    hp6.setTextColor('red')
+    hp6.setSize(20)
+    hp6.draw(win)
+    hp7.setTextColor('red')
+    hp7.setSize(20)
+    hp7.draw(win)
+    hp8.setTextColor('red')
+    hp8.setSize(20)
+    hp8.draw(win)
+
 def set_hp_text(unit1,unit2):
     hp1.setText(unit1.characters[0].hp)
     hp2.setText(unit1.characters[1].hp)
@@ -140,7 +176,8 @@ def battle():
 
     unit1 = Unit("blue",[char1_1,char1_2,char1_3,char1_4])
     unit2 = Unit("red",[char2_1,char2_2,char2_3,char2_4])
-    set_hp_text(unit1,unit2)
+    draw_stuff(unit1,unit2)
+    draw_hp_text(unit1,unit2)
     all_chars = unit1.characters + unit2.characters
     all_chars.sort(key=lambda x: x.agility, reverse=True)
     #TODO include some luck into sorting
@@ -161,7 +198,7 @@ def battle():
         message.setText("draw!")
     win.getMouse()
 
-def draw_stuff():
+def draw_stuff(unit1,unit2):
     win.setBackground('gray')
 
     p2 = Point(350,250)
@@ -173,55 +210,28 @@ def draw_stuff():
     message.setSize(30)
     message.draw(win)
 
-    image1 = Image(Point(600,370),'blue_fighter.gif')
+    image1 = Image(unit1.characters[0].location,'blue_fighter.gif')
     image1.draw(win)
-    image2 = Image(Point(650,350),'blue_fighter.gif')
+    image2 = Image(unit1.characters[1].location,'blue_fighter.gif')
     image2.draw(win)
-    image3 = Image(Point(590,450),'blue_amazon.gif')
+    image3 = Image(unit1.characters[2].location,'blue_amazon.gif')
     image3.draw(win)
-    image4 = Image(Point(640,420),'blue_amazon.gif')
+    image4 = Image(unit1.characters[3].location,'blue_amazon.gif')
     image4.draw(win)
 
-    image5 = Image(Point(200,200),'red_fighter.gif')
+    image5 = Image(unit2.characters[0].location,'red_fighter.gif')
     image5.draw(win)
-    image6 = Image(Point(250,180),'red_fighter.gif')
+    image6 = Image(unit2.characters[1].location,'red_fighter.gif')
     image6.draw(win)
-    image7 = Image(Point(210,140),'red_amazon.gif')
+    image7 = Image(unit2.characters[2].location,'red_amazon.gif')
     image7.draw(win)
-    image8 = Image(Point(260,120),'red_amazon.gif')
+    image8 = Image(unit2.characters[3].location,'red_amazon.gif')
     image8.draw(win)
-
-    hp1.setTextColor('blue')
-    hp1.setSize(20)
-    hp1.draw(win)
-    hp2.setTextColor('blue')
-    hp2.setSize(20)
-    hp2.draw(win)
-    hp3.setTextColor('blue')
-    hp3.setSize(20)
-    hp3.draw(win)
-    hp4.setTextColor('blue')
-    hp4.setSize(20)
-    hp4.draw(win)
-
-    hp5.setTextColor('red')
-    hp5.setSize(20)
-    hp5.draw(win)
-    hp6.setTextColor('red')
-    hp6.setSize(20)
-    hp6.draw(win)
-    hp7.setTextColor('red')
-    hp7.setSize(20)
-    hp7.draw(win)
-    hp8.setTextColor('red')
-    hp8.setSize(20)
-    hp8.draw(win)
 
     message.setText('Click anywhere to begin')
     win.getMouse()
 
 def main(argv):
-    draw_stuff()
     battle()
 
 if __name__ == "__main__":
