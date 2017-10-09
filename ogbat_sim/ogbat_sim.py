@@ -9,14 +9,16 @@ blue_damage = 0
 red_damage = 0
 win = GraphWin('Draw units', 700, 500)
 message = Text(Point(win.getWidth()/2, 30), 'Ogre Battle Fight Sim')
-hp1 = Text(Point(600,390), '0')
-hp2 = Text(Point(650,370), '0')
-hp3 = Text(Point(590,470), '0')
-hp4 = Text(Point(640,440), '0')
-hp5 = Text(Point(200,220), '0')
-hp6 = Text(Point(250,200), '0')
+current_rec = Rectangle(Point(0,0),Point(1,1))
+target_rec = Rectangle(Point(0,0),Point(1,1))
+hp1 = Text(Point(600,400), '0')
+hp2 = Text(Point(650,380), '0')
+hp3 = Text(Point(590,480), '0')
+hp4 = Text(Point(640,450), '0')
+hp5 = Text(Point(200,230), '0')
+hp6 = Text(Point(250,210), '0')
 hp7 = Text(Point(210,170), '0')
-hp8 = Text(Point(260,160), '0')
+hp8 = Text(Point(260,150), '0')
 
 def does_it_hit(attacker, defender):
     #TODO actual to-hit rules
@@ -66,7 +68,23 @@ def choose_target(attacker, defending_unit):
     return target
 
 def attack(attacker, defender):
-    global blue_damage,red_damage
+    global blue_damage,red_damage,current_rec,target_rec
+    current_rec.undraw()
+    target_rec.undraw()
+
+    up_left = Point(attacker.location.getX()-20,attacker.location.getY()-20)
+    corner = Point(attacker.location.getX()+20,attacker.location.getY()+20)
+    current_rec = Rectangle(up_left,corner)
+    current_rec.setOutline("white")
+    current_rec.setWidth(5)
+    current_rec.draw(win)
+
+    target_up_left = Point(defender.location.getX()-20,defender.location.getY()-20)
+    target_corner = Point(defender.location.getX()+20,defender.location.getY()+20)
+    target_rec = Rectangle(target_up_left,target_corner)
+    target_rec.setOutline("black")
+    target_rec.setWidth(5)
+    target_rec.draw(win)
     attacker.num_attacks_remaining -= 1
     hit = does_it_hit(attacker, defender)
     if (hit):
@@ -111,14 +129,15 @@ def combat_round(all_chars,unit1,unit2):
             set_hp_text(unit1,unit2)
 
 def battle():
-    char1_1 = Fighter("fighter 1_1","blue")
-    char1_2 = Fighter("fighter 1_2","blue")
-    char1_3 = Amazon("amazon 1_3","blue")
-    char1_4 = Amazon("amazon 1_4","blue")
-    char2_1 = Fighter("fighter 2_1","red")
-    char2_2 = Fighter("fighter 2_2","red")
-    char2_3 = Amazon("amazon 2_3","red")
-    char2_4 = Amazon("amazon 2_4","red")
+    char1_1 = Fighter("fighter 1_1","blue",Point(600,370))
+    char1_2 = Fighter("fighter 1_2","blue",Point(650,350))
+    char1_3 = Amazon("amazon 1_3","blue",Point(590,450))
+    char1_4 = Amazon("amazon 1_4","blue",Point(640,420))
+    char2_1 = Fighter("fighter 2_1","red",Point(200,200))
+    char2_2 = Fighter("fighter 2_2","red",Point(250,180))
+    char2_3 = Amazon("amazon 2_3","red",Point(210,140))
+    char2_4 = Amazon("amazon 2_4","red",Point(260,120))
+
     unit1 = Unit("blue",[char1_1,char1_2,char1_3,char1_4])
     unit2 = Unit("red",[char2_1,char2_2,char2_3,char2_4])
     set_hp_text(unit1,unit2)
@@ -127,14 +146,20 @@ def battle():
     #TODO include some luck into sorting
     for round_num in range(2):
         combat_round(all_chars,unit1,unit2)
+    current_rec.undraw()
+    target_rec.undraw()
     print("blue damage: {0}".format(blue_damage))
     print("red damage: {0}".format(red_damage))
     if blue_damage > red_damage:
         print("blue side wins!")
+        message.setText("blue side wins!")
     elif blue_damage < red_damage:
         print("red side wins!")
+        message.setText("red side wins!")
     else:
         print("draw")
+        message.setText("draw!")
+    win.getMouse()
 
 def draw_stuff():
     win.setBackground('gray')
@@ -143,9 +168,9 @@ def draw_stuff():
     background = Image(p2,'tiles.gif')
     background.draw(win)
 
-    message.setTextColor('red')
+    message.setTextColor('gray')
     message.setStyle('italic')
-    message.setSize(20)
+    message.setSize(30)
     message.draw(win)
 
     image1 = Image(Point(600,370),'blue_fighter.gif')
@@ -161,35 +186,35 @@ def draw_stuff():
     image5.draw(win)
     image6 = Image(Point(250,180),'red_fighter.gif')
     image6.draw(win)
-    image7 = Image(Point(210,150),'red_amazon.gif')
+    image7 = Image(Point(210,140),'red_amazon.gif')
     image7.draw(win)
-    image8 = Image(Point(260,140),'red_amazon.gif')
+    image8 = Image(Point(260,120),'red_amazon.gif')
     image8.draw(win)
 
-    hp1.setTextColor('red')
-    hp1.setSize(15)
+    hp1.setTextColor('blue')
+    hp1.setSize(20)
     hp1.draw(win)
-    hp2.setTextColor('red')
-    hp2.setSize(15)
+    hp2.setTextColor('blue')
+    hp2.setSize(20)
     hp2.draw(win)
-    hp3.setTextColor('red')
-    hp3.setSize(15)
+    hp3.setTextColor('blue')
+    hp3.setSize(20)
     hp3.draw(win)
-    hp4.setTextColor('red')
-    hp4.setSize(15)
+    hp4.setTextColor('blue')
+    hp4.setSize(20)
     hp4.draw(win)
 
     hp5.setTextColor('red')
-    hp5.setSize(15)
+    hp5.setSize(20)
     hp5.draw(win)
     hp6.setTextColor('red')
-    hp6.setSize(15)
+    hp6.setSize(20)
     hp6.draw(win)
     hp7.setTextColor('red')
-    hp7.setSize(15)
+    hp7.setSize(20)
     hp7.draw(win)
     hp8.setTextColor('red')
-    hp8.setSize(15)
+    hp8.setSize(20)
     hp8.draw(win)
 
     message.setText('Click anywhere to begin')
