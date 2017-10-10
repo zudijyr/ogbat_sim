@@ -22,6 +22,8 @@ target_rec = Rectangle(Point(0,0),Point(1,1))
 
 def does_it_hit(attacker, defender):
     #TODO actual to-hit rules
+    #TODO movement factor
+    movement_factor = 0
     attack_type = attacker.attack_type
     if attack_type == "physical":
         attack_speed = attacker.agility
@@ -31,14 +33,28 @@ def does_it_hit(attacker, defender):
         defend_speed = defender.intelligence
     attack_luck = attacker.luck
     defend_luck = defender.luck
-    speed_diff = attack_speed - defend_speed
-    luck_diff = attack_luck - defend_luck
     HIT_BONUS = 5
-    rand = random.randint(1,10)
-    if (rand <= speed_diff + luck_diff/2 + HIT_BONUS):
+    friend_factor = 0 #TODO charm status, special attacks
+
+    #hit formula from Deathlike2 unit mechanics gamefaq
+    hit_success = attack_speed + attack_luck/2 + movement_factor + random.randint(0,7)
+    evasion_success = defend_speed + defend_luck/2 + movement_factor + friend_factor + random.randint(0,7)
+    target_difference = hit_success - evasion_success
+    rand_hit_num = random.randint(0,9)
+    if (target_difference <= -49 ):
+        return (rand_hit_num < 4)
+    elif (target_difference >= -48 and target_difference <= -33):
+        return (rand_hit_num < 5)
+    elif (target_difference >= -32 and target_difference <= -17):
+        return (rand_hit_num < 5)
+    elif (target_difference >= -16 and target_difference <= -1):
+        return (rand_hit_num < 5)
+    elif (target_difference >= 0 and target_difference <= 15):
+        return (rand_hit_num < 5)
+    elif (target_difference >= 16 and target_difference <= 31):
+        return (rand_hit_num < 5)
+    elif (target_difference > 32):
         return True
-    else:
-        return False
 
 def damage(attacker, defender):
     #TODO element types, actual damage rules
