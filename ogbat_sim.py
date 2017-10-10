@@ -201,7 +201,7 @@ def battle():
 def draw_stuff(unit1,unit2):
     win.setBackground('gray')
 
-    p2 = Point(350,250)
+    p2 = Point(win.width/2,win.height/2)
     background = Image(p2,'tiles.gif')
     background.draw(win)
 
