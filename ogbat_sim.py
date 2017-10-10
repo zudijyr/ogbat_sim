@@ -76,7 +76,7 @@ def damage(attacker, defender):
     raw_damage = attack_power/2 + movement*2 - time/5 + tactics + kiss + random.randint(1,8)
     attack_multiplier = 1 #TODO special attacks like ianuki
     raw_damage = raw_damage*attack_multiplier
-    resistance = 50 #TODO resistance
+    resistance = defender.elements['physical'] #TODO choose resistance element
     absorption = ((defend_power/2 + movement*2 - time/5 + kiss + random.randint(3,10)) * resistance/100) + tactics
     damage = max(raw_damage - absorption,1) #TODO quake
     return damage

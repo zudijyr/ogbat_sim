@@ -8,6 +8,16 @@ class Character:
     agility = 1
     luck = 1
     intelligence = 1
+
+    elements = {
+        'physical': 50,
+        'black': 50,
+        'white': 50,
+        'fire': 50,
+        'cold': 50,
+        'lightning': 50
+        }
+
     num_attacks = 0
     order_value = 0
     attack_type = 'physical'
