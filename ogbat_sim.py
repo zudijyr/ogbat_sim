@@ -181,7 +181,7 @@ def battle():
     all_chars = unit1.characters + unit2.characters
     all_chars.sort(key=lambda x: x.agility, reverse=True)
     #TODO include some luck into sorting
-    for round_num in range(2):
+    for round_num in range(4):
         combat_round(all_chars,unit1,unit2)
     current_rec.undraw()
     target_rec.undraw()
