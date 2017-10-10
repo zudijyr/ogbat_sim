@@ -21,7 +21,6 @@ current_rec = Rectangle(Point(0,0),Point(1,1))
 target_rec = Rectangle(Point(0,0),Point(1,1))
 
 def does_it_hit(attacker, defender):
-    #TODO actual to-hit rules
     #TODO movement factor
     movement_factor = 0
     attack_type = attacker.attack_type
@@ -180,6 +179,14 @@ def combat_round(all_chars,unit1,unit2):
             attack(x, target)
             set_hp_text(unit1,unit2)
 
+def turn_order(unit1,unit2):
+    all_chars = unit1.characters + unit2.characters
+    movement_factor = 0 #TODO
+    for char in all_chars:
+        char.order_value = char.agility + char.luck/2 + movement_factor + random.randint(3,10)
+    all_chars.sort(key=lambda x: x.order_value, reverse=True)
+    return all_chars
+
 def battle():
     char1_1 = Fighter("fighter 1_1","blue",Point(600,370))
     char1_2 = Fighter("fighter 1_2","blue",Point(650,350))
@@ -194,10 +201,8 @@ def battle():
     unit2 = Unit("red",[char2_1,char2_2,char2_3,char2_4])
     draw_stuff(unit1,unit2)
     draw_hp_text(unit1,unit2)
-    all_chars = unit1.characters + unit2.characters
-    all_chars.sort(key=lambda x: x.agility, reverse=True)
-    #TODO include some luck into sorting
     for round_num in range(4):
+        all_chars = turn_order(unit1,unit2)
         combat_round(all_chars,unit1,unit2)
     current_rec.undraw()
     target_rec.undraw()

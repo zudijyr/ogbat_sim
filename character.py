@@ -9,6 +9,7 @@ class Character:
     luck = 1
     intelligence = 1
     num_attacks = 0
+    order_value = 0
     attack_type = 'physical'
     #same attack type regardless of row
     is_alive = True
