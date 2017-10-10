@@ -35,7 +35,7 @@ def does_it_hit(attacker, defender):
     HIT_BONUS = 5
     friend_factor = 0 #TODO charm status, special attacks
 
-    #hit formula from Deathlike2 unit mechanics gamefaq
+    #hit formula from Deathlike2's unit mechanics gamefaq
     hit_success = attack_speed + attack_luck/2 + movement_factor + random.randint(0,7)
     evasion_success = defend_speed + defend_luck/2 + movement_factor + friend_factor + random.randint(0,7)
     target_difference = hit_success - evasion_success
@@ -66,10 +66,20 @@ def damage(attacker, defender):
         defend_power = defender.intelligence
     attack_luck = attacker.luck
     defend_luck = defender.luck
-    power_diff = attack_power - defend_power
-    luck_diff = attack_luck - defend_luck
-    rand = random.randint(1,10)
-    return max(int(rand + power_diff + luck_diff/2),1)
+
+    #formula from Deathlike2's unit analysis gamefaq
+    movement = 0
+    time = 0
+    tactics = 0
+    kiss = 0
+    #TODO movement,time,tactics,kiss
+    raw_damage = attack_power/2 + movement*2 - time/5 + tactics + kiss + random.randint(1,8)
+    attack_multiplier = 1 #TODO special attacks like ianuki
+    raw_damage = raw_damage*attack_multiplier
+    resistance = 70 #TODO resistance
+    absorption = ((defend_power/2 + movement*2 - time/5 + kiss + random.randint(3,10)) * resistance/100) + tactics
+    damage = max(raw_damage - absorption,1) #TODO quake
+    return damage
 
 def choose_target(attacker, defending_unit):
     #TODO include rows, position
