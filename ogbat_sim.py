@@ -24,7 +24,7 @@ def does_it_hit(attacker, defender):
     #TODO movement factor
     movement_factor = 0
     attack_type = attacker.attack_type
-    if attack_type == "physical":
+    if attack_type == "melee":
         attack_speed = attacker.agility
         defend_speed = defender.agility
     elif attack_type == "magical":
@@ -56,9 +56,8 @@ def does_it_hit(attacker, defender):
         return True
 
 def damage(attacker, defender):
-    #TODO element types, actual damage rules
     attack_type = attacker.attack_type
-    if attack_type == "physical":
+    if attack_type == "melee":
         attack_power = attacker.strength
         defend_power = defender.strength
     elif attack_type == "magical":
@@ -83,8 +82,27 @@ def damage(attacker, defender):
 
 def choose_target(attacker, defending_unit):
     #TODO include rows, position
+    #TODO include tactic
     lowest = 9999
-    for character in defending_unit.characters:
+    possible_targets = []
+    if attacker.attack_type == 'magic': #todo ianuki
+        possible_targets = defending_unit.characters
+    else:
+        for char in defending_unit.characters:
+            if char.is_alive and char.row == 'front':
+                possible_targets.append(char) #can target anything alive in front row
+        if len(possible_targets) == 0:
+            possible_targets = defending_unit.characters #if no front row alive, target anything left
+        elif len(possible_targets) == 1:
+            alive_char = possible_targets[0]
+            for char in defending_unit.characters:
+                target_diff = abs(char.position - attacker.position)
+                front_row_diff = abs(alive_char.position - attacker.position)
+                if char.is_alive and target_diff < 1 and front_row_diff > 1:
+                    possible_targets.append(char)
+                #this lets melee targets back row if the only alive front row char is on the opposite side
+
+    for character in possible_targets:
         if character.is_alive == False:
             pass
         elif character.hp < lowest:
@@ -198,14 +216,15 @@ def turn_order(unit1,unit2):
     return all_chars
 
 def battle():
-    char1_1 = Fighter("fighter 1_1","blue",Point(600,370))
-    char1_2 = Fighter("fighter 1_2","blue",Point(650,350))
-    char1_3 = Amazon("amazon 1_3","blue",Point(590,450))
-    char1_4 = Amazon("amazon 1_4","blue",Point(640,420))
-    char2_1 = Fighter("fighter 2_1","red",Point(200,200))
-    char2_2 = Fighter("fighter 2_2","red",Point(250,180))
-    char2_3 = Amazon("amazon 2_3","red",Point(210,140))
-    char2_4 = Amazon("amazon 2_4","red",Point(260,120))
+    char1_1 = Fighter("fighter 1_1","blue",Point(600,370),"front",0)
+    char1_2 = Fighter("fighter 1_2","blue",Point(650,350),"front",1.5)
+    char1_3 = Amazon("amazon 1_3","blue",Point(590,450),"back",0)
+    char1_4 = Amazon("amazon 1_4","blue",Point(640,420),"back",1.5)
+    char2_1 = Fighter("fighter 2_1","red",Point(200,200),"front",0)
+    char2_2 = Fighter("fighter 2_2","red",Point(250,180),"front",1)
+    char2_3 = Amazon("amazon 2_3","red",Point(210,140),"back",0)
+    char2_4 = Amazon("amazon 2_4","red",Point(260,120),"back",1.5)
+    #some bug... 2_4 should attack 1_4
 
     unit1 = Unit("blue",[char1_1,char1_2,char1_3,char1_4])
     unit2 = Unit("red",[char2_1,char2_2,char2_3,char2_4])
@@ -214,6 +233,7 @@ def battle():
     for round_num in range(4):
         all_chars = turn_order(unit1,unit2)
         combat_round(all_chars,unit1,unit2)
+    win.getMouse()
     current_rec.undraw()
     target_rec.undraw()
     print("blue damage: {0}".format(blue_damage))

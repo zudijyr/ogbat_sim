@@ -17,4 +17,4 @@ class Amazon(Character):
         }
 
     num_attacks = 2
-    attack_type = 'physical'
+    attack_type = 'melee'
