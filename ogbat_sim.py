@@ -45,13 +45,13 @@ def does_it_hit(attacker, defender):
     elif (target_difference >= -48 and target_difference <= -33):
         return (rand_hit_num < 5)
     elif (target_difference >= -32 and target_difference <= -17):
-        return (rand_hit_num < 5)
+        return (rand_hit_num < 6)
     elif (target_difference >= -16 and target_difference <= -1):
-        return (rand_hit_num < 5)
+        return (rand_hit_num < 7)
     elif (target_difference >= 0 and target_difference <= 15):
-        return (rand_hit_num < 5)
+        return (rand_hit_num < 8)
     elif (target_difference >= 16 and target_difference <= 31):
-        return (rand_hit_num < 5)
+        return (rand_hit_num < 9)
     elif (target_difference > 32):
         return True
 
