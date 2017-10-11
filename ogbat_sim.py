@@ -78,7 +78,7 @@ def damage(attacker, defender):
     resistance = defender.elements['physical'] #TODO choose resistance element
     absorption = ((defend_power/2 + movement*2 - time/5 + kiss + random.randint(3,10)) * resistance/100) + tactics
     damage = max(raw_damage - absorption,1) #TODO quake
-    return damage
+    return int(damage)
 
 def choose_target(attacker, defending_unit):
     #TODO include rows, position
