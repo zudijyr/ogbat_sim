@@ -81,7 +81,6 @@ def damage(attacker, defender):
     return int(damage)
 
 def choose_target(attacker, defending_unit):
-    #TODO include rows, position
     #TODO include tactic
     lowest = 9999
     possible_targets = []
@@ -261,22 +260,22 @@ def draw_stuff(unit1,unit2):
     message.setSize(30)
     message.draw(win)
 
-    image1 = Image(unit1.characters[0].location,'blue_fighter.gif')
+    image1 = Image(unit1.characters[0].location,'blue_fighter_big.gif')
     image1.draw(win)
-    image2 = Image(unit1.characters[1].location,'blue_fighter.gif')
+    image2 = Image(unit1.characters[1].location,'blue_fighter_big.gif')
     image2.draw(win)
-    image3 = Image(unit1.characters[2].location,'blue_amazon.gif')
+    image3 = Image(unit1.characters[2].location,'blue_amazon_big.gif')
     image3.draw(win)
-    image4 = Image(unit1.characters[3].location,'blue_amazon.gif')
+    image4 = Image(unit1.characters[3].location,'blue_amazon_big.gif')
     image4.draw(win)
 
-    image5 = Image(unit2.characters[0].location,'red_fighter.gif')
+    image5 = Image(unit2.characters[0].location,'red_fighter_big.gif')
     image5.draw(win)
-    image6 = Image(unit2.characters[1].location,'red_fighter.gif')
+    image6 = Image(unit2.characters[1].location,'red_fighter_big.gif')
     image6.draw(win)
-    image7 = Image(unit2.characters[2].location,'red_amazon.gif')
+    image7 = Image(unit2.characters[2].location,'red_amazon_big.gif')
     image7.draw(win)
-    image8 = Image(unit2.characters[3].location,'red_amazon.gif')
+    image8 = Image(unit2.characters[3].location,'red_amazon_big.gif')
     image8.draw(win)
 
     message.setText('Click anywhere to begin')
