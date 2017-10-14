@@ -6,6 +6,7 @@ class Amazon(Character):
     agility = 50
     intelligence = 52
     luck = 48
+    image = "amazon.gif"
 
     elements = {
         'physical': 38,

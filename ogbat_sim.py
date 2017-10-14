@@ -262,27 +262,12 @@ def draw_stuff(unit1,unit2):
     message.setSize(30)
     message.draw(win)
 
-    image1 = Image(unit1.characters[0].location,'blue_fighter.gif')
-    image1.draw(win)
-    image2 = Image(unit1.characters[1].location,'blue_fighter.gif')
-    image2.draw(win)
-    image3 = Image(unit1.characters[2].location,'blue_amazon.gif')
-    image3.draw(win)
-    image4 = Image(unit1.characters[3].location,'blue_amazon.gif')
-    image4.draw(win)
-    image_wizblue = Image(unit1.characters[4].location,"blue_"+unit1.characters[4].image)
-    image_wizblue.draw(win)
-
-    image5 = Image(unit2.characters[0].location,'red_fighter.gif')
-    image6 = Image(unit2.characters[1].location,'red_fighter.gif')
-    image7 = Image(unit2.characters[2].location,'red_amazon.gif')
-    image7.draw(win)
-    image8 = Image(unit2.characters[3].location,'red_amazon.gif')
-    image8.draw(win)
-    image_wizred = Image(unit2.characters[4].location,"red_"+unit2.characters[4].image)
-    image_wizred.draw(win)
-    image5.draw(win)
-    image6.draw(win)
+    for i in range(5):
+        image = Image(unit1.characters[i].location,"blue_" + unit1.characters[i].image)
+        image.draw(win)
+    for i in range(5):
+        image = Image(unit2.characters[i].location,"red_" + unit2.characters[i].image)
+        image.draw(win)
 
     message.setText('Click anywhere to begin')
     win.getMouse()

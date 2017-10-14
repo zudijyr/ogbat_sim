@@ -4,8 +4,9 @@ class Fighter(Character):
     hp = 77
     strength = 45
     agility = 47
-    luck = 45
     intelligence = 40
+    luck = 45
+    image = "fighter.gif"
 
     elements = {
         'physical': 44,
