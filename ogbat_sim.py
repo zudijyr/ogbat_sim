@@ -57,7 +57,20 @@ def choose_element(attacker, defender):
             low_score = defender.resistances[element]
     return lowest
 
-def damage(attacker, defender, attack_element):
+def calc_tac_bonuses(attacker_tactic, defender_tactic):
+    att_tac_bonus = 0
+    def_tac_bonus = 0
+    if (attacker_tactic == 'weak'):
+        att_tac_bonus += 4
+    if (attacker_tactic == 'strong'):
+        att_tac_bonus -= 4
+    if (defender_tactic == 'weak'):
+        def_tac_bonus -= 4
+    if (defender_tactic == 'strong'):
+        def_tac_bonus += 4
+    return att_tac_bonus,def_tac_bonus
+
+def damage(attacker, defender, attack_element, attacker_tactic, defender_tactic):
     attack_type = attacker.attack_type
     if attack_type == "melee":
         attack_power = attacker.strength
@@ -65,20 +78,18 @@ def damage(attacker, defender, attack_element):
     elif attack_type == "magical":
         attack_power = attacker.intelligence
         defend_power = defender.intelligence
-    attack_luck = attacker.luck
-    defend_luck = defender.luck
 
-    #formula from Deathlike2's unit analysis gamefaq
+    att_tac_bonus,def_tac_bonus = calc_tac_bonuses(attacker_tactic, defender_tactic)
     movement = 0
     time = 0
-    tactics = 0
     kiss = 0
-    #TODO movement,time,tactics,kiss
-    raw_damage = attack_power/2 + movement*2 - time/5 + tactics + kiss + random.randint(1,8)
+    #TODO movement,time,kiss
+    #damage formula from Deathlike2's unit analysis gamefaq
+    raw_damage = attack_power/2 + movement*2 - time/5 + att_tac_bonus + kiss + random.randint(1,8)
     attack_multiplier = 1 #TODO special attacks like ianuki
     raw_damage = raw_damage*attack_multiplier
     resistance = defender.resistances[attack_element]
-    absorption = ((defend_power/2 + movement*2 - time/5 + kiss + random.randint(3,10)) * resistance/100) + tactics
+    absorption = ((defend_power/2 + movement*2 - time/5 + kiss + random.randint(3,10)) * resistance/100) + def_tac_bonus
     damage = max(raw_damage - absorption,1) #TODO quake
     return int(damage)
 
@@ -133,7 +144,7 @@ def attack(attacker, defender):
     hit = does_it_hit(attacker, defender)
     if (hit):
         attack_element = choose_element(attacker, defender)
-        dam = damage(attacker,defender,attack_element)
+        dam = damage(attacker,defender,attack_element,'weak','weak')
         dam_output = "{0} hits {1} with {2} for {3}".format(attacker.name,defender.name,attack_element,dam)
         print(dam_output)
         message.setText(dam_output)
