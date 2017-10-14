@@ -1,4 +1,4 @@
-from character import Character
+from classes.character import Character
 
 class Wizard(Character):
     base_hp = 86

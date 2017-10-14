@@ -1,10 +1,10 @@
 import sys
 import random
 from graphics import *
-from fighter import Fighter
-from amazon import Amazon
-from wizard import Wizard
-from unit import Unit
+from classes.fighter import Fighter
+from classes.amazon import Amazon
+from classes.wizard import Wizard
+from classes.unit import Unit
 
 blue_damage = 0
 red_damage = 0
@@ -236,7 +236,7 @@ def battle():
 
 def draw_stuff(unit1,unit2):
     p2 = Point(win.width/2,win.height/2)
-    background = Image(p2,'tiles.gif')
+    background = Image(p2,'images/tiles.gif')
     background.draw(win)
 
     message.setTextColor('gray')
@@ -245,10 +245,10 @@ def draw_stuff(unit1,unit2):
     message.draw(win)
 
     for i in range(5):
-        image = Image(unit1.characters[i].location,"blue_" + unit1.characters[i].image)
+        image = Image(unit1.characters[i].location,"images/blue_" + unit1.characters[i].image)
         image.draw(win)
     for i in range(5):
-        image = Image(unit2.characters[i].location,"red_" + unit2.characters[i].image)
+        image = Image(unit2.characters[i].location,"images/red_" + unit2.characters[i].image)
         image.draw(win)
 
     message.setText('Click anywhere to begin')

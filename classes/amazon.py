@@ -1,4 +1,4 @@
-from character import Character
+from classes.character import Character
 
 class Amazon(Character):
     base_hp = 83
