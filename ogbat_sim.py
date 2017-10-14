@@ -8,8 +8,8 @@ from classes.unit import Unit
 
 blue_damage = 0
 red_damage = 0
-win = GraphWin('Draw units', 700, 500)
-message = Text(Point(win.getWidth()/2, 30), 'Ogre Battle Fight Sim')
+win = GraphWin('Ogre Battle Fight Sim', 700, 500)
+message = Text(Point(win.getWidth()/2, 30), '')
 current_rec = Rectangle(Point(0,0),Point(1,1))
 target_rec = Rectangle(Point(0,0),Point(1,1))
 
