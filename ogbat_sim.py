@@ -3,6 +3,7 @@ import random
 from graphics import *
 from fighter import Fighter
 from amazon import Amazon
+from wizard import Wizard
 from unit import Unit
 
 blue_damage = 0
@@ -219,14 +220,15 @@ def battle():
     char1_2 = Fighter("fighter 1_2","blue",Point(650,350),"front",1.5)
     char1_3 = Amazon("amazon 1_3","blue",Point(590,450),"back",0)
     char1_4 = Amazon("amazon 1_4","blue",Point(640,420),"back",1.5)
+    char1_5 = Wizard("wizard 1_5","blue",Point(690,390),"back",3)
     char2_1 = Fighter("fighter 2_1","red",Point(200,200),"front",0)
     char2_2 = Fighter("fighter 2_2","red",Point(250,180),"front",1)
     char2_3 = Amazon("amazon 2_3","red",Point(210,140),"back",0)
     char2_4 = Amazon("amazon 2_4","red",Point(260,120),"back",1.5)
-    #some bug... 2_4 should attack 1_4
+    char2_5 = Wizard("wizard 2_5","red",Point(310,100),"back",3)
 
-    unit1 = Unit("blue",[char1_1,char1_2,char1_3,char1_4])
-    unit2 = Unit("red",[char2_1,char2_2,char2_3,char2_4])
+    unit1 = Unit("blue",[char1_1,char1_2,char1_3,char1_4,char1_5])
+    unit2 = Unit("red",[char2_1,char2_2,char2_3,char2_4,char2_5])
     draw_stuff(unit1,unit2)
     draw_hp_text(unit1,unit2)
     for round_num in range(4):
@@ -268,6 +270,8 @@ def draw_stuff(unit1,unit2):
     image3.draw(win)
     image4 = Image(unit1.characters[3].location,'blue_amazon.gif')
     image4.draw(win)
+    image_wizblue = Image(unit1.characters[4].location,"blue_"+unit1.characters[4].image)
+    image_wizblue.draw(win)
 
     image5 = Image(unit2.characters[0].location,'red_fighter.gif')
     image6 = Image(unit2.characters[1].location,'red_fighter.gif')
@@ -275,6 +279,8 @@ def draw_stuff(unit1,unit2):
     image7.draw(win)
     image8 = Image(unit2.characters[3].location,'red_amazon.gif')
     image8.draw(win)
+    image_wizred = Image(unit2.characters[4].location,"red_"+unit2.characters[4].image)
+    image_wizred.draw(win)
     image5.draw(win)
     image6.draw(win)
 
