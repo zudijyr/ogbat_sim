@@ -9,7 +9,7 @@ class Wizard(Character):
     luck = 50
     image = "wizard.gif"
 
-    elements = {
+    resistances = {
         'physical': 20,
         'black': 45,
         'white': 35,
@@ -18,5 +18,6 @@ class Wizard(Character):
         'lightning': 37
         }
 
+    attacking_elements = ['physical', 'black', 'fire', 'cold', 'lightning']
     num_attacks = 2
     attack_type = 'magical'

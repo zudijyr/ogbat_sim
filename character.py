@@ -11,7 +11,7 @@ class Character:
     luck = 1
     intelligence = 1
 
-    elements = {
+    resistances = {
         'physical': 50,
         'black': 50,
         'white': 50,
@@ -20,6 +20,7 @@ class Character:
         'lightning': 50
         }
 
+    attacking_elements = ['physical']
     num_attacks = 0
     order_value = 0
     attack_type = 'melee'

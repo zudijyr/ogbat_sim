@@ -8,7 +8,7 @@ class Amazon(Character):
     luck = 48
     image = "amazon.gif"
 
-    elements = {
+    resistances = {
         'physical': 38,
         'black': 38,
         'white': 42,

@@ -8,7 +8,7 @@ class Fighter(Character):
     luck = 45
     image = "fighter.gif"
 
-    elements = {
+    resistances = {
         'physical': 44,
         'black': 40,
         'white': 40,

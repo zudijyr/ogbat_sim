@@ -58,7 +58,16 @@ def does_it_hit(attacker, defender):
     elif (target_difference > 32):
         return True
 
-def damage(attacker, defender):
+def choose_element(attacker, defender):
+    low_score = 101
+    lowest = 'element'
+    for element in attacker.attacking_elements:
+        if defender.resistances[element] < low_score:
+            lowest = element
+            low_score = defender.resistances[element]
+    return lowest
+
+def damage(attacker, defender, attack_element):
     attack_type = attacker.attack_type
     if attack_type == "melee":
         attack_power = attacker.strength
@@ -78,7 +87,7 @@ def damage(attacker, defender):
     raw_damage = attack_power/2 + movement*2 - time/5 + tactics + kiss + random.randint(1,8)
     attack_multiplier = 1 #TODO special attacks like ianuki
     raw_damage = raw_damage*attack_multiplier
-    resistance = defender.elements['physical'] #TODO choose resistance element
+    resistance = defender.resistances[attack_element]
     absorption = ((defend_power/2 + movement*2 - time/5 + kiss + random.randint(3,10)) * resistance/100) + tactics
     damage = max(raw_damage - absorption,1) #TODO quake
     return int(damage)
@@ -87,7 +96,7 @@ def choose_target(attacker, defending_unit):
     #TODO include tactic
     lowest = 9999
     possible_targets = []
-    if attacker.attack_type == 'magic': #todo ianuki
+    if attacker.attack_type == 'magical': #todo ianuki
         possible_targets = defending_unit.characters
     else:
         for char in defending_unit.characters:
@@ -133,8 +142,9 @@ def attack(attacker, defender):
     attacker.num_attacks_remaining -= 1
     hit = does_it_hit(attacker, defender)
     if (hit):
-        dam = damage(attacker,defender)
-        dam_output = "{0} hits {1} for {2}".format(attacker.name,defender.name,dam)
+        attack_element = choose_element(attacker, defender)
+        dam = damage(attacker,defender,attack_element)
+        dam_output = "{0} hits {1} with {2} for {3}".format(attacker.name,defender.name,attack_element,dam)
         print(dam_output)
         message.setText(dam_output)
         defender.hp -= dam
