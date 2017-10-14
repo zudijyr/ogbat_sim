@@ -1,13 +1,18 @@
 from character import Character
 
 class Wizard(Character):
-    hp = 86
-    strength = 37
-    agility = 51
-    intelligence = 52
-    cost = 400
-    luck = 50
+    base_hp = 86
+    base_strength = 37
+    base_agility = 51
+    base_intelligence = 45
+    base_cost = 400
+    base_luck = 50
     image = "wizard.gif"
+    growth_hp = 2
+    growth_strength = 1
+    growth_agility = 1
+    growth_intelligence = 4
+    growth_cost = 70
 
     resistances = {
         'physical': 20,

@@ -91,13 +91,14 @@ def damage(attacker, defender, attack_element, attacker_tactic, defender_tactic)
     resistance = defender.resistances[attack_element]
     absorption = ((defend_power/2 + movement*2 - time/5 + kiss + random.randint(3,10)) * resistance/100) + def_tac_bonus
     damage = max(raw_damage - absorption,1) #TODO quake
+    damage = min(damage,defender.hp)
     return int(damage)
 
 def choose_target(attacker, defending_unit):
     #TODO include tactic
     lowest = 9999
     possible_targets = []
-    if attacker.attack_type == 'magical': #todo ianuki
+    if attacker.attack_type == 'magical': #TODO ianuki
         possible_targets = defending_unit.characters
     else:
         for char in defending_unit.characters:
@@ -199,16 +200,16 @@ def turn_order(unit1,unit2):
 def battle():
     top_left = Point(int(win.width/7), int(win.height/3))
     bottom_right = Point(int(3*win.width/7), int(2*win.height/3))
-    char1_1 = Fighter("fighter 1_1","blue",bottom_right,"front",0)
-    char1_2 = Fighter("fighter 1_2","blue",bottom_right,"front",1.5)
-    char1_3 = Amazon("amazon 1_3","blue",bottom_right,"back",0)
-    char1_4 = Amazon("amazon 1_4","blue",bottom_right,"back",1)
-    char1_5 = Wizard("wizard 1_5","blue",bottom_right,"back",2)
-    char2_1 = Fighter("fighter 2_1","red",top_left,"front",0)
-    char2_2 = Fighter("fighter 2_2","red",top_left,"front",2)
-    char2_3 = Amazon("amazon 2_3","red",top_left,"back",0)
-    char2_4 = Amazon("amazon 2_4","red",top_left,"back",1)
-    char2_5 = Wizard("wizard 2_5","red",top_left,"back",2)
+    char1_1 = Fighter("fighter 1_1",2,"blue",bottom_right,"front",0)
+    char1_2 = Fighter("fighter 1_2",5,"blue",bottom_right,"front",1.5)
+    char1_3 = Amazon("amazon 1_3",3,"blue",bottom_right,"back",0)
+    char1_4 = Amazon("amazon 1_4",5,"blue",bottom_right,"back",1)
+    char1_5 = Wizard("wizard 1_5",5,"blue",bottom_right,"back",2)
+    char2_1 = Fighter("fighter 2_1",1,"red",top_left,"front",0)
+    char2_2 = Fighter("fighter 2_2",3,"red",top_left,"front",2)
+    char2_3 = Amazon("amazon 2_3",5,"red",top_left,"back",0)
+    char2_4 = Amazon("amazon 2_4",4,"red",top_left,"back",1)
+    char2_5 = Wizard("wizard 2_5",5,"red",top_left,"back",2)
 
     unit1 = Unit("blue",[char1_1,char1_2,char1_3,char1_4,char1_5])
     unit2 = Unit("red",[char2_1,char2_2,char2_3,char2_4,char2_5])
@@ -234,8 +235,6 @@ def battle():
     win.getMouse()
 
 def draw_stuff(unit1,unit2):
-    win.setBackground('gray')
-
     p2 = Point(win.width/2,win.height/2)
     background = Image(p2,'tiles.gif')
     background.draw(win)

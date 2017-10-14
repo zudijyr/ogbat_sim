@@ -1,12 +1,18 @@
 from character import Character
 
 class Fighter(Character):
-    hp = 77
-    strength = 45
-    agility = 47
-    intelligence = 40
-    luck = 45
+    base_hp = 77
+    base_strength = 45
+    base_agility = 47
+    base_intelligence = 40
+    base_luck = 45
+    base_cost = 100
     image = "fighter.gif"
+    growth_hp = 5
+    growth_strength = 2
+    growth_agility = 2
+    growth_intelligence = 2
+    growth_cost = 20
 
     resistances = {
         'physical': 44,
