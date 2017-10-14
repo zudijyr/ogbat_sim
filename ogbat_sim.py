@@ -162,16 +162,16 @@ def attack(attacker, defender):
 
 def draw_hp_text(unit1,unit2):
     global hp1,hp2,hp3,hp4,hp5,hp6,hp7,hp8,hp9,hp10
-    hp1 = Text(Point(unit1.characters[0].location.getX(), unit1.characters[0].location.getY()+30),unit1.characters[0].hp)
-    hp2 = Text(Point(unit1.characters[1].location.getX(), unit1.characters[1].location.getY()+30),unit1.characters[1].hp)
-    hp3 = Text(Point(unit1.characters[2].location.getX(), unit1.characters[2].location.getY()+30),unit1.characters[2].hp)
-    hp4 = Text(Point(unit1.characters[3].location.getX(), unit1.characters[3].location.getY()+30),unit1.characters[3].hp)
-    hp5 = Text(Point(unit1.characters[4].location.getX(), unit1.characters[4].location.getY()+30),unit1.characters[4].hp)
-    hp6 = Text(Point(unit2.characters[0].location.getX(), unit2.characters[0].location.getY()+30),unit2.characters[0].hp)
-    hp7 = Text(Point(unit2.characters[1].location.getX(), unit2.characters[1].location.getY()+30),unit2.characters[1].hp)
-    hp8 = Text(Point(unit2.characters[2].location.getX(), unit2.characters[2].location.getY()+30),unit2.characters[2].hp)
-    hp9 = Text(Point(unit2.characters[3].location.getX(), unit2.characters[3].location.getY()+30),unit2.characters[3].hp)
-    hp10 = Text(Point(unit2.characters[4].location.getX(), unit2.characters[4].location.getY()+30),unit1.characters[4].hp)
+    hp1 = Text(Point(unit1.characters[0].location.getX(), unit1.characters[0].location.getY()+40),unit1.characters[0].hp)
+    hp2 = Text(Point(unit1.characters[1].location.getX(), unit1.characters[1].location.getY()+40),unit1.characters[1].hp)
+    hp3 = Text(Point(unit1.characters[2].location.getX(), unit1.characters[2].location.getY()+40),unit1.characters[2].hp)
+    hp4 = Text(Point(unit1.characters[3].location.getX(), unit1.characters[3].location.getY()+40),unit1.characters[3].hp)
+    hp5 = Text(Point(unit1.characters[4].location.getX(), unit1.characters[4].location.getY()+40),unit1.characters[4].hp)
+    hp6 = Text(Point(unit2.characters[0].location.getX(), unit2.characters[0].location.getY()+40),unit2.characters[0].hp)
+    hp7 = Text(Point(unit2.characters[1].location.getX(), unit2.characters[1].location.getY()+40),unit2.characters[1].hp)
+    hp8 = Text(Point(unit2.characters[2].location.getX(), unit2.characters[2].location.getY()+40),unit2.characters[2].hp)
+    hp9 = Text(Point(unit2.characters[3].location.getX(), unit2.characters[3].location.getY()+40),unit2.characters[3].hp)
+    hp10 = Text(Point(unit2.characters[4].location.getX(), unit2.characters[4].location.getY()+40),unit1.characters[4].hp)
     hp1.setTextColor('blue')
     hp1.setSize(20)
     hp1.draw(win)
@@ -238,16 +238,18 @@ def turn_order(unit1,unit2):
     return all_chars
 
 def battle():
-    char1_1 = Fighter("fighter 1_1","blue",Point(600,370),"front",0)
-    char1_2 = Fighter("fighter 1_2","blue",Point(650,350),"front",1.5)
-    char1_3 = Amazon("amazon 1_3","blue",Point(590,450),"back",0)
-    char1_4 = Amazon("amazon 1_4","blue",Point(640,420),"back",1.5)
-    char1_5 = Wizard("wizard 1_5","blue",Point(690,390),"back",3)
-    char2_1 = Fighter("fighter 2_1","red",Point(200,200),"front",0)
-    char2_2 = Fighter("fighter 2_2","red",Point(250,180),"front",1)
-    char2_3 = Amazon("amazon 2_3","red",Point(210,140),"back",0)
-    char2_4 = Amazon("amazon 2_4","red",Point(260,120),"back",1.5)
-    char2_5 = Wizard("wizard 2_5","red",Point(310,100),"back",3)
+    top_left = Point(int(win.width/7), int(win.height/3))
+    bottom_right = Point(int(3*win.width/7), int(2*win.height/3))
+    char1_1 = Fighter("fighter 1_1","blue",bottom_right,"front",0)
+    char1_2 = Fighter("fighter 1_2","blue",bottom_right,"front",1.5)
+    char1_3 = Amazon("amazon 1_3","blue",bottom_right,"back",0)
+    char1_4 = Amazon("amazon 1_4","blue",bottom_right,"back",1)
+    char1_5 = Wizard("wizard 1_5","blue",bottom_right,"back",2)
+    char2_1 = Fighter("fighter 2_1","red",top_left,"front",0)
+    char2_2 = Fighter("fighter 2_2","red",top_left,"front",2)
+    char2_3 = Amazon("amazon 2_3","red",top_left,"back",0)
+    char2_4 = Amazon("amazon 2_4","red",top_left,"back",1)
+    char2_5 = Wizard("wizard 2_5","red",top_left,"back",2)
 
     unit1 = Unit("blue",[char1_1,char1_2,char1_3,char1_4,char1_5])
     unit2 = Unit("red",[char2_1,char2_2,char2_3,char2_4,char2_5])
@@ -286,9 +288,11 @@ def draw_stuff(unit1,unit2):
 
     for i in range(5):
         image = Image(unit1.characters[i].location,"blue_" + unit1.characters[i].image)
+        print(unit1.characters[i].location)
         image.draw(win)
     for i in range(5):
         image = Image(unit2.characters[i].location,"red_" + unit2.characters[i].image)
+        print(unit2.characters[i].location)
         image.draw(win)
 
     message.setText('Click anywhere to begin')

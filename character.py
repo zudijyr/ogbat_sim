@@ -28,8 +28,14 @@ class Character:
     is_alive = True
     def __init__(self, name, side, location, row, position):
         self.num_attacks_remaining = self.num_attacks
-        self.location = location
         self.name = name
         self.side = side
         self.row = row
         self.position = position
+        clone_loc = location.clone()
+        if (row == "front" and side == "red") or (row == "back" and side == "blue"):
+            clone_loc.move(60+70*position,70-30*position)
+        else:
+            clone_loc.move(70*position,-30*position)
+        self.location = clone_loc
+
