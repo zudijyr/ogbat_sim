@@ -9,16 +9,6 @@ from unit import Unit
 blue_damage = 0
 red_damage = 0
 win = GraphWin('Draw units', 700, 500)
-hp1 = Text(Point(0,0),"")
-hp2 = Text(Point(0,0),"")
-hp3 = Text(Point(0,0),"")
-hp4 = Text(Point(0,0),"")
-hp5 = Text(Point(0,0),"")
-hp6 = Text(Point(0,0),"")
-hp7 = Text(Point(0,0),"")
-hp8 = Text(Point(0,0),"")
-hp9 = Text(Point(0,0),"")
-hp10 = Text(Point(0,0),"")
 message = Text(Point(win.getWidth()/2, 30), 'Ogre Battle Fight Sim')
 current_rec = Rectangle(Point(0,0),Point(1,1))
 target_rec = Rectangle(Point(0,0),Point(1,1))
@@ -161,60 +151,14 @@ def attack(attacker, defender):
         message.setText(output)
 
 def draw_hp_text(unit1,unit2):
-    global hp1,hp2,hp3,hp4,hp5,hp6,hp7,hp8,hp9,hp10
-    hp1 = Text(Point(unit1.characters[0].location.getX(), unit1.characters[0].location.getY()+40),unit1.characters[0].hp)
-    hp2 = Text(Point(unit1.characters[1].location.getX(), unit1.characters[1].location.getY()+40),unit1.characters[1].hp)
-    hp3 = Text(Point(unit1.characters[2].location.getX(), unit1.characters[2].location.getY()+40),unit1.characters[2].hp)
-    hp4 = Text(Point(unit1.characters[3].location.getX(), unit1.characters[3].location.getY()+40),unit1.characters[3].hp)
-    hp5 = Text(Point(unit1.characters[4].location.getX(), unit1.characters[4].location.getY()+40),unit1.characters[4].hp)
-    hp6 = Text(Point(unit2.characters[0].location.getX(), unit2.characters[0].location.getY()+40),unit2.characters[0].hp)
-    hp7 = Text(Point(unit2.characters[1].location.getX(), unit2.characters[1].location.getY()+40),unit2.characters[1].hp)
-    hp8 = Text(Point(unit2.characters[2].location.getX(), unit2.characters[2].location.getY()+40),unit2.characters[2].hp)
-    hp9 = Text(Point(unit2.characters[3].location.getX(), unit2.characters[3].location.getY()+40),unit2.characters[3].hp)
-    hp10 = Text(Point(unit2.characters[4].location.getX(), unit2.characters[4].location.getY()+40),unit1.characters[4].hp)
-    hp1.setTextColor('blue')
-    hp1.setSize(20)
-    hp1.draw(win)
-    hp2.setTextColor('blue')
-    hp2.setSize(20)
-    hp2.draw(win)
-    hp3.setTextColor('blue')
-    hp3.setSize(20)
-    hp3.draw(win)
-    hp4.setTextColor('blue')
-    hp4.setSize(20)
-    hp4.draw(win)
-    hp5.setTextColor('blue')
-    hp5.setSize(20)
-    hp5.draw(win)
+    for char in unit1.characters:
+        char.hptext.draw(win)
+    for char in unit2.characters:
+        char.hptext.draw(win)
 
-    hp6.setTextColor('red')
-    hp6.setSize(20)
-    hp6.draw(win)
-    hp7.setTextColor('red')
-    hp7.setSize(20)
-    hp7.draw(win)
-    hp8.setTextColor('red')
-    hp8.setSize(20)
-    hp8.draw(win)
-    hp9.setTextColor('red')
-    hp9.setSize(20)
-    hp9.draw(win)
-    hp10.setTextColor('red')
-    hp10.setSize(20)
-    hp10.draw(win)
-
-def set_hp_text(unit1,unit2):
-    hp1.setText(unit1.characters[0].hp)
-    hp2.setText(unit1.characters[1].hp)
-    hp3.setText(unit1.characters[2].hp)
-    hp4.setText(unit1.characters[3].hp)
-    hp5.setText(unit1.characters[4].hp)
-    hp6.setText(unit2.characters[0].hp)
-    hp7.setText(unit2.characters[1].hp)
-    hp8.setText(unit2.characters[2].hp)
-    hp9.setText(unit2.characters[3].hp)
-    hp10.setText(unit2.characters[4].hp)
+def set_hp_text(all_chars):
+    for char in all_chars:
+        char.hptext.setText(char.hp)
 
 def combat_round(all_chars,unit1,unit2):
     for x in all_chars:
@@ -227,7 +171,7 @@ def combat_round(all_chars,unit1,unit2):
             else:
                 target = choose_target(x,unit1)
             attack(x, target)
-            set_hp_text(unit1,unit2)
+            set_hp_text(all_chars)
 
 def turn_order(unit1,unit2):
     all_chars = unit1.characters + unit2.characters
@@ -288,11 +232,9 @@ def draw_stuff(unit1,unit2):
 
     for i in range(5):
         image = Image(unit1.characters[i].location,"blue_" + unit1.characters[i].image)
-        print(unit1.characters[i].location)
         image.draw(win)
     for i in range(5):
         image = Image(unit2.characters[i].location,"red_" + unit2.characters[i].image)
-        print(unit2.characters[i].location)
         image.draw(win)
 
     message.setText('Click anywhere to begin')

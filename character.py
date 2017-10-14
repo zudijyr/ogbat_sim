@@ -23,6 +23,7 @@ class Character:
     attacking_elements = ['physical']
     num_attacks = 0
     order_value = 0
+    hptext = Text(Point(0,0),"")
     attack_type = 'melee'
     #same attack type regardless of row
     is_alive = True
@@ -38,4 +39,7 @@ class Character:
         else:
             clone_loc.move(70*position,-30*position)
         self.location = clone_loc
+        self.hptext = Text(Point(self.location.getX(),self.location.getY()+40),self.hp)
+        self.hptext.setSize(20)
+        self.hptext.setTextColor(side)
 
