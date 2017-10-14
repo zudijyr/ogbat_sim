@@ -270,13 +270,13 @@ def draw_stuff(unit1,unit2):
     image4.draw(win)
 
     image5 = Image(unit2.characters[0].location,'red_fighter_big.gif')
-    image5.draw(win)
     image6 = Image(unit2.characters[1].location,'red_fighter_big.gif')
-    image6.draw(win)
     image7 = Image(unit2.characters[2].location,'red_amazon_big.gif')
     image7.draw(win)
     image8 = Image(unit2.characters[3].location,'red_amazon_big.gif')
     image8.draw(win)
+    image5.draw(win)
+    image6.draw(win)
 
     message.setText('Click anywhere to begin')
     win.getMouse()
