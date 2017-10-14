@@ -122,8 +122,8 @@ def choose_target(attacker, defending_unit):
             target = character
     return target
 
-def attack(attacker, defender):
-    global blue_damage,red_damage,current_rec,target_rec
+def draw_attack_recs(attacker,defender):
+    global current_rec,target_rec
     current_rec.undraw()
     target_rec.undraw()
 
@@ -140,6 +140,10 @@ def attack(attacker, defender):
     target_rec.setOutline("black")
     target_rec.setWidth(5)
     target_rec.draw(win)
+
+def attack(attacker, defender):
+    global blue_damage,red_damage
+    draw_attack_recs(attacker,defender)
     attacker.num_attacks_remaining -= 1
     hit = does_it_hit(attacker, defender)
     if (hit):
