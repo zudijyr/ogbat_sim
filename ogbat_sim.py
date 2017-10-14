@@ -1,4 +1,6 @@
 import sys
+from os import system
+from platform import system as platform
 import random
 from graphics import *
 from classes.fighter import Fighter
@@ -255,6 +257,8 @@ def draw_stuff(unit1,unit2):
     win.getMouse()
 
 def main(argv):
+    if platform() == 'Darwin':  # How Mac OS X is identified by Python
+        system('''/usr/bin/osascript -e 'tell app "Finder" to set frontmost of process "Python" to true' ''')
     battle()
 
 if __name__ == "__main__":
