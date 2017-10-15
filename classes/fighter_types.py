@@ -139,7 +139,7 @@ class Samurai(Character):
     base_hp = 85
     base_strength = 50
     base_agility = 54
-    base_intelligence = 21
+    base_intelligence = 51
     base_cost = 700
     base_luck = 47
     image = "samurai.gif"
@@ -354,7 +354,7 @@ class Mage(Character):
     attack_type = 'magical'
 
 class Sorcerer(Character):
-    base_hp = 37
+    base_hp = 73
     base_strength = 39
     base_agility = 47
     base_intelligence = 55
