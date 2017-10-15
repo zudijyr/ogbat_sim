@@ -254,7 +254,6 @@ def draw_stuff(unit1,unit2):
         image.draw(win)
 
     message.setText('Click anywhere to begin')
-    win.getMouse()
 
 def main(argv):
     if platform() == 'Darwin':  # How Mac OS X is identified by Python
