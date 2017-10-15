@@ -30,6 +30,7 @@ class Character:
 
     attacking_elements = ['physical']
     num_attacks = 0
+    target = 'one'
     order_value = 0
     hptext = Text(Point(0,0),"")
     attack_type = 'melee'

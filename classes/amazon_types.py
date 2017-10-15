@@ -24,4 +24,5 @@ class Amazon(Character):
         }
 
     num_attacks = 2
+    target = 'one'
     attack_type = 'melee'
