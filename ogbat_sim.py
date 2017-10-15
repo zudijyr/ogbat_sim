@@ -194,8 +194,7 @@ def combat_round(all_chars,unit1,unit2):
                 attack(x, char)
                 set_hp_text(all_chars)
 
-def turn_order(unit1,unit2):
-    all_chars = unit1.characters + unit2.characters
+def turn_order(all_chars):
     movement_factor = 0 #TODO
     for char in all_chars:
         char.order_value = char.agility + char.luck/2 + movement_factor + random.randint(3,10)
@@ -206,18 +205,18 @@ def battle():
     top_left = Point(int(win.width/7), int(win.height/3))
     bottom_right = Point(int(3*win.width/7), int(2*win.height/3))
     unit1_charlist = []
-    char1_1 = Knight("knight 1_1",2,"blue",bottom_right,"front",0)
+    char1_1 = Knight("knight 1_1",100,"blue",bottom_right,"front",0)
     unit1_charlist.append(char1_1)
-    char1_2 = Paladin("paladin 1_2",5,"blue",bottom_right,"front",1.5)
+    char1_2 = Paladin("paladin 1_2",100,"blue",bottom_right,"front",1.5)
     unit1_charlist.append(char1_2)
     #char1_3 = Mage("mage 1_3",3,"blue",bottom_right,"back",0)
     #char1_4 = Samurai("samurai 1_4",5,"blue",bottom_right,"back",1)
     #char1_5 = Wizard("wizard 1_5",5,"blue",bottom_right,"back",2)
 
     unit2_charlist = []
-    char2_1 = EvilOne("evil one 2_1",1,"red",top_left,"front",0)
+    char2_1 = EvilOne("evil one 2_1",100,"red",top_left,"front",0)
     unit2_charlist.append(char2_1)
-    char2_2 = WildMan("wild man 2_2",3,"red",top_left,"front",2)
+    char2_2 = WildMan("wild man 2_2",100,"red",top_left,"front",2)
     unit2_charlist.append(char2_2)
     #char2_3 = Sorcerer("sorcerer 2_3",5,"red",top_left,"back",0)
     #char2_4 = DollMaster("doll master 2_4",4,"red",top_left,"back",1)
@@ -225,10 +224,15 @@ def battle():
 
     unit1 = Unit("blue",unit1_charlist)
     unit2 = Unit("red",unit2_charlist)
+    all_chars = unit1_charlist + unit2_charlist
     draw_stuff(unit1,unit2)
     draw_hp_text(unit1,unit2)
-    for round_num in range(4):
-        all_chars = turn_order(unit1,unit2)
+    max_rounds = 1
+    for char in all_chars:
+        if char.num_attacks > max_rounds:
+            max_rounds = char.num_attacks
+    for round_num in range(max_rounds):
+        all_chars = turn_order(all_chars)
         combat_round(all_chars,unit1,unit2)
     win.getMouse()
     current_rec.undraw()
