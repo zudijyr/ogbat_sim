@@ -29,6 +29,7 @@ class Character:
         }
 
     attacking_elements = ['physical']
+    movement = 'plains'
     num_attacks = 0
     target = 'one'
     order_value = 0
