@@ -3,10 +3,8 @@ from os import system
 from platform import system as platform
 import random
 from graphics import *
-from classes.fighter import Fighter
-from classes.amazon import Amazon
-from classes.wizard import Wizard
 from classes.unit import Unit
+from classes.fighter_types import *
 
 blue_damage = 0
 red_damage = 0
@@ -202,15 +200,15 @@ def turn_order(unit1,unit2):
 def battle():
     top_left = Point(int(win.width/7), int(win.height/3))
     bottom_right = Point(int(3*win.width/7), int(2*win.height/3))
-    char1_1 = Fighter("fighter 1_1",2,"blue",bottom_right,"front",0)
-    char1_2 = Fighter("fighter 1_2",5,"blue",bottom_right,"front",1.5)
-    char1_3 = Amazon("amazon 1_3",3,"blue",bottom_right,"back",0)
-    char1_4 = Amazon("amazon 1_4",5,"blue",bottom_right,"back",1)
+    char1_1 = Knight("fighter 1_1",2,"blue",bottom_right,"front",0)
+    char1_2 = Paladin("fighter 1_2",5,"blue",bottom_right,"front",1.5)
+    char1_3 = Mage("amazon 1_3",3,"blue",bottom_right,"back",0)
+    char1_4 = Samurai("amazon 1_4",5,"blue",bottom_right,"back",1)
     char1_5 = Wizard("wizard 1_5",5,"blue",bottom_right,"back",2)
-    char2_1 = Fighter("fighter 2_1",1,"red",top_left,"front",0)
-    char2_2 = Fighter("fighter 2_2",3,"red",top_left,"front",2)
-    char2_3 = Amazon("amazon 2_3",5,"red",top_left,"back",0)
-    char2_4 = Amazon("amazon 2_4",4,"red",top_left,"back",1)
+    char2_1 = EvilOne("fighter 2_1",1,"red",top_left,"front",0)
+    char2_2 = WildMan("fighter 2_2",3,"red",top_left,"front",2)
+    char2_3 = Sorcerer("amazon 2_3",5,"red",top_left,"back",0)
+    char2_4 = DollMaster("amazon 2_4",4,"red",top_left,"back",1)
     char2_5 = Wizard("wizard 2_5",5,"red",top_left,"back",2)
 
     unit1 = Unit("blue",[char1_1,char1_2,char1_3,char1_4,char1_5])
