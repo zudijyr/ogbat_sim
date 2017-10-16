@@ -250,7 +250,8 @@ def battle():
     unit2_charlist.append(char2_1)
     char2_2 = WildMan("wild man 2_2",1,"red",top_left,"front",2)
     unit2_charlist.append(char2_2)
-    #char2_3 = Sorcerer("sorcerer 2_3",5,"red",top_left,"back",0)
+#    char2_3 = Sorcerer("sorcerer 2_3",5,"red",top_left,"back",0)
+#    unit2_charlist.append(char2_3)
     #char2_4 = DollMaster("doll master 2_4",4,"red",top_left,"back",1)
     #char2_5 = Wizard("wizard 2_5",5,"red",top_left,"back",2)
     char2_1.movement = 'high sky'
