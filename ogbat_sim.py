@@ -236,26 +236,27 @@ def battle():
     bottom_right = Point(int(3*win.width/7), int(2*win.height/3))
     unit1_charlist = []
     char1_1 = Knight("knight 1_1",1,"blue",bottom_right,"front",0)
-    char1_1.movement = 'deep_sea'
     unit1_charlist.append(char1_1)
-    char1_2 = Paladin("paladin 1_2",1,"blue",bottom_right,"front",1.5)
-    char1_2.movement = 'deep_sea'
+    char1_2 = Ravenman("ravenman 1_2",1,"blue",bottom_right,"front",1.5)
     unit1_charlist.append(char1_2)
-    #char1_3 = Mage("mage 1_3",3,"blue",bottom_right,"back",0)
-    #char1_4 = Samurai("samurai 1_4",5,"blue",bottom_right,"back",1)
-    #char1_5 = Wizard("wizard 1_5",5,"blue",bottom_right,"back",2)
+    char1_3 = Lich("lich 1_3",3,"blue",bottom_right,"back",0)
+    unit1_charlist.append(char1_3)
+    char1_4 = Samurai("samurai 1_4",5,"blue",bottom_right,"back",1)
+    unit1_charlist.append(char1_4)
+    char1_5 = BeastTamer("beast tamer 1_5",5,"blue",bottom_right,"back",2)
+    unit1_charlist.append(char1_5)
 
     unit2_charlist = []
     char2_1 = EvilOne("evil one 2_1",1,"red",top_left,"front",0)
     unit2_charlist.append(char2_1)
     char2_2 = WildMan("wild man 2_2",1,"red",top_left,"front",2)
     unit2_charlist.append(char2_2)
-#    char2_3 = Sorcerer("sorcerer 2_3",5,"red",top_left,"back",0)
-#    unit2_charlist.append(char2_3)
-    #char2_4 = DollMaster("doll master 2_4",4,"red",top_left,"back",1)
-    #char2_5 = Wizard("wizard 2_5",5,"red",top_left,"back",2)
-    char2_1.movement = 'high sky'
-    char2_2.movement = 'high sky'
+    char2_3 = Dragoner("dragoner 2_3",5,"red",top_left,"back",0)
+    unit2_charlist.append(char2_3)
+    char2_4 = Tigerman("tigerman 2_4",4,"red",top_left,"back",1)
+    unit2_charlist.append(char2_4)
+    char2_5 = Werewolf("werewolf 2_5",5,"red",top_left,"back",2)
+    unit2_charlist.append(char2_5)
 
     unit1 = Unit("blue",unit1_charlist)
     unit2 = Unit("red",unit2_charlist)

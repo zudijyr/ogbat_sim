@@ -360,7 +360,7 @@ class Sorcerer(Character):
     base_intelligence = 55
     base_cost = 1200
     base_luck = 45
-    image = "sorcerer.gif"
+    image = "dragoner.gif"
     growth_hp = 3
     growth_strength = 1
     growth_agility = 1
@@ -436,3 +436,200 @@ class DollMaster(Character):
     num_attacks = 2
     hit = 'all'
     attack_type = 'magical'
+
+class Vampyre(Character):
+    base_hp = 45
+    base_strength = 42
+    base_agility = 45
+    base_intelligence = 61
+    base_cost = 1600
+    base_luck = 62
+    image = "vampyre.gif"
+    growth_hp = 4
+    growth_strength = 3
+    growth_agility = 2
+    growth_intelligence = 4
+    growth_cost = 250
+
+    resistances = {
+        'physical': 82,
+        'black': 80,
+        'white': 10,
+        'fire': 78,
+        'cold': 85,
+        'lightning': 48
+        }
+    #all resistances go to 100 in the daytime, but magic attacks should choose fire
+
+    attacking_elements = ['black']
+    num_attacks = 2
+    hit = 'one'
+    attack_type = 'melee' #TODO special attacks, needs to be added
+
+class Werewolf(Character):
+    base_hp = 79
+    base_strength = 53
+    base_agility = 54
+    base_intelligence = 44
+    base_cost = 380
+    base_luck = 49
+    image = "werewolf.gif"
+    growth_hp = 6
+    growth_strength = 3
+    growth_agility = 3
+    growth_intelligence = 1
+    growth_cost = 80
+
+    resistances = {
+        'physical': 71,
+        'black': 92,
+        'white': 11,
+        'fire': 72,
+        'cold': 77,
+        'lightning': 78
+        }
+
+    attacking_elements = ['physical']
+    num_attacks = 3
+    hit = 'one'
+    attack_type = 'melee'
+
+class Tigerman(Character):
+    base_hp = 77
+    base_strength = 59
+    base_agility = 58
+    base_intelligence = 45
+    base_cost = 720
+    base_luck = 52
+    image = "tigerman.gif"
+    growth_hp = 6
+    growth_strength = 4
+    growth_agility = 3
+    growth_intelligence = 1
+    growth_cost = 120
+
+    resistances = {
+        'physical': 74,
+        'black': 94,
+        'white': 14,
+        'fire': 76,
+        'cold': 71,
+        'lightning': 75
+        }
+
+    attacking_elements = ['physical']
+    num_attacks = 2
+    hit = 'one'
+    attack_type = 'melee'
+
+class Ravenman(Character):
+    base_hp = 95
+    base_strength = 52
+    base_agility = 62
+    base_intelligence = 55
+    base_cost = 800
+    base_luck = 48
+    image = "ravenman.gif"
+    growth_hp = 6
+    growth_strength = 2
+    growth_agility = 4
+    growth_intelligence = 2
+    growth_cost = 120
+
+    resistances = {
+        'physical': 40,
+        'black': 69,
+        'white': 21,
+        'fire': 70,
+        'cold': 46,
+        'lightning': 47
+        }
+
+    attacking_elements = ['physical']
+    num_attacks = 2
+    hit = 'one'
+    attack_type = 'melee'
+
+class Lich(Character):
+    base_hp = 88
+    base_strength = 35
+    base_agility = 46
+    base_intelligence = 59
+    base_cost = 1900
+    base_luck = 42
+    image = "lich.gif"
+    growth_hp = 2
+    growth_strength = 1
+    growth_agility = 2
+    growth_intelligence = 4
+    growth_cost = 250
+
+    resistances = {
+        'physical': 100,
+        'black': 100,
+        'white': 10,
+        'fire': 100,
+        'cold': 100,
+        'lightning': 68
+        }
+
+    attacking_elements = ['physical','black','cold','fire','lightning']
+    num_attacks = 3
+    hit = 'all'
+    attack_type = 'magical'
+
+class Dragoner(Character):
+    base_hp = 83
+    base_strength = 48
+    base_agility = 51
+    base_intelligence = 49
+    base_cost = 1370
+    base_luck = 58
+    image = "dragoner.gif"
+    growth_hp = 4
+    growth_strength = 3
+    growth_agility = 2
+    growth_intelligence = 2
+    growth_cost = 200
+
+    resistances = {
+        'physical': 43,
+        'black': 40,
+        'white': 40,
+        'fire': 26,
+        'cold': 54,
+        'lightning': 40
+        }
+
+    attacking_elements = ['physical']
+    num_attacks = 2
+    hit = 'one'
+    attack_type = 'melee'
+
+class DragonMaster(Character):
+    base_hp = 85
+    base_strength = 52
+    base_agility = 53
+    base_intelligence = 51
+    base_cost = 2000
+    base_luck = 65
+    image = "dragon_master.gif"
+    growth_hp = 3
+    growth_strength = 3
+    growth_agility = 3
+    growth_intelligence = 2
+    growth_cost = 250
+
+    resistances = {
+        'physical': 45,
+        'black': 40,
+        'white': 40,
+        'fire': 22,
+        'cold': 58,
+        'lightning': 47
+        }
+
+    attacking_elements = ['physical']
+    num_attacks = 2
+    hit = 'one'
+    attack_type = 'melee'
