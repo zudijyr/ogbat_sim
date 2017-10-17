@@ -187,7 +187,7 @@ class Samurai(Character):
     front_elements = ['physical']
     front_num_attacks = 2
     front_hit = 'one'
-    back_attack_type = 'ianuki'
+    back_attack_type = 'iainuki'
     back_elements = ['physical']
     back_num_attacks = 1
     back_hit = 'one'
@@ -219,7 +219,7 @@ class SamuraiMaster(Character):
     front_elements = ['physical']
     front_num_attacks = 3
     front_hit = 'one'
-    back_attack_type = 'ianuki'
+    back_attack_type = 'iainuki'
     back_elements = ['physical']
     back_num_attacks = 1
     back_hit = 'one'

@@ -45,10 +45,10 @@ def calc_movement_bonus(unit, terrain):
 
 def does_it_hit(attacker, defender, terrain):
     attack_type = attacker.attack_type
-    if attack_type == "melee":
+    if attack_type in ('melee','iainuki'):
         attack_speed = attacker.agility
         defend_speed = defender.agility
-    elif attack_type == "magical":
+    elif attack_type == 'magical':
         attack_speed = attacker.intelligence
         defend_speed = defender.intelligence
 
@@ -100,10 +100,10 @@ def calc_tac_bonuses(attacker_tactic, defender_tactic):
 
 def damage(attacker, defender, attack_element, attacker_tactic, defender_tactic, terrain):
     attack_type = attacker.attack_type
-    if attack_type == "melee":
+    if attack_type in ('melee','iainuki'):
         attack_power = attacker.strength
         defend_power = defender.strength
-    elif attack_type == "magical":
+    elif attack_type == 'magical':
         attack_power = attacker.intelligence
         defend_power = defender.intelligence
 
@@ -116,6 +116,12 @@ def damage(attacker, defender, attack_element, attacker_tactic, defender_tactic,
     #damage formula from Deathlike2's unit analysis gamefaq
     raw_damage = attack_power/2 + att_move_bonus*2 - time/5 + att_tac_bonus + kiss + random.randint(1,8)
     attack_multiplier = 1 #TODO special attacks like ianuki
+    if attack_type == 'iainuki':
+        attack_multiplier = 1.5
+        blowback = int(0.5 * raw_damage)
+        blowback = min(blowback,attacker.hp)
+        print("{0} suffers {1} from iainuki blowback".format(attacker.name,blowback))
+        attacker.hp -= blowback
     raw_damage = raw_damage*attack_multiplier
     resistance = defender.resistances[attack_element]
     absorption = ((defend_power/2 + def_move_bonus*2 - time/5 + kiss + random.randint(3,10)) * resistance/100) + def_tac_bonus
