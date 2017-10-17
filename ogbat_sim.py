@@ -5,6 +5,7 @@ import random
 from graphics import *
 from classes.unit import Unit
 from classes.fighter_types import *
+from classes.faerie_types import *
 
 blue_damage = 0
 red_damage = 0
@@ -242,13 +243,13 @@ def battle():
     top_left = Point(int(win.width/7), int(win.height/3))
     bottom_right = Point(int(3*win.width/7), int(2*win.height/3))
     unit1_charlist = []
-    char1_1 = Knight("knight 1_1",1,"blue",bottom_right,"front",0)
+    char1_1 = Knight("knight 1_1",5,"blue",bottom_right,"front",0)
     unit1_charlist.append(char1_1)
     char1_2 = Ravenman("ravenman 1_2",1,"blue",bottom_right,"front",1.5)
     unit1_charlist.append(char1_2)
     char1_3 = Lich("lich 1_3",3,"blue",bottom_right,"back",0)
     unit1_charlist.append(char1_3)
-    char1_4 = Samurai("samurai 1_4",5,"blue",bottom_right,"back",1)
+    char1_4 = Tigerman("tigerman 1_4",5,"blue",bottom_right,"back",1)
     unit1_charlist.append(char1_4)
     char1_5 = BeastTamer("beast tamer 1_5",5,"blue",bottom_right,"back",2)
     unit1_charlist.append(char1_5)
@@ -258,9 +259,13 @@ def battle():
     unit2_charlist.append(char2_1)
     char2_2 = WildMan("wild man 2_2",1,"red",top_left,"front",2)
     unit2_charlist.append(char2_2)
-    char2_3 = Dragoner("dragoner 2_3",5,"red",top_left,"back",0)
+    #char2_3 = Samurai("samurai 2_3",5,"red",top_left,"back",0)
+    #unit2_charlist.append(char2_3)
+    #char2_4 = SamuraiMaster("samurai master 2_4",5,"red",top_left,"back",1)
+    #unit2_charlist.append(char2_4)
+    char2_3 = Sylph("sylph 2_3",5,"red",top_left,"back",0)
     unit2_charlist.append(char2_3)
-    char2_4 = Tigerman("tigerman 2_4",4,"red",top_left,"back",1)
+    char2_4 = Sylph("sylph 2_4",5,"red",top_left,"back",1)
     unit2_charlist.append(char2_4)
     char2_5 = Werewolf("werewolf 2_5",5,"red",top_left,"back",2)
     unit2_charlist.append(char2_5)
