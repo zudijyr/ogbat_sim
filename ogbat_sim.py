@@ -231,7 +231,7 @@ def turn_order(all_chars, terrain):
     return all_chars
 
 def battle():
-    terrain = 'plains' #TODO set this somehow
+    terrain = 'city' #TODO set this somehow
     top_left = Point(int(win.width/7), int(win.height/3))
     bottom_right = Point(int(3*win.width/7), int(2*win.height/3))
     unit1_charlist = []
@@ -261,7 +261,7 @@ def battle():
     unit1 = Unit("blue",unit1_charlist)
     unit2 = Unit("red",unit2_charlist)
     all_chars = unit1_charlist + unit2_charlist
-    draw_stuff(unit1,unit2)
+    draw_stuff(unit1,unit2,terrain)
     draw_hp_text(unit1,unit2)
     max_rounds = 1
     for char in all_chars:
@@ -286,9 +286,9 @@ def battle():
         message.setText("draw!")
     win.getMouse()
 
-def draw_stuff(unit1,unit2):
+def draw_stuff(unit1,unit2,terrain):
     p2 = Point(win.width/2,win.height/2)
-    background = Image(p2,'images/tiles.gif')
+    background = Image(p2,'images/city_blank.gif')
     background.draw(win)
 
     message.setTextColor('gray')
