@@ -424,7 +424,7 @@ class Sorcerer(Character):
     base_intelligence = 55
     base_cost = 1200
     base_luck = 45
-    image = "dragoner.gif"
+    image = "sorcerer.gif"
     growth_hp = 3
     growth_strength = 1
     growth_agility = 1
