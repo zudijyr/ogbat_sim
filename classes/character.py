@@ -28,17 +28,21 @@ class Character:
         'lightning': 50
         }
 
-    attacking_elements = ['physical']
+    front_attack_type = 'melee'
+    front_elements = ['physical']
+    front_num_attacks = 0
+    front_hit = 'one'
+    back_attack_type = 'melee'
+    back_elements = ['physical']
+    back_num_attacks = 0
+    back_hit = 'all'
     movement = 'plains'
-    num_attacks = 0
     target = 'one'
     order_value = 0
     hptext = Text(Point(0,0),"")
-    attack_type = 'melee'
     #same attack type regardless of row
     is_alive = True
     def __init__(self, name, level, side, location, row, position):
-        self.num_attacks_remaining = self.num_attacks
         self.name = name
         self.level = level
         self.hp = self.base_hp + (level-1)*self.growth_hp
@@ -55,6 +59,17 @@ class Character:
             clone_loc.move(60+70*position,70-30*position)
         else:
             clone_loc.move(70*position,-30*position)
+        if row == "front":
+            self.num_attacks = self.front_num_attacks
+            self.attack_type = self.front_attack_type
+            self.attacking_elements = self.front_elements
+            self.hit = self.front_hit
+        if row == "back":
+            self.num_attacks = self.back_num_attacks
+            self.attack_type = self.back_attack_type
+            self.attacking_elements = self.back_elements
+            self.hit = self.back_hit
+        self.num_attacks_remaining = self.num_attacks
         self.location = clone_loc
         self.hptext = Text(Point(self.location.getX(),self.location.getY()+40),self.hp)
         self.hptext.setSize(20)

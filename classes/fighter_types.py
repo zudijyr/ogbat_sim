@@ -23,9 +23,14 @@ class Fighter(Character):
         'lightning': 44
         }
 
-    num_attacks = 2
-    hit = 'one'
-    attack_type = 'melee'
+    front_attack_type = 'melee'
+    front_elements = ['physical']
+    front_num_attacks = 2
+    front_hit = 'one'
+    back_attack_type = 'melee'
+    back_elements = ['physical']
+    back_num_attacks = 1
+    back_hit = 'one'
 
 class Knight(Character):
     base_hp = 76
@@ -50,9 +55,14 @@ class Knight(Character):
         'lightning': 37
         }
 
-    num_attacks = 2
-    hit = 'one'
-    attack_type = 'melee'
+    front_attack_type = 'melee'
+    front_elements = ['physical']
+    front_num_attacks = 2
+    front_hit = 'one'
+    back_attack_type = 'melee'
+    back_elements = ['physical']
+    back_num_attacks = 1
+    back_hit = 'one'
 
 class Paladin(Character):
     base_hp = 67
@@ -77,9 +87,14 @@ class Paladin(Character):
         'lightning': 40
         }
 
-    num_attacks = 3
-    hit = 'one'
-    attack_type = 'melee'
+    front_attack_type = 'melee'
+    front_elements = ['physical']
+    front_num_attacks = 3
+    front_hit = 'one'
+    back_attack_type = 'healing'
+    back_elements = ['white']
+    back_num_attacks = 1
+    back_hit = 'one'
 
 class BeastTamer(Character):
     base_hp = 85
@@ -104,9 +119,14 @@ class BeastTamer(Character):
         'lightning': 35
         }
 
-    num_attacks = 2
-    hit = 'one'
-    attack_type = 'melee'
+    front_attack_type = 'melee'
+    front_elements = ['physical']
+    front_num_attacks = 2
+    front_hit = 'one'
+    back_attack_type = 'melee'
+    back_elements = ['physical']
+    back_num_attacks = 2
+    back_hit = 'one'
 
 class BeastMaster(Character):
     base_hp = 79
@@ -131,9 +151,14 @@ class BeastMaster(Character):
         'lightning': 39
         }
 
-    num_attacks = 2
-    hit = 'one'
-    attack_type = 'melee'
+    front_attack_type = 'melee'
+    front_elements = ['physical']
+    front_num_attacks = 2
+    front_hit = 'one'
+    back_attack_type = 'melee'
+    back_elements = ['physical']
+    back_num_attacks = 2
+    back_hit = 'one'
 
 class Samurai(Character):
     base_hp = 85
@@ -158,9 +183,14 @@ class Samurai(Character):
         'lightning': 34
         }
 
-    num_attacks = 2
-    hit = 'one'
-    attack_type = 'melee'
+    front_attack_type = 'melee'
+    front_elements = ['physical']
+    front_num_attacks = 2
+    front_hit = 'one'
+    back_attack_type = 'ianuki'
+    back_elements = ['physical']
+    back_num_attacks = 1
+    back_hit = 'one'
 
 class SamuraiMaster(Character):
     base_hp = 96
@@ -185,9 +215,14 @@ class SamuraiMaster(Character):
         'lightning': 37
         }
 
-    num_attacks = 3
-    hit = 'one'
-    attack_type = 'melee'
+    front_attack_type = 'melee'
+    front_elements = ['physical']
+    front_num_attacks = 3
+    front_hit = 'one'
+    back_attack_type = 'ianuki'
+    back_elements = ['physical']
+    back_num_attacks = 1
+    back_hit = 'one'
 
 class Ninja(Character):
     base_hp = 76
@@ -212,9 +247,15 @@ class Ninja(Character):
         'lightning': 43
         }
 
-    num_attacks = 3
-    hit = 'one'
-    attack_type = 'melee'
+    front_attack_type = 'melee'
+    front_elements = ['physical']
+    front_num_attacks = 3
+    front_hit = 'one'
+    back_attack_type = 'magical'
+    back_elements = ['cold','fire','lightning']
+    back_num_attacks = 2
+    back_hit = 'one'
+
 
 class NinjaMaster(Character):
     base_hp = 77
@@ -239,9 +280,14 @@ class NinjaMaster(Character):
         'lightning': 45
         }
 
-    num_attacks = 3
-    hit = 'one'
-    attack_type = 'melee'
+    front_attack_type = 'melee'
+    front_elements = ['physical']
+    front_num_attacks = 3
+    front_hit = 'one'
+    back_attack_type = 'magical'
+    back_elements = ['cold','fire','lightning']
+    back_num_attacks = 1
+    back_hit = 'all'
 
 class WildMan(Character):
     base_hp = 71
@@ -266,9 +312,14 @@ class WildMan(Character):
         'lightning': 36
         }
 
-    num_attacks = 2
-    hit = 'one'
-    attack_type = 'melee'
+    front_attack_type = 'melee'
+    front_elements = ['physical']
+    front_num_attacks = 2
+    front_hit = 'one'
+    back_attack_type = 'melee'
+    back_elements = ['physical']
+    back_num_attacks = 1
+    back_hit = 'one'
 
 class EvilOne(Character):
     base_hp = 74
@@ -293,9 +344,14 @@ class EvilOne(Character):
         'lightning': 39
         }
 
-    num_attacks = 2
-    hit = 'one'
-    attack_type = 'melee'
+    front_attack_type = 'melee'
+    front_elements = ['physical']
+    front_num_attacks = 2
+    front_hit = 'one'
+    back_attack_type = 'magical'
+    back_elements = ['fire']
+    back_num_attacks = 2
+    back_hit = 'one'
 
 class Wizard(Character):
     base_hp = 86
@@ -320,10 +376,14 @@ class Wizard(Character):
         'lightning': 37
         }
 
-    attacking_elements = ['physical', 'black', 'fire', 'cold', 'lightning']
-    num_attacks = 2
-    hit = 'one'
-    attack_type = 'magical'
+    front_attack_type = 'melee'
+    front_elements = ['physical']
+    front_num_attacks = 2
+    front_hit = 'one'
+    back_attack_type = 'magical'
+    back_elements = ['physical', 'black', 'fire', 'cold', 'lightning']
+    back_num_attacks = 2
+    back_hit = 'one'
 
 class Mage(Character):
     base_hp = 81
@@ -348,10 +408,14 @@ class Mage(Character):
         'lightning': 38
         }
 
-    attacking_elements = ['physical', 'black', 'fire', 'cold', 'lightning']
-    num_attacks = 1
-    hit = 'all'
-    attack_type = 'magical'
+    front_attack_type = 'melee'
+    front_elements = ['physical']
+    front_num_attacks = 2
+    front_hit = 'one'
+    back_attack_type = 'magical'
+    back_elements = ['physical', 'black', 'fire', 'cold', 'lightning']
+    back_num_attacks = 1
+    back_hit = 'all'
 
 class Sorcerer(Character):
     base_hp = 73
@@ -376,10 +440,46 @@ class Sorcerer(Character):
         'lightning': 39
         }
 
-    attacking_elements = ['physical', 'black', 'fire', 'cold', 'lightning']
-    num_attacks = 2
-    hit = 'all'
-    attack_type = 'magical'
+    front_attack_type = 'melee'
+    front_elements = ['physical']
+    front_num_attacks = 2
+    front_hit = 'one'
+    back_attack_type = 'magical'
+    back_elements = ['physical', 'black', 'fire', 'cold', 'lightning']
+    back_num_attacks = 2
+    back_hit = 'all'
+
+class Lich(Character):
+    base_hp = 88
+    base_strength = 35
+    base_agility = 46
+    base_intelligence = 59
+    base_cost = 1900
+    base_luck = 42
+    image = "lich.gif"
+    growth_hp = 2
+    growth_strength = 1
+    growth_agility = 2
+    growth_intelligence = 4
+    growth_cost = 250
+
+    resistances = {
+        'physical': 100,
+        'black': 100,
+        'white': 10,
+        'fire': 100,
+        'cold': 100,
+        'lightning': 68
+        }
+
+    front_attack_type = 'melee'
+    front_elements = ['white']
+    front_num_attacks = 3
+    front_hit = 'one'
+    back_attack_type = 'magical'
+    back_elements = ['physical','black','cold','fire','lightning']
+    back_num_attacks = 3
+    back_hit = 'all'
 
 class DollMage(Character):
     base_hp = 78
@@ -404,10 +504,14 @@ class DollMage(Character):
         'lightning': 27
         }
 
-    attacking_elements = ['physical']
-    num_attacks = 1
-    hit = 'all'
-    attack_type = 'magical'
+    front_attack_type = 'melee'
+    front_elements = ['physical']
+    front_num_attacks = 2
+    front_hit = 'one'
+    back_attack_type = 'magical'
+    back_elements = ['physical']
+    back_num_attacks = 1
+    back_hit = 'all'
 
 class DollMaster(Character):
     base_hp = 78
@@ -432,10 +536,14 @@ class DollMaster(Character):
         'lightning': 29
         }
 
-    attacking_elements = ['physical']
-    num_attacks = 2
-    hit = 'all'
-    attack_type = 'magical'
+    front_attack_type = 'melee'
+    front_elements = ['physical']
+    front_num_attacks = 2
+    front_hit = 'one'
+    back_attack_type = 'magical'
+    back_elements = ['physical']
+    back_num_attacks = 2
+    back_hit = 'all'
 
 class Vampyre(Character):
     base_hp = 45
@@ -461,10 +569,14 @@ class Vampyre(Character):
         }
     #all resistances go to 100 in the daytime, but magic attacks should choose fire
 
-    attacking_elements = ['black']
-    num_attacks = 2
-    hit = 'one'
-    attack_type = 'melee' #TODO special attacks, needs to be added
+    front_attack_type = 'lifesuck'
+    front_elements = ['black']
+    front_num_attacks = 2
+    front_hit = 'one'
+    back_attack_type = 'charm'
+    back_elements = ['black']
+    back_num_attacks = 2
+    back_hit = 'one'
 
 class Werewolf(Character):
     base_hp = 79
@@ -489,10 +601,14 @@ class Werewolf(Character):
         'lightning': 78
         }
 
-    attacking_elements = ['physical']
-    num_attacks = 3
-    hit = 'one'
-    attack_type = 'melee'
+    front_attack_type = 'melee'
+    front_elements = ['physical']
+    front_num_attacks = 3
+    front_hit = 'one'
+    back_attack_type = 'melee'
+    back_elements = ['physical']
+    back_num_attacks = 3
+    back_hit = 'one'
 
 class Tigerman(Character):
     base_hp = 77
@@ -517,10 +633,14 @@ class Tigerman(Character):
         'lightning': 75
         }
 
-    attacking_elements = ['physical']
-    num_attacks = 2
-    hit = 'one'
-    attack_type = 'melee'
+    front_attack_type = 'melee'
+    front_elements = ['physical']
+    front_num_attacks = 2
+    front_hit = 'one'
+    back_attack_type = 'melee'
+    back_elements = ['physical']
+    back_num_attacks = 2
+    back_hit = 'one'
 
 class Ravenman(Character):
     base_hp = 95
@@ -545,38 +665,14 @@ class Ravenman(Character):
         'lightning': 47
         }
 
-    attacking_elements = ['physical']
-    num_attacks = 2
-    hit = 'one'
-    attack_type = 'melee'
-
-class Lich(Character):
-    base_hp = 88
-    base_strength = 35
-    base_agility = 46
-    base_intelligence = 59
-    base_cost = 1900
-    base_luck = 42
-    image = "lich.gif"
-    growth_hp = 2
-    growth_strength = 1
-    growth_agility = 2
-    growth_intelligence = 4
-    growth_cost = 250
-
-    resistances = {
-        'physical': 100,
-        'black': 100,
-        'white': 10,
-        'fire': 100,
-        'cold': 100,
-        'lightning': 68
-        }
-
-    attacking_elements = ['physical','black','cold','fire','lightning']
-    num_attacks = 3
-    hit = 'all'
-    attack_type = 'magical'
+    front_attack_type = 'melee'
+    front_elements = ['physical']
+    front_num_attacks = 2
+    front_hit = 'one'
+    back_attack_type = 'magical'
+    back_elements = ['fire']
+    back_num_attacks = 1
+    back_hit = 'one'
 
 class Dragoner(Character):
     base_hp = 83
@@ -601,10 +697,14 @@ class Dragoner(Character):
         'lightning': 40
         }
 
-    attacking_elements = ['physical']
-    num_attacks = 2
-    hit = 'one'
-    attack_type = 'melee'
+    front_attack_type = 'melee'
+    front_elements = ['physical']
+    front_num_attacks = 2
+    front_hit = 'one'
+    back_attack_type = 'melee'
+    back_elements = ['physical']
+    back_num_attacks = 2
+    back_hit = 'one'
 
 class DragonMaster(Character):
     base_hp = 85
@@ -629,7 +729,11 @@ class DragonMaster(Character):
         'lightning': 47
         }
 
-    attacking_elements = ['physical']
-    num_attacks = 2
-    hit = 'one'
-    attack_type = 'melee'
+    front_attack_type = 'melee'
+    front_elements = ['physical']
+    front_num_attacks = 2
+    front_hit = 'one'
+    back_attack_type = 'magical'
+    back_elements = ['cold']
+    back_num_attacks = 2
+    back_hit = 'one'
