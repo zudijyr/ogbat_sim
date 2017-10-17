@@ -76,9 +76,10 @@ def does_it_hit(attacker, defender, terrain):
     elif (target_difference > 32):
         return True
 
-def choose_element(attacker, defender):
+def choose_element(attacker, targets):
     low_score = 101
     lowest = 'element'
+    defender = targets[0] #targets should be sorted by tactics priority
     for element in attacker.attacking_elements:
         if defender.resistances[element] < low_score:
             lowest = element
@@ -135,8 +136,8 @@ def choose_target(attacker, defending_unit):
     possible_targets = []
     target = []
     if attacker.hit == 'all':
-        return defending_unit.characters #hit all
-    if attacker.attack_type == 'magical': #TODO ianuki
+        return defending_unit.characters #hit all TODO sort by tactic
+    if attacker.attack_type in('magical','iainuki'):
         possible_targets = defending_unit.characters
     else:
         for char in defending_unit.characters:
@@ -181,12 +182,11 @@ def draw_attack_recs(attacker,defender):
     target_rec.setWidth(5)
     target_rec.draw(win)
 
-def attack(attacker, defender, terrain):
+def attack(attacker, defender, terrain, attack_element):
     global blue_damage,red_damage
     draw_attack_recs(attacker,defender)
     hit = does_it_hit(attacker, defender, terrain)
     if (hit):
-        attack_element = choose_element(attacker, defender)
         dam = damage(attacker,defender,attack_element,'weak','weak',terrain)
         dam_output = "{0} hits {1} with {2} for {3}".format(attacker.name,defender.name,attack_element,dam)
         print(dam_output)
@@ -215,18 +215,19 @@ def set_hp_text(all_chars):
         char.hptext.setText(char.hp)
 
 def combat_round(all_chars,unit1,unit2,terrain):
-    for x in all_chars:
-        if x.is_alive == False or x.num_attacks_remaining == 0:
+    for attacker in all_chars:
+        if attacker.is_alive == False or attacker.num_attacks_remaining == 0:
             pass
         else:
             win.getMouse()
-            x.num_attacks_remaining -= 1
-            if x.side == "blue":
-                target = choose_target(x,unit2)
+            attacker.num_attacks_remaining -= 1
+            if attacker.side == "blue":
+                targets = choose_target(attacker,unit2)
             else:
-                target = choose_target(x,unit1)
-            for char in target:
-                attack(x, char, terrain)
+                targets = choose_target(attacker,unit1)
+            attack_element = choose_element(attacker, targets)
+            for char in targets:
+                attack(attacker, char, terrain, attack_element)
                 set_hp_text(all_chars)
 
 def turn_order(all_chars, terrain):
