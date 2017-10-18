@@ -16,15 +16,42 @@ target_rec = Rectangle(Point(0,0),Point(1,1))
 
 def calc_movement_bonus(unit, terrain):
     #not sure these numbers are accurate, they are from the ogrebattlesaga wiki
-    #TODO fill them all out
     high_sky_moves = {'wall':5,'city':5,'snow road':7,'sky':7,'desert':6,'road':7,
-            'volcano':5,'cliff':5,'dark mountain':5,'snow mountain':6,'swamp': 7,
+            'volcano':5,'cliff':5,'dark mountain':5,'snow mountain':6,'swamp':7,
             'mountain':6,'snow forest':7,'barrens':7,'snow plains':7,'forest':7,
             'reef':6,'plains':7,'shallows':6,'deep sea':6}
     plains_moves = {'wall':0,'city':6,'snow road':5,'sky':0,'desert':3,'road':6,
             'volcano':1,'cliff':1,'dark mountain':2,'snow mountain':1,'swamp':1,
             'mountain':2,'snow forest':3,'barrens':3,'snow plains':4,'forest':4,
             'reef':1,'plains':5,'shallows':1,'deep sea':1}
+    forest_moves = {'wall':0,'city':5,'snow road':5,'sky':0,'desert':2,'road':6,
+            'volcano':2,'cliff':1,'dark mountain':2,'snow mountain':2,'swamp':3,
+            'mountain':3,'snow forest':5,'barrens':5,'snow plains':3,'forest':6,
+            'reef':1,'plains':4,'shallows':1,'deep sea':1}
+    mountain_moves = {'wall':0,'city':4,'snow road':5,'sky':0,'desert':3,'road':6,
+            'volcano':5,'cliff':3,'dark mountain':4,'snow mountain':4,'swamp':1,
+            'mountain':5,'snow forest':3,'barrens':5,'snow plains':3,'forest':5,
+            'reef':1,'plains':3,'shallows':1,'deep sea':1}
+    snow_plains_moves = {'wall':0,'city':4,'snow road':7,'sky':0,'desert':1,'road':6,
+            'volcano':1,'cliff':1,'dark mountain':5,'snow mountain':5,'swamp':2,
+            'mountain':3,'snow forest':5,'barrens':4,'snow plains':6,'forest':5,
+            'reef':1,'plains':4,'shallows':1,'deep sea':1}
+    swamp_moves = {'wall':0,'city':3,'snow road':3,'sky':0,'desert':1,'road':4,
+            'volcano':1,'cliff':1,'dark mountain':1,'snow mountain':1,'swamp':6,
+            'mountain':1,'snow forest':2,'barrens':2,'snow plains':3,'forest':3,
+            'reef':6,'plains':4,'shallows':4,'deep sea':3}
+    shallows_moves = {'wall':0,'city':3,'snow road':2,'sky':0,'desert':1,'road':3,
+            'volcano':1,'cliff':1,'dark mountain':1,'snow mountain':1,'swamp':2,
+            'mountain':1,'snow forest':1,'barrens':1,'snow plains':1,'forest':1,
+            'reef':4,'plains':3,'shallows':7,'deep sea':5}
+    deep_sea_moves = {'wall':0,'city':3,'snow road':1,'sky':0,'desert':1,'road':2,
+            'volcano':1,'cliff':1,'dark mountain':1,'snow mountain':1,'swamp':2,
+            'mountain':1,'snow forest':1,'barrens':1,'snow plains':1,'forest':1,
+            'reef':3,'plains':2,'shallows':5,'deep sea':7}
+    slow_moves = {'wall':0,'city':3,'snow road':1,'sky':0,'desert':1,'road':2,
+            'volcano':1,'cliff':1,'dark mountain':1,'snow mountain':1,'swamp':1,
+            'mountain':1,'snow forest':1,'barrens':1,'snow plains':1,'forest':1,
+            'reef':1,'plains':1,'shallows':1,'deep sea':1}
     if unit.movement == 'high sky':
         return high_sky_moves[terrain]
     elif unit.movement == 'low sky':
@@ -33,16 +60,21 @@ def calc_movement_bonus(unit, terrain):
         return (high_sky_moves[terrain] - 1)
     elif unit.movement == 'plains':
         return plains_moves[terrain]
-    elif unit.movement == terrain:
-        return 6
-    #deep_sea_moves = {'wall':,'city':,'snow road':,'sky':,'desert':,'road':,
-    #        'volcano':,'cliff':,'dark mountain':,'snow mountain':,'swamp': ,
-    #        'mountain':,'snow forest':,'barrens':,'snow plains':,'forest':,
-    #        'reef':,'plains':,'shallows':,'deep sea':}
-    elif terrain == 'deep_sea' and unit.movement != 'deep_sea':
-        return 1
-    else:
-        return 2
+    elif unit.movement == 'forest':
+        return forest_moves[terrain]
+    elif unit.movement == 'mountain':
+        return mountain_moves[terrain]
+    elif unit.movement == 'snow plains':
+        return snow_plains_moves[terrain]
+    elif unit.movement == 'swamp':
+        return swamp_moves[terrain]
+    elif unit.movement == 'shallows':
+        return shallows_moves[terrain]
+    elif unit.movement == 'deep sea':
+        return deep_sea_moves[terrain]
+    elif unit.movement == 'slow':
+        return slow_moves[terrain]
+    #error if no matching movement type
 
 def does_it_hit(attacker, defender, terrain):
     attack_type = attacker.attack_type
@@ -243,31 +275,38 @@ def battle():
     top_left = Point(int(win.width/7), int(win.height/3))
     bottom_right = Point(int(3*win.width/7), int(2*win.height/3))
     unit1_charlist = []
-    char1_1 = Knight("knight 1_1",5,"blue",bottom_right,"front",0)
+    level = 15
+    char1_1 = Fighter("fighter 1_1",level*4,"blue",bottom_right,"front",0)
     unit1_charlist.append(char1_1)
-    char1_2 = Ravenman("ravenman 1_2",1,"blue",bottom_right,"front",1.5)
+    print(char1_1.cost)
+    char1_2 = Ravenman("ravenman 1_2",level,"blue",bottom_right,"front",1.5)
     unit1_charlist.append(char1_2)
-    char1_3 = Lich("lich 1_3",3,"blue",bottom_right,"back",0)
+    #char1_3 = Lich("lich 1_3",level,"blue",bottom_right,"back",0)
+    #unit1_charlist.append(char1_3)
+    #char1_3 = DollMaster("dollmaster 1_3",level,"blue",bottom_right,"back",0)
+    #unit1_charlist.append(char1_3)
+    char1_3 = Sorcerer("sorcerer 1_3",level,"blue",bottom_right,"back",0)
     unit1_charlist.append(char1_3)
-    char1_4 = Tigerman("tigerman 1_4",5,"blue",bottom_right,"back",1)
+    char1_4 = Tigerman("tigerman 1_4",level,"blue",bottom_right,"back",1)
     unit1_charlist.append(char1_4)
-    char1_5 = BeastTamer("beast tamer 1_5",5,"blue",bottom_right,"back",2)
+    char1_5 = BeastTamer("beast tamer 1_5",level,"blue",bottom_right,"back",2)
     unit1_charlist.append(char1_5)
 
     unit2_charlist = []
-    char2_1 = EvilOne("evil one 2_1",1,"red",top_left,"front",0)
+    char2_1 = EvilOne("evil one 2_1",level,"red",top_left,"front",0)
     unit2_charlist.append(char2_1)
-    char2_2 = WildMan("wild man 2_2",1,"red",top_left,"front",2)
+    char2_2 = WildMan("wild man 2_2",level,"red",top_left,"front",2)
     unit2_charlist.append(char2_2)
     #char2_3 = Samurai("samurai 2_3",5,"red",top_left,"back",0)
     #unit2_charlist.append(char2_3)
     #char2_4 = SamuraiMaster("samurai master 2_4",5,"red",top_left,"back",1)
     #unit2_charlist.append(char2_4)
-    char2_3 = Sylph("sylph 2_3",5,"red",top_left,"back",0)
+    char2_3 = Sylph("sylph 2_3",level,"red",top_left,"back",0)
     unit2_charlist.append(char2_3)
-    char2_4 = Sylph("sylph 2_4",5,"red",top_left,"back",1)
+    print(char2_3.cost)
+    char2_4 = Sylph("sylph 2_4",level,"red",top_left,"back",1)
     unit2_charlist.append(char2_4)
-    char2_5 = Werewolf("werewolf 2_5",5,"red",top_left,"back",2)
+    char2_5 = Werewolf("werewolf 2_5",level,"red",top_left,"back",2)
     unit2_charlist.append(char2_5)
 
     unit1 = Unit("blue",unit1_charlist)
