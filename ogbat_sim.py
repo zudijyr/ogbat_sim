@@ -6,6 +6,7 @@ from graphics import *
 from classes.unit import Unit
 from classes.fighter_types import *
 from classes.faerie_types import *
+from classes.beast_types import *
 
 blue_damage = 0
 red_damage = 0
@@ -78,7 +79,7 @@ def calc_movement_bonus(unit, terrain):
 
 def does_it_hit(attacker, defender, terrain):
     attack_type = attacker.attack_type
-    if attack_type in ('melee','iainuki'):
+    if attack_type in ('melee','iainuki','strength'):
         attack_speed = attacker.agility
         defend_speed = defender.agility
     elif attack_type == 'magical':
@@ -134,7 +135,7 @@ def calc_tac_bonuses(attacker_tactic, defender_tactic):
 
 def damage(attacker, defender, attack_element, attacker_tactic, defender_tactic, terrain):
     attack_type = attacker.attack_type
-    if attack_type in ('melee','iainuki'):
+    if attack_type in ('melee','iainuki','strength'):#TODO
         attack_power = attacker.strength
         defend_power = defender.strength
     elif attack_type == 'magical':
@@ -275,39 +276,38 @@ def battle():
     top_left = Point(int(win.width/7), int(win.height/3))
     bottom_right = Point(int(3*win.width/7), int(2*win.height/3))
     unit1_charlist = []
-    level = 15
-    char1_1 = Fighter("fighter 1_1",level*4,"blue",bottom_right,"front",0)
+    level = 55
+    char1_1 = IronGolem("golem 1_1",level,"blue",bottom_right,"front",0)
     unit1_charlist.append(char1_1)
-    print(char1_1.cost)
-    char1_2 = Ravenman("ravenman 1_2",level,"blue",bottom_right,"front",1.5)
-    unit1_charlist.append(char1_2)
+    #char1_2 = Ravenman("ravenman 1_2",level,"blue",bottom_right,"front",1.5)
+    #unit1_charlist.append(char1_2)
     #char1_3 = Lich("lich 1_3",level,"blue",bottom_right,"back",0)
     #unit1_charlist.append(char1_3)
     #char1_3 = DollMaster("dollmaster 1_3",level,"blue",bottom_right,"back",0)
     #unit1_charlist.append(char1_3)
-    char1_3 = Sorcerer("sorcerer 1_3",level,"blue",bottom_right,"back",0)
-    unit1_charlist.append(char1_3)
-    char1_4 = Tigerman("tigerman 1_4",level,"blue",bottom_right,"back",1)
-    unit1_charlist.append(char1_4)
-    char1_5 = BeastTamer("beast tamer 1_5",level,"blue",bottom_right,"back",2)
-    unit1_charlist.append(char1_5)
+    #char1_3 = Sorcerer("sorcerer 1_3",level,"blue",bottom_right,"back",0)
+    #unit1_charlist.append(char1_3)
+    #char1_4 = Tigerman("tigerman 1_4",level,"blue",bottom_right,"back",1)
+    #unit1_charlist.append(char1_4)
+    #char1_5 = BeastTamer("beast tamer 1_5",level,"blue",bottom_right,"back",2)
+    #unit1_charlist.append(char1_5)
 
     unit2_charlist = []
-    char2_1 = EvilOne("evil one 2_1",level,"red",top_left,"front",0)
+    char2_1 = Cerberus("cerberus 2_1",level,"red",top_left,"front",0)
     unit2_charlist.append(char2_1)
-    char2_2 = WildMan("wild man 2_2",level,"red",top_left,"front",2)
-    unit2_charlist.append(char2_2)
+    #char2_2 = WildMan("wild man 2_2",level,"red",top_left,"front",2)
+    #unit2_charlist.append(char2_2)
     #char2_3 = Samurai("samurai 2_3",5,"red",top_left,"back",0)
     #unit2_charlist.append(char2_3)
     #char2_4 = SamuraiMaster("samurai master 2_4",5,"red",top_left,"back",1)
     #unit2_charlist.append(char2_4)
-    char2_3 = Sylph("sylph 2_3",level,"red",top_left,"back",0)
-    unit2_charlist.append(char2_3)
-    print(char2_3.cost)
-    char2_4 = Sylph("sylph 2_4",level,"red",top_left,"back",1)
-    unit2_charlist.append(char2_4)
-    char2_5 = Werewolf("werewolf 2_5",level,"red",top_left,"back",2)
-    unit2_charlist.append(char2_5)
+    #char2_3 = Sylph("sylph 2_3",level,"red",top_left,"back",0)
+    #unit2_charlist.append(char2_3)
+    #print(char2_3.cost)
+    #char2_4 = Sylph("sylph 2_4",level,"red",top_left,"back",1)
+    #unit2_charlist.append(char2_4)
+    #char2_5 = Werewolf("werewolf 2_5",level,"red",top_left,"back",2)
+    #unit2_charlist.append(char2_5)
 
     unit1 = Unit("blue",unit1_charlist)
     unit2 = Unit("red",unit2_charlist)

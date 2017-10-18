@@ -32,10 +32,12 @@ class Character:
     front_elements = ['physical']
     front_num_attacks = 0
     front_hit = 'one'
+    front_attack_targetable = False
     back_attack_type = 'melee'
     back_elements = ['physical']
     back_num_attacks = 0
     back_hit = 'all'
+    back_attack_targetable = False
     movement = 'plains'
     target = 'one'
     order_value = 0
@@ -64,11 +66,13 @@ class Character:
             self.attack_type = self.front_attack_type
             self.attacking_elements = self.front_elements
             self.hit = self.front_hit
+            self.targetable = self.front_attack_targetable
         if row == "back":
             self.num_attacks = self.back_num_attacks
             self.attack_type = self.back_attack_type
             self.attacking_elements = self.back_elements
             self.hit = self.back_hit
+            self.targetable = self.back_attack_targetable
         self.num_attacks_remaining = self.num_attacks
         self.location = clone_loc
         self.hptext = Text(Point(self.location.getX(),self.location.getY()+40),self.hp)
