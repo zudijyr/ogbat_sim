@@ -12,6 +12,7 @@ from classes.beast_types import *
 from classes.dragon_types import *
 from classes.angel_types import *
 from classes.imp_types import *
+from classes.pumpkin_types import *
 
 blue_damage = 0
 red_damage = 0
@@ -84,7 +85,7 @@ def calc_movement_bonus(unit, terrain):
 
 def does_it_hit(attacker, defender, terrain):
     attack_type = attacker.attack_type
-    if attack_type in ('strength','iainuki','petrify'):
+    if attack_type in ('strength','iainuki','petrify','pumpkin'):
         attack_speed = attacker.agility
         defend_speed = defender.agility
     elif attack_type == 'intelligence':
@@ -165,6 +166,8 @@ def damage(attacker, defender, attack_element, attacker_tactic, defender_tactic,
     if attack_type == 'petrify':
         defender.is_petrified = True
         print("{0} has been petrified".format(defender.name))
+    if attack_type == 'pumpkin':
+        return int(defender.hp/2)
     #TODO time,kiss
     #damage formula from Deathlike2's unit analysis gamefaq
     raw_damage = attack_power/2 + att_move_bonus*2 - time/5 + att_tac_bonus + kiss + random.randint(1,8)
@@ -301,8 +304,10 @@ def battle():
     bottom_right = Point(int(3*win.width/7), int(2*win.height/3))
     unit1_charlist = []
     level = 25
-    char1_1 = PlatinumDragon("platinum dragon 1_1",level,"blue",bottom_right,"front",0)
+    char1_1 = Halloween("halloween 1_1",level,"blue",bottom_right,"front",0)
     unit1_charlist.append(char1_1)
+    char1_5 = Halloween("halloween 1_1",level,"blue",bottom_right,"front",2)
+    unit1_charlist.append(char1_5)
     char1_2 = Devil("devil 1_1",level,"blue",bottom_right,"back",0)
     unit1_charlist.append(char1_2)
     char1_3 = Devil("devil 1_2",level,"blue",bottom_right,"back",1)
@@ -333,12 +338,12 @@ def battle():
     #unit2_charlist.append(char2_3)
     #char2_4 = SamuraiMaster("samurai master 2_4",5,"red",top_left,"back",1)
     #unit2_charlist.append(char2_4)
-    char2_3 = Sylph("sylph 2_3",level,"red",top_left,"back",0)
-    unit2_charlist.append(char2_3)
-    char2_4 = Sylph("sylph 2_4",level,"red",top_left,"back",1)
-    unit2_charlist.append(char2_4)
-    char2_5 = Sylph("sylph 2_5",level,"red",top_left,"back",2)
-    unit2_charlist.append(char2_5)
+    #char2_3 = Sylph("sylph 2_3",level,"red",top_left,"back",0)
+    #unit2_charlist.append(char2_3)
+    #char2_4 = Sylph("sylph 2_4",level,"red",top_left,"back",1)
+    #unit2_charlist.append(char2_4)
+    #char2_5 = Sylph("sylph 2_5",level,"red",top_left,"back",2)
+    #unit2_charlist.append(char2_5)
 
     unit1 = Unit("blue",unit1_charlist)
     unit2 = Unit("red",unit2_charlist)
