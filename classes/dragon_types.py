@@ -1,26 +1,26 @@
 from classes.character import Character
 
-class Gryphon(Character):
-    base_hp = 80
-    base_strength = 50
-    base_agility = 58
-    base_intelligence = 37
-    base_luck = 53
-    base_cost = 200
-    image = "gryphon.gif"
-    growth_hp = 7
-    growth_strength = 2
-    growth_agility = 4
+class Dragon(Character):
+    base_hp = 93
+    base_strength = 60
+    base_agility = 37
+    base_intelligence = 42
+    base_luck = 50
+    base_cost = 850
+    image = "dragon.gif"
+    growth_hp = 8
+    growth_strength = 4
+    growth_agility = 1
     growth_intelligence = 1
-    growth_cost = 50
+    growth_cost = 100
 
     resistances = {
-        'physical': 43,
-        'black': 55,
-        'white': 35,
-        'fire': 33,
-        'cold': 48,
-        'lightning': 53
+        'physical': 52,
+        'black': 44,
+        'white': 44,
+        'fire': 50,
+        'cold': 46,
+        'lightning': 47
         }
 
     front_attack_type = 'melee'
@@ -28,9 +28,10 @@ class Gryphon(Character):
     front_num_attacks = 2
     front_hit = 'one'
     back_attack_type = 'melee'
-    back_elements = ['physical']
-    back_num_attacks = 1
-    back_hit = 'all'
+    back_targetable = True
+    back_elements = ['fire']
+    back_num_attacks = 2
+    back_hit = 'one'
 
 class Cockatris(Character):
     base_hp = 74
