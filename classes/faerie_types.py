@@ -23,7 +23,7 @@ class Faerie(Character):
         'lightning': 28
         }
 
-    front_attack_type = 'melee'
+    front_attack_type = 'strength'
     front_elements = ['physical']
     front_num_attacks = 2
     front_hit = 'one'
@@ -55,7 +55,7 @@ class Pixie(Character):
         'lightning': 26
         }
 
-    front_attack_type = 'melee'
+    front_attack_type = 'strength'
     front_elements = ['physical']
     front_num_attacks = 2
     front_hit = 'one'
@@ -87,11 +87,11 @@ class Sylph(Character):
         'lightning': 22
         }
 
-    front_attack_type = 'melee'
+    front_attack_type = 'strength'
     front_elements = ['physical']
     front_num_attacks = 2
     front_hit = 'one'
-    back_attack_type = 'magical'
+    back_attack_type = 'intelligence'
     back_elements = ['white']
     back_num_attacks = 1
     back_hit = 'all'
