@@ -196,73 +196,74 @@ class Monk(Character):
     front_elements = ['white']
     front_num_attacks = 3
     front_hit = 'one'
-    back_attack_type = 'strength'
+    back_attack_type = 'healing'
     back_elements = ['white']
     back_num_attacks = 2
     back_hit = 'all'
 
 class Amazon(Character):
-    base_hp = 83
-    base_strength = 42
-    base_agility = 50
-    base_intelligence = 52
-    base_luck = 48
-    base_cost = 100
-    image = "amazon.gif"
-    growth_hp = 4
-    growth_strength = 2
-    growth_agility = 3
-    growth_intelligence = 2
-    growth_cost = 30
+    base_hp = 80
+    base_strength = 38
+    base_agility = 49
+    base_intelligence = 58
+    base_luck = 67
+    base_cost = 510
+    image = "witch.gif"
+    growth_hp = 3
+    growth_strength = 1
+    growth_agility = 2
+    growth_intelligence = 4
+    growth_cost = 70
     movement = 'plains'
 
     resistances = {
-        'physical': 38,
-        'black': 38,
-        'white': 42,
-        'fire': 32,
-        'cold': 36,
-        'lightning': 43
+        'physical': 25,
+        'black': 48,
+        'white': 50,
+        'fire': 30,
+        'cold': 28,
+        'lightning': 31
         }
 
     front_attack_type = 'strength'
     front_elements = ['physical']
-    front_num_attacks = 1
+    front_num_attacks = 2
     front_hit = 'one'
-    back_attack_type = 'strength'
-    back_elements = ['physical']
+    back_attack_type = 'stun'
+    back_elements = ['black']
     back_num_attacks = 2
-    back_hit = 'one'
+    back_hit = 'all'
 
-class Amazon(Character):
-    base_hp = 83
-    base_strength = 42
-    base_agility = 50
-    base_intelligence = 52
-    base_luck = 48
-    base_cost = 100
-    image = "amazon.gif"
-    growth_hp = 4
-    growth_strength = 2
-    growth_agility = 3
-    growth_intelligence = 2
-    growth_cost = 30
+class Princess(Character):
+    #TODO leader bonus
+    base_hp = 70
+    base_strength = 37
+    base_agility = 48
+    base_intelligence = 57
+    base_luck = 63
+    base_cost = 2000
+    image = "princess.gif"
+    growth_hp = 2
+    growth_strength = 1
+    growth_agility = 2
+    growth_intelligence = 4
+    growth_cost = 250
     movement = 'plains'
 
     resistances = {
-        'physical': 38,
-        'black': 38,
-        'white': 42,
-        'fire': 32,
-        'cold': 36,
-        'lightning': 43
+        'physical': 27,
+        'black': 20,
+        'white': 65,
+        'fire': 21,
+        'cold': 22,
+        'lightning': 25
         }
 
     front_attack_type = 'strength'
     front_elements = ['physical']
-    front_num_attacks = 1
+    front_num_attacks = 2
     front_hit = 'one'
-    back_attack_type = 'strength'
-    back_elements = ['physical']
-    back_num_attacks = 2
-    back_hit = 'one'
+    back_attack_type = 'intelligence'
+    back_elements = ['white']
+    back_num_attacks = 1
+    back_hit = 'all'
