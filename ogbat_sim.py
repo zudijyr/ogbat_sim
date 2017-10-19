@@ -13,6 +13,7 @@ from classes.dragon_types import *
 from classes.angel_types import *
 from classes.imp_types import *
 from classes.pumpkin_types import *
+from classes.undead_types import *
 
 blue_damage = 0
 red_damage = 0
@@ -95,6 +96,8 @@ def does_it_hit(attacker, defender, terrain):
     att_move_bonus = calc_movement_bonus(attacker,terrain)
     def_move_bonus = calc_movement_bonus(defender,terrain)
     friend_factor = 0 #TODO charm status, special attacks
+    if (defender.is_undead and attack_element != 'white' and attack_type not in ('healing','petrify','pumpkin'):
+        return False
 
     #hit formula from Deathlike2's unit mechanics gamefaq
     hit_success = attack_speed + attacker.luck/2 + att_move_bonus + random.randint(0,7)
@@ -246,7 +249,7 @@ def draw_attack_recs(attacker,defender):
 def attack(attacker, defender, terrain, attack_element):
     global blue_damage,red_damage
     draw_attack_recs(attacker,defender)
-    hit = does_it_hit(attacker, defender, terrain)
+    hit = does_it_hit(attacker, defender, terrain, attack_element)
     if (hit):
         dam = damage(attacker,defender,attack_element,'weak','weak',terrain)
         dam_output = "{0} hits {1} with {2} for {3}".format(attacker.name,defender.name,attack_element,dam)
@@ -260,6 +263,7 @@ def attack(attacker, defender, terrain, attack_element):
         if defender.hp <= 0:
             defender.hp = 0
             defender.is_alive = False
+            #this will look weird when killing undead but should work
     else:
         output = "{0} misses {1}".format(attacker.name,defender.name)
         print(output)

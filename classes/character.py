@@ -18,6 +18,8 @@ class Character:
     growth_agility = 1
     growth_intelligence = 1
     growth_cost = 10
+    movement = 'plains'
+    is_undead = False
 
     resistances = {
         'physical': 50,
@@ -38,7 +40,6 @@ class Character:
     back_num_attacks = 0
     back_hit = 'all'
     back_attack_targetable = False
-    movement = 'plains'
     target = 'one'
     order_value = 0
     hptext = Text(Point(0,0),"")
