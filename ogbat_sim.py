@@ -5,8 +5,11 @@ import random
 from graphics import *
 from classes.unit import Unit
 from classes.fighter_types import *
+from classes.amazon_types import *
 from classes.faerie_types import *
+from classes.hawkmen_types import *
 from classes.beast_types import *
+from classes.dragon_types import *
 
 blue_damage = 0
 red_damage = 0
