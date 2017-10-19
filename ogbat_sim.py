@@ -10,6 +10,8 @@ from classes.faerie_types import *
 from classes.hawkmen_types import *
 from classes.beast_types import *
 from classes.dragon_types import *
+from classes.angel_types import *
+from classes.imp_types import *
 
 blue_damage = 0
 red_damage = 0
@@ -299,13 +301,13 @@ def battle():
     bottom_right = Point(int(3*win.width/7), int(2*win.height/3))
     unit1_charlist = []
     level = 25
-    #char1_1 = PlatinumDragon("platinum dragon 1_1",level,"blue",bottom_right,"front",0)
-    #unit1_charlist.append(char1_1)
-    char1_2 = Titan("titan 1_1",level,"blue",bottom_right,"back",0)
+    char1_1 = PlatinumDragon("platinum dragon 1_1",level,"blue",bottom_right,"front",0)
+    unit1_charlist.append(char1_1)
+    char1_2 = Devil("devil 1_1",level,"blue",bottom_right,"back",0)
     unit1_charlist.append(char1_2)
-    char1_3 = Muse("muse 1_2",level,"blue",bottom_right,"back",1)
+    char1_3 = Devil("devil 1_2",level,"blue",bottom_right,"back",1)
     unit1_charlist.append(char1_3)
-    char1_4 = Titan("titan 1_3",level,"blue",bottom_right,"back",2)
+    char1_4 = Devil("devil 1_3",level,"blue",bottom_right,"back",2)
     unit1_charlist.append(char1_4)
     #char1_3 = Salamand("salamand 1_1",level,"blue",bottom_right,"back",2)
     #unit1_charlist.append(char1_3)
