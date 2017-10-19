@@ -60,6 +60,7 @@ class Cockatris(Character):
     front_num_attacks = 2
     front_hit = 'one'
     back_attack_type = 'petrify'
+    back_attack_targetable = True
     back_elements = ['physical']
     back_num_attacks = 1
     back_hit = 'all'
@@ -222,6 +223,7 @@ class IceGiant(Character):
     front_hit = 'one'
     back_attack_type = 'strength'
     back_elements = ['cold']
+    back_attack_targetable = True
     back_num_attacks = 2
     back_hit = 'one'
 
@@ -254,6 +256,7 @@ class FireGiant(Character):
     front_hit = 'one'
     back_attack_type = 'strength'
     back_elements = ['fire']
+    back_attack_targetable = True
     back_num_attacks = 2
     back_hit = 'one'
 

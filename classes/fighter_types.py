@@ -93,6 +93,7 @@ class Paladin(Character):
     front_num_attacks = 3
     front_hit = 'one'
     back_attack_type = 'healing'
+    back_attack_targetable = True
     back_elements = ['white']
     back_num_attacks = 1
     back_hit = 'one'
@@ -189,6 +190,7 @@ class Samurai(Character):
     front_num_attacks = 2
     front_hit = 'one'
     back_attack_type = 'iainuki'
+    back_attack_targetable = True
     back_elements = ['physical']
     back_num_attacks = 1
     back_hit = 'one'
@@ -221,6 +223,7 @@ class SamuraiMaster(Character):
     front_num_attacks = 3
     front_hit = 'one'
     back_attack_type = 'iainuki'
+    back_attack_targetable = True
     back_elements = ['physical']
     back_num_attacks = 1
     back_hit = 'one'
@@ -575,6 +578,7 @@ class Vampyre(Character):
     front_num_attacks = 2
     front_hit = 'one'
     back_attack_type = 'charm'
+    back_attack_targetable = True
     back_elements = ['black']
     back_num_attacks = 2
     back_hit = 'one'
@@ -670,7 +674,8 @@ class Ravenman(Character):
     front_elements = ['physical']
     front_num_attacks = 2
     front_hit = 'one'
-    back_attack_type = 'intelligence'
+    back_attack_type = 'strength'
+    back_attack_targetable = True
     back_elements = ['fire']
     back_num_attacks = 1
     back_hit = 'one'

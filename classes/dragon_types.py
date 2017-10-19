@@ -28,7 +28,7 @@ class Dragon(Character):
     front_num_attacks = 2
     front_hit = 'one'
     back_attack_type = 'strength'
-    back_targeted = True
+    back_attack_targetable = True
     back_elements = ['fire']
     back_num_attacks = 2
     back_hit = 'one'
@@ -62,7 +62,7 @@ class SilverDragon(Character):
     front_hit = 'one'
     back_attack_type = 'strength'
     back_elements = ['cold']
-    back_targetable = True
+    back_attack_targetable = True
     back_num_attacks = 2
     back_hit = 'one'
 
@@ -95,7 +95,7 @@ class GoldDragon(Character):
     front_num_attacks = 2
     front_hit = 'one'
     back_attack_type = 'strength'
-    back_targetable = True
+    back_attack_targetable = True
     back_elements = ['cold']
     back_num_attacks = 2
     back_hit = 'one'
@@ -128,7 +128,7 @@ class PlatinumDragon(Character):
     front_elements = ['physical']
     front_num_attacks = 2
     front_hit = 'one'
-    front_targetable = True
+    front_attack_targetable = True
     back_attack_type = 'strength'
     back_elements = ['cold']
     back_num_attacks = 2
@@ -165,7 +165,7 @@ class RedDragon(Character):
     back_attack_type = 'strength'
     back_elements = ['fire']
     back_num_attacks = 2
-    back_targetable = True
+    back_attack_targetable = True
     back_hit = 'one'
 
 class RedDragonII(Character):
@@ -199,7 +199,7 @@ class RedDragonII(Character):
     back_attack_type = 'strength'
     back_elements = ['fire']
     back_num_attacks = 2
-    back_targetable = True
+    back_attack_targetable = True
     back_hit = 'one'
 
 class Salamand(Character):
@@ -230,7 +230,7 @@ class Salamand(Character):
     front_elements = ['fire']
     front_num_attacks = 2
     front_hit = 'one'
-    front_targetable = True
+    front_attack_targetable = True
     back_attack_type = 'intelligence'
     back_elements = ['fire']
     back_num_attacks = 1
@@ -266,7 +266,7 @@ class BlackDragon(Character):
     front_hit = 'one'
     back_attack_type = 'strength'
     back_elements = ['physical']
-    back_targetable = True
+    back_attack_targetable = True
     back_num_attacks = 2
     back_hit = 'one'
 
@@ -295,7 +295,7 @@ class Tiamat(Character):
         }
 
     front_attack_type = 'strength'
-    front_targetable = True
+    front_attack_targetable = True
     front_elements = ['physical']
     front_num_attacks = 2
     front_hit = 'one'
@@ -329,12 +329,12 @@ class ZombieDragon(Character):
         }
 
     front_attack_type = 'strength'
-    front_targetable = True
+    front_attack_targetable = True
     front_elements = ['physical']
     front_num_attacks = 2
     front_hit = 'one'
     back_attack_type = 'strength'
-    back_targetable = True
+    back_attack_targetable = True
     back_elements = ['black']
     back_num_attacks = 2
     back_hit = 'one'
