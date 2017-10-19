@@ -74,7 +74,7 @@ class Muse(Character):
     base_intelligence = 56
     base_luck = 64
     base_cost = 1350
-    image = "muse.gif"
+    image = "amazon.gif" #TODO
     growth_hp = 4
     growth_strength = 3
     growth_agility = 3

@@ -235,8 +235,8 @@ class Salamand(Character):
     front_attack_targetable = True
     back_attack_type = 'intelligence'
     back_elements = ['fire']
-    back_num_attacks = 1
-    back_hit = 'one'
+    back_num_attacks = 2
+    back_hit = 'all'
 
 class BlackDragon(Character):
     base_hp = 97
