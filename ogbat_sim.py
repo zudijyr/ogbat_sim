@@ -96,8 +96,10 @@ def does_it_hit(attacker, defender, terrain):
     att_move_bonus = calc_movement_bonus(attacker,terrain)
     def_move_bonus = calc_movement_bonus(defender,terrain)
     friend_factor = 0 #TODO charm status, special attacks
-    if (defender.is_undead and attack_element != 'white' and attack_type not in ('healing','petrify','pumpkin'):
+    if (defender.is_undead and attack_element != 'white' and attack_type not in ('healing','petrify','pumpkin')):
         return False
+        if (attack_type == 'healing' and attacker.side == defender.side):
+            return True
 
     #hit formula from Deathlike2's unit mechanics gamefaq
     hit_success = attack_speed + attacker.luck/2 + att_move_bonus + random.randint(0,7)
@@ -156,7 +158,7 @@ def stun_recovery(attacker, defender):
     if defender.is_stunned == False:
         return False
     time = 0
-    stun_recov = defender.strength defender.luck/2 + time + random.randint(3,10):
+    stun_recov = defender.strength + defender.luck/2 + time + random.randint(3,10)
     threshold = random.randint(0,9)
     if (threshold <= -48 ):
         return (rand_hit_num < 1)
@@ -177,6 +179,9 @@ def damage(attacker, defender, attack_element, attacker_tactic, defender_tactic,
     elif attack_type == 'intelligence':
         attack_power = attacker.intelligence
         defend_power = defender.intelligence
+    elif attack_type == 'healing':
+        print("{0} heals {1} for 30".format(attacker.name,defender.name))
+        return -30 #TODO actual healing calculation 
 
     att_tac_bonus,def_tac_bonus = calc_tac_bonuses(attacker_tactic, defender_tactic)
     att_move_bonus = calc_movement_bonus(attacker,terrain)
@@ -215,30 +220,34 @@ def damage(attacker, defender, attack_element, attacker_tactic, defender_tactic,
         print("{0} wakes up".format(defender.name))
     return int(damage)
 
-def choose_target(attacker, defending_unit):
+def choose_target(attacker, defending_unit, attacking_unit):
     #TODO include tactic
     lowest = 9999
     possible_targets = []
     target = []
+    if attacker.attack_type == 'healing': #TODO charmed attacks
+        target_unit = attacking_unit
+    else:
+        target_unit = defending_unit
     if attacker.hit == 'all':
-        for char in defending_unit.characters:
+        for char in target_unit.characters:
             if char.is_alive:
                 target.append(char)
         return target #hit all TODO sort by tactic
 
-    elif (attacker.attack_type in('intelligence','iainuki')) or attacker.targetable:
-        for char in defending_unit.characters:
+    elif (attacker.attack_type in('intelligence','iainuki','healing')) or attacker.targetable:
+        for char in target_unit.characters:
             if char.is_alive:
                 possible_targets.append(char)
     else:
-        for char in defending_unit.characters:
+        for char in target_unit.characters:
             if char.is_alive and char.row == 'front':
                 possible_targets.append(char) #can target anything alive in front row
         if len(possible_targets) == 0:
-            possible_targets = defending_unit.characters #if no front row alive, target anything left
+            possible_targets = target_unit.characters #if no front row alive, target anything left
         elif len(possible_targets) == 1:
             alive_char = possible_targets[0]
-            for char in defending_unit.characters:
+            for char in target_unit.characters:
                 target_diff = abs(char.position - attacker.position)
                 front_row_diff = abs(alive_char.position - attacker.position)
                 if char.is_alive and target_diff < 1 and front_row_diff > 1:
@@ -314,9 +323,9 @@ def combat_round(all_chars,unit1,unit2,terrain):
             win.getMouse()
             attacker.num_attacks_remaining -= 1
             if attacker.side == "blue":
-                targets = choose_target(attacker,unit2)
+                targets = choose_target(attacker,unit2, unit1)
             else:
-                targets = choose_target(attacker,unit1)
+                targets = choose_target(attacker,unit1, unit2)
             attack_element = choose_element(attacker, targets)
             for char in targets:
                 attack(attacker, char, terrain, attack_element)
