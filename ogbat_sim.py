@@ -36,7 +36,7 @@ def calc_movement_bonus(unit, terrain):
             'volcano':5,'cliff':3,'dark mountain':4,'snow mountain':4,'swamp':1,
             'mountain':5,'snow forest':3,'barrens':5,'snow plains':3,'forest':5,
             'reef':1,'plains':3,'shallows':1,'deep sea':1}
-    snow_plains_moves = {'wall':0,'city':4,'snow road':7,'sky':0,'desert':1,'road':6,
+    snow_moves = {'wall':0,'city':4,'snow road':7,'sky':0,'desert':1,'road':6,
             'volcano':1,'cliff':1,'dark mountain':5,'snow mountain':5,'swamp':2,
             'mountain':3,'snow forest':5,'barrens':4,'snow plains':6,'forest':5,
             'reef':1,'plains':4,'shallows':1,'deep sea':1}
@@ -68,10 +68,10 @@ def calc_movement_bonus(unit, terrain):
         return forest_moves[terrain]
     elif unit.movement == 'mountain':
         return mountain_moves[terrain]
-    elif unit.movement == 'snow plains':
-        return snow_plains_moves[terrain]
+    elif unit.movement == 'snow':
+        return snow_moves[terrain]
     elif unit.movement == 'marsh':
-        return swamp_moves[terrain]
+        return marsh_moves[terrain]
     elif unit.movement == 'shallows':
         return shallows_moves[terrain]
     elif unit.movement == 'deep sea':
@@ -280,7 +280,7 @@ def battle():
     bottom_right = Point(int(3*win.width/7), int(2*win.height/3))
     unit1_charlist = []
     level = 55
-    char1_1 = IronGolem("golem 1_1",level,"blue",bottom_right,"front",0)
+    char1_1 = PlatinumDragon("platinum dragon 1_1",level,"blue",bottom_right,"front",0)
     unit1_charlist.append(char1_1)
     #char1_2 = Ravenman("ravenman 1_2",level,"blue",bottom_right,"front",1.5)
     #unit1_charlist.append(char1_2)
@@ -296,7 +296,7 @@ def battle():
     #unit1_charlist.append(char1_5)
 
     unit2_charlist = []
-    char2_1 = Cerberus("cerberus 2_1",level,"red",top_left,"front",0)
+    char2_1 = ZombieDragon("zombie dragon 2_1",level,"red",top_left,"front",0)
     unit2_charlist.append(char2_1)
     #char2_2 = WildMan("wild man 2_2",level,"red",top_left,"front",2)
     #unit2_charlist.append(char2_2)

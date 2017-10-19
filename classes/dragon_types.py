@@ -13,6 +13,7 @@ class Dragon(Character):
     growth_agility = 1
     growth_intelligence = 1
     growth_cost = 100
+    movement = 'plains'
 
     resistances = {
         'physical': 52,
@@ -46,6 +47,7 @@ class SilverDragon(Character):
     growth_agility = 2
     growth_intelligence = 2
     growth_cost = 160
+    movement = 'snow'
 
     resistances = {
         'physical': 53,
