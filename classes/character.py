@@ -46,6 +46,7 @@ class Character:
     #same attack type regardless of row
     is_alive = True
     is_petrified = False
+    is_stunned = False
     def __init__(self, name, level, side, location, row, position):
         self.name = name
         self.level = level

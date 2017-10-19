@@ -152,6 +152,23 @@ def calc_tac_bonuses(attacker_tactic, defender_tactic):
         def_tac_bonus += 4
     return att_tac_bonus,def_tac_bonus
 
+def stun_recovery(attacker, defender):
+    if defender.is_stunned == False:
+        return False
+    time = 0
+    stun_recov = defender.strength defender.luck/2 + time + random.randint(3,10):
+    threshold = random.randint(0,9)
+    if (threshold <= -48 ):
+        return (rand_hit_num < 1)
+    elif (threshold >= -47 and target_difference <= -32):
+        return (rand_hit_num < 2)
+    elif (threshold >= -31 and target_difference <= 0):
+        return (rand_hit_num < 3)
+    elif (threshold >= 1 and target_difference <= 48):
+        return (rand_hit_num < 4)
+    elif (threshold >= 49):
+        return (rand_hit_num < 5)
+
 def damage(attacker, defender, attack_element, attacker_tactic, defender_tactic, terrain):
     attack_type = attacker.attack_type
     if attack_type in ('strength','iainuki','petrify'):
@@ -170,7 +187,14 @@ def damage(attacker, defender, attack_element, attacker_tactic, defender_tactic,
         defender.is_petrified = True
         print("{0} has been petrified".format(defender.name))
     if attack_type == 'pumpkin':
+        if stun_recovery(attacker,defender):
+            defender.is_stunned = False
+            print("{0} wakes up".format(defender.name))
         return int(defender.hp/2)
+    if attack_type == 'stun':
+        defender.is_stunned = True
+        print("{0} has been stunned".format(defender.name))
+        return 0
     #TODO time,kiss
     #damage formula from Deathlike2's unit analysis gamefaq
     raw_damage = attack_power/2 + att_move_bonus*2 - time/5 + att_tac_bonus + kiss + random.randint(1,8)
@@ -186,6 +210,9 @@ def damage(attacker, defender, attack_element, attacker_tactic, defender_tactic,
     absorption = ((defend_power/2 + def_move_bonus*2 - time/5 + kiss + random.randint(3,10)) * resistance/100) + def_tac_bonus
     damage = max(raw_damage - absorption,1) #TODO quake
     damage = min(damage,defender.hp)
+    if stun_recovery(attacker,defender):
+        defender.is_stunned = False
+        print("{0} wakes up".format(defender.name))
     return int(damage)
 
 def choose_target(attacker, defending_unit):
@@ -281,7 +308,7 @@ def set_hp_text(all_chars):
 
 def combat_round(all_chars,unit1,unit2,terrain):
     for attacker in all_chars:
-        if attacker.is_alive == False or attacker.num_attacks_remaining == 0 or attacker.is_petrified:
+        if attacker.is_alive == False or attacker.num_attacks_remaining == 0 or attacker.is_petrified or attacker.is_stunned:
             pass
         else:
             win.getMouse()
