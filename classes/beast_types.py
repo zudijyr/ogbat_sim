@@ -62,8 +62,8 @@ class Cockatris(Character):
     back_attack_type = 'petrify'
     back_attack_targetable = True
     back_elements = ['physical']
-    back_num_attacks = 1
-    back_hit = 'all'
+    back_num_attacks = 2
+    back_hit = 'one'
 
 class Wyrm(Character):
     base_hp = 92

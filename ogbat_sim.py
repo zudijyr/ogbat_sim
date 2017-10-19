@@ -82,7 +82,7 @@ def calc_movement_bonus(unit, terrain):
 
 def does_it_hit(attacker, defender, terrain):
     attack_type = attacker.attack_type
-    if attack_type in ('strength','iainuki'):
+    if attack_type in ('strength','iainuki','petrify'):
         attack_speed = attacker.agility
         defend_speed = defender.agility
     elif attack_type == 'intelligence':
@@ -98,6 +98,16 @@ def does_it_hit(attacker, defender, terrain):
     evasion_success = defend_speed + defender.luck/2 + def_move_bonus + friend_factor + random.randint(0,7)
     target_difference = hit_success - evasion_success
     rand_hit_num = random.randint(0,9)
+    if attack_type in ('pumpkin','petrify','stun','charm'):
+        hit_success = attack_speed + attacker.luck/2 + random.randint(3,10)
+        evasion_success = defend_speed + defender.luck/2 + friend_factor + random.randint(3,10)
+        target_difference = hit_success - evasion_success
+    if attack_type == 'pumpkin':
+        rand_hit_num += 1
+    if attack_type == 'petrify':
+        rand_hit_num += 3
+    if attack_type == 'stun':
+        rand_hit_num += 4
     if (target_difference <= -49 ):
         return (rand_hit_num < 4)
     elif (target_difference >= -48 and target_difference <= -33):
@@ -138,7 +148,7 @@ def calc_tac_bonuses(attacker_tactic, defender_tactic):
 
 def damage(attacker, defender, attack_element, attacker_tactic, defender_tactic, terrain):
     attack_type = attacker.attack_type
-    if attack_type in ('strength','iainuki'):
+    if attack_type in ('strength','iainuki','petrify'):
         attack_power = attacker.strength
         defend_power = defender.strength
     elif attack_type == 'intelligence':
@@ -150,6 +160,9 @@ def damage(attacker, defender, attack_element, attacker_tactic, defender_tactic,
     def_move_bonus = calc_movement_bonus(defender,terrain)
     time = 0
     kiss = 0
+    if attack_type == 'petrify':
+        defender.is_petrified = True
+        print("{0} has been petrified".format(defender.name))
     #TODO time,kiss
     #damage formula from Deathlike2's unit analysis gamefaq
     raw_damage = attack_power/2 + att_move_bonus*2 - time/5 + att_tac_bonus + kiss + random.randint(1,8)
@@ -178,7 +191,7 @@ def choose_target(attacker, defending_unit):
                 target.append(char)
         return target #hit all TODO sort by tactic
 
-    elif attacker.attack_type in('magical','iainuki'):
+    elif (attacker.attack_type in('intelligence','iainuki')) or attacker.targetable:
         for char in defending_unit.characters:
             if char.is_alive:
                 possible_targets.append(char)
@@ -259,7 +272,7 @@ def set_hp_text(all_chars):
 
 def combat_round(all_chars,unit1,unit2,terrain):
     for attacker in all_chars:
-        if attacker.is_alive == False or attacker.num_attacks_remaining == 0:
+        if attacker.is_alive == False or attacker.num_attacks_remaining == 0 or attacker.is_petrified:
             pass
         else:
             win.getMouse()
@@ -285,13 +298,17 @@ def battle():
     top_left = Point(int(win.width/7), int(win.height/3))
     bottom_right = Point(int(3*win.width/7), int(2*win.height/3))
     unit1_charlist = []
-    level = 15
-    char1_1 = PlatinumDragon("platinum dragon 1_1",level,"blue",bottom_right,"back",0)
-    unit1_charlist.append(char1_1)
-    char1_2 = Muse("muse 1_1",level,"blue",bottom_right,"back",1)
+    level = 25
+    #char1_1 = PlatinumDragon("platinum dragon 1_1",level,"blue",bottom_right,"front",0)
+    #unit1_charlist.append(char1_1)
+    char1_2 = Titan("titan 1_1",level,"blue",bottom_right,"back",0)
     unit1_charlist.append(char1_2)
-    char1_3 = Salamand("salamand 1_1",level,"blue",bottom_right,"back",2)
+    char1_3 = Muse("muse 1_2",level,"blue",bottom_right,"back",1)
     unit1_charlist.append(char1_3)
+    char1_4 = Titan("titan 1_3",level,"blue",bottom_right,"back",2)
+    unit1_charlist.append(char1_4)
+    #char1_3 = Salamand("salamand 1_1",level,"blue",bottom_right,"back",2)
+    #unit1_charlist.append(char1_3)
     #char1_2 = Ravenman("ravenman 1_2",level,"blue",bottom_right,"front",1.5)
     #unit1_charlist.append(char1_2)
     #char1_3 = Lich("lich 1_3",level,"blue",bottom_right,"back",0)

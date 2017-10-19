@@ -44,6 +44,7 @@ class Character:
     hptext = Text(Point(0,0),"")
     #same attack type regardless of row
     is_alive = True
+    is_petrified = False
     def __init__(self, name, level, side, location, row, position):
         self.name = name
         self.level = level
