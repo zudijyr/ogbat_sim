@@ -36,7 +36,7 @@ def calc_movement_bonus(unit, terrain):
             'volcano':1,'cliff':1,'dark mountain':5,'snow mountain':5,'swamp':2,
             'mountain':3,'snow forest':5,'barrens':4,'snow plains':6,'forest':5,
             'reef':1,'plains':4,'shallows':1,'deep sea':1}
-    swamp_moves = {'wall':0,'city':3,'snow road':3,'sky':0,'desert':1,'road':4,
+    marsh_moves = {'wall':0,'city':3,'snow road':3,'sky':0,'desert':1,'road':4,
             'volcano':1,'cliff':1,'dark mountain':1,'snow mountain':1,'swamp':6,
             'mountain':1,'snow forest':2,'barrens':2,'snow plains':3,'forest':3,
             'reef':6,'plains':4,'shallows':4,'deep sea':3}
@@ -66,7 +66,7 @@ def calc_movement_bonus(unit, terrain):
         return mountain_moves[terrain]
     elif unit.movement == 'snow plains':
         return snow_plains_moves[terrain]
-    elif unit.movement == 'swamp':
+    elif unit.movement == 'marsh':
         return swamp_moves[terrain]
     elif unit.movement == 'shallows':
         return shallows_moves[terrain]
@@ -78,10 +78,10 @@ def calc_movement_bonus(unit, terrain):
 
 def does_it_hit(attacker, defender, terrain):
     attack_type = attacker.attack_type
-    if attack_type in ('melee','iainuki'):
+    if attack_type in ('strength','iainuki'):
         attack_speed = attacker.agility
         defend_speed = defender.agility
-    elif attack_type == 'magical':
+    elif attack_type == 'intelligence':
         attack_speed = attacker.intelligence
         defend_speed = defender.intelligence
 
@@ -134,10 +134,10 @@ def calc_tac_bonuses(attacker_tactic, defender_tactic):
 
 def damage(attacker, defender, attack_element, attacker_tactic, defender_tactic, terrain):
     attack_type = attacker.attack_type
-    if attack_type in ('melee','iainuki'):
+    if attack_type in ('strength','iainuki'):
         attack_power = attacker.strength
         defend_power = defender.strength
-    elif attack_type == 'magical':
+    elif attack_type == 'intelligence':
         attack_power = attacker.intelligence
         defend_power = defender.intelligence
 
