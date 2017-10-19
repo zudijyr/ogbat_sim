@@ -13,6 +13,7 @@ class Fighter(Character):
     growth_agility = 2
     growth_intelligence = 2
     growth_cost = 20
+    movement = 'plains'
 
     resistances = {
         'physical': 44,
