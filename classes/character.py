@@ -51,7 +51,8 @@ class Character:
     def __init__(self, name, level, side, location, row, position):
         self.name = name
         self.level = level
-        self.hp = self.base_hp + (level-1)*self.growth_hp
+        self.max_hp = self.base_hp + (level-1)*self.growth_hp
+        self.hp = self.max_hp
         self.strength = self.base_strength + (level-1)*self.growth_strength
         self.agility = self.base_agility + (level-1)*self.growth_agility
         self.intelligence = self.base_intelligence + (level-1)*self.growth_intelligence

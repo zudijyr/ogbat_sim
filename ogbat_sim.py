@@ -183,6 +183,9 @@ def damage(attacker, defender, attack_element, attacker_tactic, defender_tactic,
         attack_power = attacker.intelligence
         defend_power = defender.intelligence
     elif attack_type == 'healing':
+        time_penalty = calc_time_penalty(attacker, time_of_day)
+        healing = attacker.intelligence + attacker.alignment/2 - time_penalty/4 + random.randint(0,7)/4
+        healing = -1*int(max(healing, defender.max_hp - defender.hp))
         print("{0} heals {1} for 30".format(attacker.name,defender.name))
         return -30 #TODO actual healing calculation 
 
