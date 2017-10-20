@@ -84,7 +84,7 @@ def calc_movement_bonus(unit, terrain):
         return slow_moves[terrain]
     #error if no matching movement type
 
-def does_it_hit(attacker, defender, terrain):
+def does_it_hit(attacker, defender, terrain, attack_element):
     attack_type = attacker.attack_type
     if attack_type in ('strength','iainuki','petrify','pumpkin'):
         attack_speed = attacker.agility
@@ -98,8 +98,8 @@ def does_it_hit(attacker, defender, terrain):
     friend_factor = 0 #TODO charm status, special attacks
     if (defender.is_undead and attack_element != 'white' and attack_type not in ('healing','petrify','pumpkin')):
         return False
-        if (attack_type == 'healing' and attacker.side == defender.side):
-            return True
+    if (attack_type == 'healing' and attacker.side == defender.side):
+        return True
 
     #hit formula from Deathlike2's unit mechanics gamefaq
     hit_success = attack_speed + attacker.luck/2 + att_move_bonus + random.randint(0,7)
@@ -348,12 +348,12 @@ def battle():
     unit1_charlist.append(char1_1)
     char1_5 = Halloween("halloween 1_1",level,"blue",bottom_right,"front",2)
     unit1_charlist.append(char1_5)
-    char1_2 = Devil("devil 1_1",level,"blue",bottom_right,"back",0)
-    unit1_charlist.append(char1_2)
-    char1_3 = Devil("devil 1_2",level,"blue",bottom_right,"back",1)
-    unit1_charlist.append(char1_3)
-    char1_4 = Devil("devil 1_3",level,"blue",bottom_right,"back",2)
-    unit1_charlist.append(char1_4)
+    #char1_2 = Devil("devil 1_1",level,"blue",bottom_right,"back",0)
+    #unit1_charlist.append(char1_2)
+    #char1_3 = Devil("devil 1_2",level,"blue",bottom_right,"back",1)
+    #unit1_charlist.append(char1_3)
+    #char1_4 = Devil("devil 1_3",level,"blue",bottom_right,"back",2)
+    #unit1_charlist.append(char1_4)
     #char1_3 = Salamand("salamand 1_1",level,"blue",bottom_right,"back",2)
     #unit1_charlist.append(char1_3)
     #char1_2 = Ravenman("ravenman 1_2",level,"blue",bottom_right,"front",1.5)
@@ -374,10 +374,10 @@ def battle():
     unit2_charlist.append(char2_1)
     #char2_2 = WildMan("wild man 2_2",level,"red",top_left,"front",2)
     #unit2_charlist.append(char2_2)
-    #char2_3 = Samurai("samurai 2_3",5,"red",top_left,"back",0)
-    #unit2_charlist.append(char2_3)
-    #char2_4 = SamuraiMaster("samurai master 2_4",5,"red",top_left,"back",1)
-    #unit2_charlist.append(char2_4)
+    char2_3 = Angel("angel 2_3",5,"red",top_left,"back",0)
+    unit2_charlist.append(char2_3)
+    char2_4 = Cleric("cleric 2_4",5,"red",top_left,"back",1)
+    unit2_charlist.append(char2_4)
     #char2_3 = Sylph("sylph 2_3",level,"red",top_left,"back",0)
     #unit2_charlist.append(char2_3)
     #char2_4 = Sylph("sylph 2_4",level,"red",top_left,"back",1)
