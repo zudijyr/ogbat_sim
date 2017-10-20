@@ -201,7 +201,7 @@ class Monk(Character):
     back_num_attacks = 2
     back_hit = 'all'
 
-class Amazon(Character):
+class Witch(Character):
     base_hp = 80
     base_strength = 38
     base_agility = 49
