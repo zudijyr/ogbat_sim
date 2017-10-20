@@ -14,6 +14,7 @@ class Imp(Character):
     growth_intelligence = 3
     growth_cost = 60
     movement = 'low sky'
+    alignment = 25
 
     resistances = {
         'physical': 44,
@@ -47,6 +48,7 @@ class Demon(Character):
     growth_intelligence = 3
     growth_cost = 140
     movement = 'low sky'
+    alignment = 15
 
     resistances = {
         'physical': 47,
@@ -80,6 +82,7 @@ class Devil(Character):
     growth_intelligence = 4
     growth_cost = 220
     movement = 'low sky'
+    alignment = 5
 
     resistances = {
         'physical': 53,

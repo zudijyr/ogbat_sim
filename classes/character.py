@@ -20,6 +20,7 @@ class Character:
     growth_cost = 10
     movement = 'plains'
     is_undead = False
+    alignment = 50
 
     resistances = {
         'physical': 50,

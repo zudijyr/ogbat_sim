@@ -14,6 +14,7 @@ class Dragon(Character):
     growth_intelligence = 1
     growth_cost = 100
     movement = 'plains'
+    alignment = 50
 
     resistances = {
         'physical': 52,
@@ -48,6 +49,7 @@ class SilverDragon(Character):
     growth_intelligence = 2
     growth_cost = 160
     movement = 'snow'
+    alignment = 71
 
     resistances = {
         'physical': 53,
@@ -82,6 +84,7 @@ class GoldDragon(Character):
     growth_intelligence = 3
     growth_cost = 230
     movement = 'snow'
+    alignment = 77
 
     resistances = {
         'physical': 57,
@@ -116,6 +119,7 @@ class PlatinumDragon(Character):
     growth_intelligence = 4
     growth_cost = 250
     movement = 'snow'
+    alignment = 82
 
     resistances = {
         'physical': 61,
@@ -150,6 +154,7 @@ class RedDragon(Character):
     growth_intelligence = 2
     growth_cost = 150
     movement = 'mountain'
+    alignment = 50
 
     resistances = {
         'physical': 54,
@@ -184,6 +189,7 @@ class RedDragonII(Character):
     growth_intelligence = 3
     growth_cost = 200
     movement = 'mountain'
+    alignment = 50
 
     resistances = {
         'physical': 59,
@@ -218,6 +224,7 @@ class Salamand(Character):
     growth_intelligence = 4
     growth_cost = 250
     movement = 'mountain'
+    alignment = 50
 
     resistances = {
         'physical': 62,
@@ -252,6 +259,7 @@ class BlackDragon(Character):
     growth_intelligence = 2
     growth_cost = 150
     movement = 'plains'
+    alignment = 29
 
     resistances = {
         'physical': 55,
@@ -286,6 +294,7 @@ class Tiamat(Character):
     growth_intelligence = 3
     growth_cost = 210
     movement = 'plains'
+    alignment = 23
 
     resistances = {
         'physical': 59,
@@ -320,6 +329,7 @@ class ZombieDragon(Character):
     growth_intelligence = 3
     growth_cost = 250
     movement = 'marsh'
+    alignment = 0
 
     resistances = {
         'physical': 73,

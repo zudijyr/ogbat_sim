@@ -15,6 +15,7 @@ class Skeleton(Character):
     growth_cost = 20
     movement = 'plains'
     is_undead = True
+    alignment = 0
 
     resistances = {
         'physical': 50,
@@ -49,6 +50,7 @@ class Wraith(Character):
     growth_cost = 0
     movement = 'plains'
     is_undead = True
+    alignment = 0
 
     resistances = {
         'physical': 50,
@@ -83,6 +85,7 @@ class Ghost(Character):
     growth_cost = 20
     movement = 'low sky'
     is_undead = True
+    alignment = 0
 
     resistances = {
         'physical': 50,
@@ -117,6 +120,7 @@ class Phantom(Character):
     growth_cost = 40
     movement = 'low sky'
     is_undead = True
+    alignment = 0
 
     resistances = {
         'physical': 50,

@@ -14,6 +14,7 @@ class Amazon(Character):
     growth_intelligence = 2
     growth_cost = 30
     movement = 'forest'
+    alignmnent = 50
 
     resistances = {
         'physical': 38,
@@ -47,6 +48,7 @@ class Valkyrie(Character):
     growth_intelligence = 3
     growth_cost = 80
     movement = 'forest'
+    alignmnent = 54
 
     resistances = {
         'physical': 42,
@@ -81,6 +83,7 @@ class Muse(Character):
     growth_intelligence = 3
     growth_cost = 210
     movement = 'snow'
+    alignmnent = 75
 
     resistances = {
         'physical': 46,
@@ -114,6 +117,7 @@ class Cleric(Character):
     growth_intelligence = 3
     growth_cost = 60
     movement = 'plains'
+    alignmnent = 65
 
     resistances = {
         'physical': 24,
@@ -148,6 +152,7 @@ class Shaman(Character):
     growth_intelligence = 2
     growth_cost = 100
     movement = 'plains'
+    alignmnent = 76
 
     resistances = {
         'physical': 28,
@@ -182,6 +187,7 @@ class Monk(Character):
     growth_intelligence = 2
     growth_cost = 110
     movement = 'plains'
+    alignmnent = 87
 
     resistances = {
         'physical': 32,
@@ -215,6 +221,7 @@ class Witch(Character):
     growth_intelligence = 4
     growth_cost = 70
     movement = 'plains'
+    alignmnent = 47
 
     resistances = {
         'physical': 25,
@@ -249,6 +256,7 @@ class Princess(Character):
     growth_intelligence = 4
     growth_cost = 250
     movement = 'plains'
+    alignmnent = 81
 
     resistances = {
         'physical': 27,
