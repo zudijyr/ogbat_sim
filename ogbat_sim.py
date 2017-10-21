@@ -184,29 +184,31 @@ def damage(attacker, defender, attack_element, attacker_tactic, defender_tactic,
         defend_power = defender.intelligence
     elif attack_type == 'healing':
         time_penalty = calc_time_penalty(attacker, time_of_day)
-        healing = attacker.intelligence + attacker.alignment/2 - time_penalty/4 + random.randint(0,7)/4
-        healing = -1*int(max(healing, defender.max_hp - defender.hp))
-        print("{0} heals {1} for 30".format(attacker.name,defender.name))
-        return -30 #TODO actual healing calculation 
+        healing = (attacker.intelligence + attacker.alignment/2 - time_penalty/4 + random.randint(0,7))/4
+        healing = int(min(healing, defender.max_hp - defender.hp))
+        dam_output = "{0} heals {1} for {2}".format(attacker.name,defender.name,healing)
+        return -1*healing,dam_output #TODO actual healing calculation 
 
     att_tac_bonus,def_tac_bonus = calc_tac_bonuses(attacker_tactic, defender_tactic)
     att_move_bonus = calc_movement_bonus(attacker,terrain)
     def_move_bonus = calc_movement_bonus(defender,terrain)
-    att_time_penalty = calc_time_penalty(attacker.alignment,time_of_day)
-    def_time_penalty = calc_time_penalty(defender.alignment,time_of_day)
+    att_time_penalty = calc_time_penalty(attacker,time_of_day)
+    def_time_penalty = calc_time_penalty(defender,time_of_day)
     kiss = 0
     if attack_type == 'petrify':
         defender.is_petrified = True
-        print("{0} has been petrified".format(defender.name))
+        dam_output = "{0} has been petrified".format(defender.name)
     if attack_type == 'pumpkin':
-        if stun_recovery(attacker,defender):
+        if stun_recovery(attacker,defender,time_of_day):
             defender.is_stunned = False
             print("{0} wakes up".format(defender.name))
-        return int(defender.hp/2)
+        damage = int(defender.hp/2)
+        dam_output = "{0} hits {1} with {2} for {3}".format(attacker.name,defender.name,attack_element,damage)
+        return damage,dam_output
     if attack_type == 'stun':
         defender.is_stunned = True
-        print("{0} has been stunned".format(defender.name))
-        return 0
+        dam_output = "{0} has been stunned".format(defender.name)
+        return 0,dam_output
     #TODO time,kiss
     #damage formula from Deathlike2's unit analysis gamefaq
     raw_damage = attack_power/2 + att_move_bonus*2 - att_time_penalty/5 + att_tac_bonus + kiss + random.randint(1,8)
@@ -222,10 +224,11 @@ def damage(attacker, defender, attack_element, attacker_tactic, defender_tactic,
     absorption = ((defend_power/2 + def_move_bonus*2 - def_time_penalty/5 + kiss + random.randint(3,10)) * resistance/100) + def_tac_bonus
     damage = max(raw_damage - absorption,1) #TODO quake
     damage = min(damage,defender.hp)
-    if stun_recovery(attacker,defender):
+    if stun_recovery(attacker,defender,time_of_day):
         defender.is_stunned = False
         print("{0} wakes up".format(defender.name))
-    return int(damage)
+    dam_output = "{0} hits {1} with {2} for {3}".format(attacker.name,defender.name,attack_element,damage)
+    return int(damage),dam_output
 
 def choose_target(attacker, defending_unit, attacking_unit):
     #TODO include tactic
@@ -294,14 +297,14 @@ def attack(attacker, defender, terrain, attack_element, time_of_day):
     draw_attack_recs(attacker,defender)
     hit = does_it_hit(attacker, defender, terrain, attack_element)
     if (hit):
-        dam = damage(attacker,defender,attack_element,'weak','weak',terrain, time_of_day)
+        dam,dam_output = damage(attacker,defender,attack_element,'weak','weak',terrain, time_of_day)
         dam_output = "{0} hits {1} with {2} for {3}".format(attacker.name,defender.name,attack_element,dam)
         print(dam_output)
         message.setText(dam_output)
         defender.hp -= dam
-        if attacker.side == "blue":
+        if attacker.side == "blue" and attacker.attack_type != 'healing':
             blue_damage += dam
-        if attacker.side == "red":
+        if attacker.side == "red" and attacker.attack_type != 'healing':
             red_damage += dam
         if defender.hp <= 0:
             defender.hp = 0
@@ -382,9 +385,9 @@ def battle():
     unit2_charlist.append(char2_1)
     #char2_2 = WildMan("wild man 2_2",level,"red",top_left,"front",2)
     #unit2_charlist.append(char2_2)
-    char2_3 = Angel("angel 2_3",5,"red",top_left,"back",0)
+    char2_3 = Angel("angel 2_3",level,"red",top_left,"back",0)
     unit2_charlist.append(char2_3)
-    char2_4 = Cleric("cleric 2_4",5,"red",top_left,"back",1)
+    char2_4 = Cleric("cleric 2_4",level,"red",top_left,"back",1)
     unit2_charlist.append(char2_4)
     #char2_3 = Sylph("sylph 2_3",level,"red",top_left,"back",0)
     #unit2_charlist.append(char2_3)
