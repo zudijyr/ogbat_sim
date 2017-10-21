@@ -14,6 +14,7 @@ class Fighter(Character):
     growth_intelligence = 2
     growth_cost = 20
     movement = 'plains'
+    alignment = 50
 
     resistances = {
         'physical': 44,
@@ -46,6 +47,7 @@ class Knight(Character):
     growth_agility = 2
     growth_intelligence = 1
     growth_cost = 90
+    alignment = 62
 
     resistances = {
         'physical': 47,
@@ -78,6 +80,7 @@ class Paladin(Character):
     growth_agility = 2
     growth_intelligence = 2
     growth_cost = 170
+    alignment = 78
 
     resistances = {
         'physical': 53,
@@ -111,6 +114,7 @@ class BeastTamer(Character):
     growth_agility = 2
     growth_intelligence = 1
     growth_cost = 50
+    alignment = 45
 
     resistances = {
         'physical': 44,
@@ -143,6 +147,7 @@ class BeastMaster(Character):
     growth_agility = 2
     growth_intelligence = 1
     growth_cost = 130
+    alignment = 33
 
     resistances = {
         'physical': 48,
@@ -175,6 +180,7 @@ class Samurai(Character):
     growth_agility = 2
     growth_intelligence = 2
     growth_cost = 100
+    alignment = 61
 
     resistances = {
         'physical': 46,
@@ -208,6 +214,7 @@ class SamuraiMaster(Character):
     growth_agility = 2
     growth_intelligence = 2
     growth_cost = 180
+    alignment = 79
 
     resistances = {
         'physical': 52,
@@ -241,6 +248,7 @@ class Ninja(Character):
     growth_agility = 3
     growth_intelligence = 2
     growth_cost = 110
+    alignment = 38
 
     resistances = {
         'physical': 45,
@@ -274,6 +282,7 @@ class NinjaMaster(Character):
     growth_agility = 4
     growth_intelligence = 3
     growth_cost = 190
+    alignment = 22
 
     resistances = {
         'physical': 47,
@@ -306,6 +315,7 @@ class WildMan(Character):
     growth_agility = 2
     growth_intelligence = 1
     growth_cost = 50
+    alignment = 41
 
     resistances = {
         'physical': 48,
@@ -338,6 +348,7 @@ class EvilOne(Character):
     growth_agility = 2
     growth_intelligence = 2
     growth_cost = 130
+    alignment = 23
 
     resistances = {
         'physical': 54,
@@ -370,6 +381,7 @@ class Wizard(Character):
     growth_agility = 1
     growth_intelligence = 4
     growth_cost = 70
+    alignment = 45
 
     resistances = {
         'physical': 20,
@@ -402,6 +414,7 @@ class Mage(Character):
     growth_agility = 1
     growth_intelligence = 4
     growth_cost = 150
+    alignment = 35
 
     resistances = {
         'physical': 24,
@@ -434,6 +447,7 @@ class Sorcerer(Character):
     growth_agility = 1
     growth_intelligence = 4
     growth_cost = 180
+    alignment = 21
 
     resistances = {
         'physical': 28,
@@ -466,6 +480,7 @@ class Lich(Character):
     growth_agility = 2
     growth_intelligence = 4
     growth_cost = 250
+    alignment = 9
 
     resistances = {
         'physical': 100,
@@ -498,6 +513,7 @@ class DollMage(Character):
     growth_agility = 2
     growth_intelligence = 3
     growth_cost = 160
+    alignment = 53
 
     resistances = {
         'physical': 28,
@@ -530,6 +546,7 @@ class DollMaster(Character):
     growth_agility = 3
     growth_intelligence = 3
     growth_cost = 190
+    alignment = 69
 
     resistances = {
         'physical': 21,
@@ -562,6 +579,7 @@ class Vampyre(Character):
     growth_agility = 2
     growth_intelligence = 4
     growth_cost = 250
+    alignment = 19
 
     resistances = {
         'physical': 82,
@@ -596,6 +614,7 @@ class Werewolf(Character):
     growth_agility = 3
     growth_intelligence = 1
     growth_cost = 80
+    alignment = 38
 
     resistances = {
         'physical': 71,
@@ -628,6 +647,7 @@ class Tigerman(Character):
     growth_agility = 3
     growth_intelligence = 1
     growth_cost = 120
+    alignment = 36
 
     resistances = {
         'physical': 74,
@@ -660,6 +680,7 @@ class Dragoner(Character):
     growth_agility = 2
     growth_intelligence = 2
     growth_cost = 200
+    alignment = 50
 
     resistances = {
         'physical': 43,
@@ -692,6 +713,7 @@ class DragonMaster(Character):
     growth_agility = 3
     growth_intelligence = 2
     growth_cost = 250
+    alignment = 50
 
     resistances = {
         'physical': 45,

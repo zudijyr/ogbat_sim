@@ -154,11 +154,14 @@ def calc_tac_bonuses(attacker_tactic, defender_tactic):
         def_tac_bonus += 4
     return att_tac_bonus,def_tac_bonus
 
-def stun_recovery(attacker, defender):
+def calc_time_penalty(character, time_of_day):
+    return abs(character.alignment - time_of_day)
+
+def stun_recovery(attacker, defender, time_of_day):
     if defender.is_stunned == False:
         return False
-    time = 0
-    stun_recov = defender.strength + defender.luck/2 + time + random.randint(3,10)
+    time_penalty = calc_time_penalty(defender, time_of_day)
+    stun_recov = defender.strength + defender.luck/2 - time_penalty + random.randint(3,10)
     threshold = random.randint(0,9)
     if (threshold <= -48 ):
         return (rand_hit_num < 1)
@@ -171,7 +174,7 @@ def stun_recovery(attacker, defender):
     elif (threshold >= 49):
         return (rand_hit_num < 5)
 
-def damage(attacker, defender, attack_element, attacker_tactic, defender_tactic, terrain):
+def damage(attacker, defender, attack_element, attacker_tactic, defender_tactic, terrain, time_of_day):
     attack_type = attacker.attack_type
     if attack_type in ('strength','iainuki','petrify'):
         attack_power = attacker.strength
@@ -180,13 +183,17 @@ def damage(attacker, defender, attack_element, attacker_tactic, defender_tactic,
         attack_power = attacker.intelligence
         defend_power = defender.intelligence
     elif attack_type == 'healing':
+        time_penalty = calc_time_penalty(attacker, time_of_day)
+        healing = attacker.intelligence + attacker.alignment/2 - time_penalty/4 + random.randint(0,7)/4
+        healing = -1*int(max(healing, defender.max_hp - defender.hp))
         print("{0} heals {1} for 30".format(attacker.name,defender.name))
         return -30 #TODO actual healing calculation 
 
     att_tac_bonus,def_tac_bonus = calc_tac_bonuses(attacker_tactic, defender_tactic)
     att_move_bonus = calc_movement_bonus(attacker,terrain)
     def_move_bonus = calc_movement_bonus(defender,terrain)
-    time = 0
+    att_time_penalty = calc_time_penalty(attacker.alignment,time_of_day)
+    def_time_penalty = calc_time_penalty(defender.alignment,time_of_day)
     kiss = 0
     if attack_type == 'petrify':
         defender.is_petrified = True
@@ -202,7 +209,7 @@ def damage(attacker, defender, attack_element, attacker_tactic, defender_tactic,
         return 0
     #TODO time,kiss
     #damage formula from Deathlike2's unit analysis gamefaq
-    raw_damage = attack_power/2 + att_move_bonus*2 - time/5 + att_tac_bonus + kiss + random.randint(1,8)
+    raw_damage = attack_power/2 + att_move_bonus*2 - att_time_penalty/5 + att_tac_bonus + kiss + random.randint(1,8)
     attack_multiplier = 1 #TODO special attacks like ianuki
     if attack_type == 'iainuki':
         attack_multiplier = 1.5
@@ -212,7 +219,7 @@ def damage(attacker, defender, attack_element, attacker_tactic, defender_tactic,
         attacker.hp -= blowback
     raw_damage = raw_damage*attack_multiplier
     resistance = defender.resistances[attack_element]
-    absorption = ((defend_power/2 + def_move_bonus*2 - time/5 + kiss + random.randint(3,10)) * resistance/100) + def_tac_bonus
+    absorption = ((defend_power/2 + def_move_bonus*2 - def_time_penalty/5 + kiss + random.randint(3,10)) * resistance/100) + def_tac_bonus
     damage = max(raw_damage - absorption,1) #TODO quake
     damage = min(damage,defender.hp)
     if stun_recovery(attacker,defender):
@@ -282,12 +289,12 @@ def draw_attack_recs(attacker,defender):
     target_rec.setWidth(5)
     target_rec.draw(win)
 
-def attack(attacker, defender, terrain, attack_element):
+def attack(attacker, defender, terrain, attack_element, time_of_day):
     global blue_damage,red_damage
     draw_attack_recs(attacker,defender)
     hit = does_it_hit(attacker, defender, terrain, attack_element)
     if (hit):
-        dam = damage(attacker,defender,attack_element,'weak','weak',terrain)
+        dam = damage(attacker,defender,attack_element,'weak','weak',terrain, time_of_day)
         dam_output = "{0} hits {1} with {2} for {3}".format(attacker.name,defender.name,attack_element,dam)
         print(dam_output)
         message.setText(dam_output)
@@ -315,7 +322,7 @@ def set_hp_text(all_chars):
     for char in all_chars:
         char.hptext.setText(char.hp)
 
-def combat_round(all_chars,unit1,unit2,terrain):
+def combat_round(all_chars,unit1,unit2,terrain, time_of_day):
     for attacker in all_chars:
         if attacker.is_alive == False or attacker.num_attacks_remaining == 0 or attacker.is_petrified or attacker.is_stunned:
             pass
@@ -328,7 +335,7 @@ def combat_round(all_chars,unit1,unit2,terrain):
                 targets = choose_target(attacker,unit1, unit2)
             attack_element = choose_element(attacker, targets)
             for char in targets:
-                attack(attacker, char, terrain, attack_element)
+                attack(attacker, char, terrain, attack_element, time_of_day)
                 set_hp_text(all_chars)
 
 def turn_order(all_chars, terrain):
@@ -340,6 +347,7 @@ def turn_order(all_chars, terrain):
 
 def battle():
     terrain = 'city' #TODO set this somehow
+    time_of_day = 50 #0 to 100 in multiples of 25. 0 is midnight, evil
     top_left = Point(int(win.width/7), int(win.height/3))
     bottom_right = Point(int(3*win.width/7), int(2*win.height/3))
     unit1_charlist = []
@@ -396,7 +404,7 @@ def battle():
             max_rounds = char.num_attacks
     for round_num in range(max_rounds):
         all_chars = turn_order(all_chars,terrain)
-        combat_round(all_chars,unit1,unit2,terrain)
+        combat_round(all_chars,unit1,unit2,terrain, time_of_day)
     win.getMouse()
     current_rec.undraw()
     target_rec.undraw()

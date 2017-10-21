@@ -14,6 +14,7 @@ class Hawkman(Character):
     growth_intelligence = 1
     growth_cost = 90
     movement = 'low sky'
+    alignment = 50
 
     resistances = {
         'physical': 39,
@@ -47,6 +48,7 @@ class Eagleman(Character):
     growth_intelligence = 2
     growth_cost = 140
     movement = 'low sky'
+    alignment = 66
 
     resistances = {
         'physical': 42,
@@ -81,6 +83,7 @@ class Ravenman(Character):
     growth_intelligence = 2
     growth_cost = 120
     movement = 'low sky'
+    alignment = 31
 
     resistances = {
         'physical': 40,

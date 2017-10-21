@@ -14,6 +14,7 @@ class Pumpkin(Character):
     growth_intelligence = 1
     growth_cost = 20
     movement = 'forest'
+    alignment = 45
 
     resistances = {
         'physical': 33,
@@ -49,6 +50,7 @@ class Halloween(Character):
     growth_intelligence = 2
     growth_cost = 50
     movement = 'forest'
+    alignment = 18
 
     resistances = {
         'physical': 60,

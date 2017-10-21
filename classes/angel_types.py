@@ -14,6 +14,7 @@ class Angel(Character):
     growth_intelligence = 3
     growth_cost = 50
     movement = 'low sky'
+    alignment = 65
 
     resistances = {
         'physical': 27,
@@ -47,6 +48,7 @@ class Cherubim(Character):
     growth_intelligence = 4
     growth_cost = 130
     movement = 'low sky'
+    alignment = 76
 
     resistances = {
         'physical': 31,
@@ -80,6 +82,7 @@ class Seraphim(Character):
     growth_intelligence = 4
     growth_cost = 210
     movement = 'low sky'
+    alignment = 87
 
     resistances = {
         'physical': 35,

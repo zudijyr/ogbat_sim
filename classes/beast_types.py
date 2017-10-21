@@ -13,6 +13,7 @@ class Gryphon(Character):
     growth_agility = 4
     growth_intelligence = 1
     growth_cost = 50
+    alignment = 45
 
     resistances = {
         'physical': 43,
@@ -45,6 +46,7 @@ class Cockatris(Character):
     growth_agility = 4
     growth_intelligence = 1
     growth_cost = 80
+    alignment = 36
 
     resistances = {
         'physical': 46,
@@ -78,6 +80,7 @@ class Wyrm(Character):
     growth_agility = 3
     growth_intelligence = 1
     growth_cost = 170
+    alignment = 42
 
     resistances = {
         'physical': 45,
@@ -110,6 +113,7 @@ class Wyvern(Character):
     growth_agility = 3
     growth_intelligence = 1
     growth_cost = 210
+    alignment = 30
 
     resistances = {
         'physical': 49,
@@ -143,6 +147,7 @@ class Giant(Character):
     growth_agility = 2
     growth_intelligence = 2
     growth_cost = 60
+    alignment = 50
 
     resistances = {
         'physical': 48,
@@ -175,6 +180,7 @@ class Titan(Character):
     growth_agility = 3
     growth_intelligence = 3
     growth_cost = 190
+    alignment = 75
 
     resistances = {
         'physical': 54,
@@ -207,6 +213,7 @@ class IceGiant(Character):
     growth_agility = 3
     growth_intelligence = 2
     growth_cost = 130
+    alignment = 70
 
     resistances = {
         'physical': 52,
@@ -240,6 +247,7 @@ class FireGiant(Character):
     growth_agility = 3
     growth_intelligence = 2
     growth_cost = 110
+    alignment = 27
 
     resistances = {
         'physical': 57,
@@ -273,6 +281,7 @@ class Hellhound(Character):
     growth_agility = 3
     growth_intelligence = 3
     growth_cost = 30
+    alignment = 44
 
     resistances = {
         'physical': 46,
@@ -306,6 +315,7 @@ class Cerberus(Character):
     growth_agility = 4
     growth_intelligence = 4
     growth_cost = 100
+    alignment = 30
 
     resistances = {
         'physical': 51,
@@ -339,6 +349,7 @@ class Octopus(Character):
     growth_agility = 2
     growth_intelligence = 1
     growth_cost = 50
+    alignment = 50
 
     resistances = {
         'physical': 64,
@@ -371,6 +382,7 @@ class Kraken(Character):
     growth_agility = 2
     growth_intelligence = 1
     growth_cost = 110
+    alignment = 57
 
     resistances = {
         'physical': 67,
@@ -403,6 +415,7 @@ class Golem(Character):
     growth_agility = 1
     growth_intelligence = 2
     growth_cost = 20
+    alignment = 50
 
     resistances = {
         'physical': 69,
@@ -435,6 +448,7 @@ class RockGolem(Character):
     growth_agility = 1
     growth_intelligence = 2
     growth_cost = 70
+    alignment = 55
 
     resistances = {
         'physical': 73,
@@ -467,6 +481,7 @@ class IronGolem(Character):
     growth_agility = 2
     growth_intelligence = 2
     growth_cost = 180
+    alignment = 73
 
     resistances = {
         'physical': 82,

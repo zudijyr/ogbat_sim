@@ -13,6 +13,7 @@ class Faerie(Character):
     growth_agility = 4
     growth_intelligence = 4
     growth_cost = 70
+    alignment = 50
 
     resistances = {
         'physical': 30,
@@ -45,6 +46,7 @@ class Pixie(Character):
     growth_agility = 5
     growth_intelligence = 4
     growth_cost = 170
+    alignment = 55
 
     resistances = {
         'physical': 32,
@@ -77,6 +79,7 @@ class Sylph(Character):
     growth_agility = 5
     growth_intelligence = 4
     growth_cost = 250
+    alignment = 60
 
     resistances = {
         'physical': 35,
