@@ -174,7 +174,9 @@ def stun_recovery(attacker, defender, time_of_day):
     elif (threshold >= 49):
         return (rand_hit_num < 5)
 
-def damage(attacker, defender, attack_element, attacker_tactic, defender_tactic, terrain, time_of_day):
+def damage(attacker, defender, attack_element, terrain, time_of_day):
+    attacker_tactic = attacker.tactic
+    defender_tactic = defender.tactic
     attack_type = attacker.attack_type
     if attack_type in ('strength','iainuki','petrify'):
         attack_power = attacker.strength
@@ -209,7 +211,7 @@ def damage(attacker, defender, attack_element, attacker_tactic, defender_tactic,
         defender.is_stunned = True
         dam_output = "{0} has been stunned".format(defender.name)
         return 0,dam_output
-    #TODO time,kiss
+    #TODO kiss
     #damage formula from Deathlike2's unit analysis gamefaq
     raw_damage = attack_power/2 + att_move_bonus*2 - att_time_penalty/5 + att_tac_bonus + kiss + random.randint(1,8)
     attack_multiplier = 1 #TODO special attacks like ianuki
@@ -233,6 +235,7 @@ def damage(attacker, defender, attack_element, attacker_tactic, defender_tactic,
 def choose_target(attacker, defending_unit, attacking_unit):
     #TODO include tactic
     lowest = 9999
+    highest = 0
     possible_targets = []
     target = []
     if attacker.attack_type == 'healing': #TODO charmed attacks
@@ -264,11 +267,16 @@ def choose_target(attacker, defending_unit, attacking_unit):
                     possible_targets.append(char)
                 #this lets melee targets back row if the only alive front row char is on the opposite side
 
+    tactic = attacker.tactic
     for character in possible_targets:
         if character.is_alive == False:
             pass
-        elif character.hp < lowest:
+        elif character.hp < lowest and tactic == 'weak':
+            print('weak')
             lowest = character.hp
+            current_target = character
+        elif character.hp > highest and tactic == 'strong':
+            highest = character.hp
             current_target = character
     target.append(current_target)
     return target
@@ -297,7 +305,7 @@ def attack(attacker, defender, terrain, attack_element, time_of_day):
     draw_attack_recs(attacker,defender)
     hit = does_it_hit(attacker, defender, terrain, attack_element)
     if (hit):
-        dam,dam_output = damage(attacker,defender,attack_element,'weak','weak',terrain, time_of_day)
+        dam,dam_output = damage(attacker,defender,attack_element,terrain,time_of_day)
         dam_output = "{0} hits {1} with {2} for {3}".format(attacker.name,defender.name,attack_element,dam)
         print(dam_output)
         message.setText(dam_output)
@@ -354,10 +362,10 @@ def battle():
     top_left = Point(int(win.width/7), int(win.height/3))
     bottom_right = Point(int(3*win.width/7), int(2*win.height/3))
     unit1_charlist = []
-    level = 25
-    char1_1 = Halloween("halloween 1_1",level,"blue",bottom_right,"front",0)
+    level = 35
+    char1_1 = PlatinumDragon("platinum 1_1",level,"blue",bottom_right,"back",1)
     unit1_charlist.append(char1_1)
-    char1_5 = Halloween("halloween 1_1",level,"blue",bottom_right,"front",2)
+    char1_5 = PlatinumDragon("platinum 1_1",level,"blue",bottom_right,"back",2)
     unit1_charlist.append(char1_5)
     char1_2 = Muse("muse 1_1",level,"blue",bottom_right,"back",0)
     unit1_charlist.append(char1_2)
@@ -381,23 +389,27 @@ def battle():
     #unit1_charlist.append(char1_5)
 
     unit2_charlist = []
-    char2_1 = ZombieDragon("zombie dragon 2_1",level,"red",top_left,"front",0)
+    char2_1 = Muse("zMuse 2_1",level,"red",top_left,"back",2)
     unit2_charlist.append(char2_1)
-    #char2_2 = WildMan("wild man 2_2",level,"red",top_left,"front",2)
-    #unit2_charlist.append(char2_2)
-    char2_3 = Angel("angel 2_3",level,"red",top_left,"back",0)
-    unit2_charlist.append(char2_3)
-    char2_4 = Cleric("cleric 2_4",level,"red",top_left,"back",1)
-    unit2_charlist.append(char2_4)
+    char2_2 = Salamand("Salamand 2_2",level,"red",top_left,"back",1)
+    unit2_charlist.append(char2_2)
+    #char2_3 = Seraphim("seraphim 2_3",level,"red",top_left,"back",0)
+    #unit2_charlist.append(char2_3)
+    #char2_4 = Cleric("cleric 2_4",level,"red",top_left,"back",1)
+    #unit2_charlist.append(char2_4)
     #char2_3 = Sylph("sylph 2_3",level,"red",top_left,"back",0)
     #unit2_charlist.append(char2_3)
     #char2_4 = Sylph("sylph 2_4",level,"red",top_left,"back",1)
     #unit2_charlist.append(char2_4)
     #char2_5 = Sylph("sylph 2_5",level,"red",top_left,"back",2)
     #unit2_charlist.append(char2_5)
+    char2_3 = Halloween("NHalloween 2_3",level,"red",top_left,"front",0)
+    unit2_charlist.append(char2_3)
+    char2_4 = Halloween("SHalloween 2_4",level,"red",top_left,"front",1)
+    unit2_charlist.append(char2_4)
 
     unit1 = Unit("blue",unit1_charlist)
-    unit2 = Unit("red",unit2_charlist)
+    unit2 = Unit("red",unit2_charlist,'strong')
     all_chars = unit1_charlist + unit2_charlist
     draw_stuff(unit1,unit2,terrain)
     draw_hp_text(unit1,unit2)
