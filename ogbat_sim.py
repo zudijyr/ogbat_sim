@@ -268,6 +268,8 @@ def choose_target(attacker, defending_unit, attacking_unit):
                 #this lets melee targets back row if the only alive front row char is on the opposite side
 
     tactic = attacker.tactic
+    if len(possible_targets) == 0:
+        return []
     for character in possible_targets:
         if character.is_alive == False:
             pass
@@ -344,6 +346,8 @@ def combat_round(all_chars,unit1,unit2,terrain, time_of_day):
                 targets = choose_target(attacker,unit2, unit1)
             else:
                 targets = choose_target(attacker,unit1, unit2)
+            if len(targets) == 0:
+                break
             attack_element = choose_element(attacker, targets)
             for char in targets:
                 attack(attacker, char, terrain, attack_element, time_of_day)
@@ -362,11 +366,11 @@ def battle():
     top_left = Point(int(win.width/7), int(win.height/3))
     bottom_right = Point(int(3*win.width/7), int(2*win.height/3))
     unit1_charlist = []
-    level = 35
+    level = 25
     char1_1 = PlatinumDragon("platinum 1_1",level,"blue",bottom_right,"back",1)
     unit1_charlist.append(char1_1)
-    char1_5 = PlatinumDragon("platinum 1_1",level,"blue",bottom_right,"back",2)
-    unit1_charlist.append(char1_5)
+    #char1_5 = PlatinumDragon("platinum 1_5",level,"blue",bottom_right,"back",2)
+    #unit1_charlist.append(char1_5)
     char1_2 = Muse("muse 1_1",level,"blue",bottom_right,"back",0)
     unit1_charlist.append(char1_2)
     #char1_3 = Devil("devil 1_2",level,"blue",bottom_right,"back",1)
@@ -389,10 +393,12 @@ def battle():
     #unit1_charlist.append(char1_5)
 
     unit2_charlist = []
-    char2_1 = Muse("zMuse 2_1",level,"red",top_left,"back",2)
+    char2_1 = Lich("Lich 2_1",level,"red",top_left,"back",2)
     unit2_charlist.append(char2_1)
-    char2_2 = Salamand("Salamand 2_2",level,"red",top_left,"back",1)
+    char2_2 = Lich("Lich 2_2",level,"red",top_left,"back",1)
     unit2_charlist.append(char2_2)
+    char2_3 = Lich("Lich 2_3",level,"red",top_left,"back",0)
+    unit2_charlist.append(char2_3)
     #char2_3 = Seraphim("seraphim 2_3",level,"red",top_left,"back",0)
     #unit2_charlist.append(char2_3)
     #char2_4 = Cleric("cleric 2_4",level,"red",top_left,"back",1)
