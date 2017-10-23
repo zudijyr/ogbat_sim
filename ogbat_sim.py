@@ -89,7 +89,7 @@ def does_it_hit(attacker, defender, terrain, attack_element):
     if attack_type in ('strength','iainuki','petrify','pumpkin'):
         attack_speed = attacker.agility
         defend_speed = defender.agility
-    elif attack_type == 'intelligence':
+    elif attack_type in ('intelligence','charm'):
         attack_speed = attacker.intelligence
         defend_speed = defender.intelligence
 
@@ -114,7 +114,7 @@ def does_it_hit(attacker, defender, terrain, attack_element):
         rand_hit_num += 1
     if attack_type == 'petrify':
         rand_hit_num += 3
-    if attack_type == 'stun':
+    if attack_type in ('stun','charm'):
         rand_hit_num += 4
     if (target_difference <= -49 ):
         return (rand_hit_num < 4)
@@ -239,9 +239,9 @@ def damage(attacker, defender, attack_element, terrain, time_of_day):
 def get_sorted_targets(attacker, possible_targets):
     tactic = attacker.tactic
     if tactic == 'strong':
-        return possible_targets.sort(key=lambda x: x.hp, reverse=True)
+        return sorted(possible_targets,key=lambda x: x.hp, reverse=True)
     elif tactic == 'weak':
-        return possible_targets.sort(key=lambda x: x.hp, reverse=False)
+        return sorted(possible_targets,key=lambda x: x.hp, reverse=False)
     elif tactic == 'best':
         #not totally sure how this should work. this prioritizes non disabled, then high hp.
         non_ailment_chars = []
@@ -280,7 +280,9 @@ def choose_target(attacker, defending_unit, attacking_unit):
             if char.is_alive and char.row == 'front':
                 possible_targets.append(char) #can target anything alive in front row
         if len(possible_targets) == 0:
-            possible_targets = target_unit.characters #if no front row alive, target anything left
+            for char in target_unit.characters:
+                if char.is_alive == True:
+                    possible_targets.append(char) #if no front row alive, target anything left
         elif len(possible_targets) == 1:
             alive_char = possible_targets[0]
             for char in target_unit.characters:
@@ -419,8 +421,8 @@ def battle():
     unit2_charlist = []
     char2_1 = Lich("Lich 2_1",level,"red",top_left,"back",2)
     unit2_charlist.append(char2_1)
-    char2_2 = Cockatris("Cockatris 2_2",level,"red",top_left,"back",1)
-    unit2_charlist.append(char2_2)
+    #char2_2 = Vampyre("Vampyre 2_2",level,"red",top_left,"back",1)
+    #unit2_charlist.append(char2_2)
     char2_3 = Cockatris("Cockatris 2_3",level,"red",top_left,"back",0)
     unit2_charlist.append(char2_3)
     #char2_3 = Seraphim("seraphim 2_3",level,"red",top_left,"back",0)
@@ -433,13 +435,13 @@ def battle():
     #unit2_charlist.append(char2_4)
     #char2_5 = Sylph("sylph 2_5",level,"red",top_left,"back",2)
     #unit2_charlist.append(char2_5)
-    #char2_3 = Halloween("NHalloween 2_3",level,"red",top_left,"front",0)
-    #unit2_charlist.append(char2_3)
-    #char2_4 = Halloween("SHalloween 2_4",level,"red",top_left,"front",1)
-    #unit2_charlist.append(char2_4)
+    char2_3 = NinjaMaster("NNinjaMaster 2_3",level,"red",top_left,"front",0)
+    unit2_charlist.append(char2_3)
+    char2_4 = NinjaMaster("SNinjaMaster 2_4",level,"red",top_left,"front",1)
+    unit2_charlist.append(char2_4)
 
     unit1 = Unit("blue",unit1_charlist)
-    unit2 = Unit("red",unit2_charlist,'best')
+    unit2 = Unit("red",unit2_charlist,'weak')
     all_chars = unit1_charlist + unit2_charlist
     draw_stuff(unit1,unit2,terrain)
     draw_hp_text(unit1,unit2)
