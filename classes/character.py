@@ -46,6 +46,7 @@ class Character:
     hptext = Text(Point(0,0),"")
     #same attack type regardless of row
     is_alive = True
+    has_status_ailment = False
     is_petrified = False
     is_stunned = False
     def __init__(self, name, level, side, location, row, position):
@@ -83,4 +84,3 @@ class Character:
         self.hptext = Text(Point(self.location.getX(),self.location.getY()+40),self.hp)
         self.hptext.setSize(20)
         self.hptext.setTextColor(side)
-

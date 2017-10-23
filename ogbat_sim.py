@@ -128,8 +128,10 @@ def does_it_hit(attacker, defender, terrain, attack_element):
         return (rand_hit_num < 8)
     elif (target_difference >= 16 and target_difference <= 31):
         return (rand_hit_num < 9)
-    elif (target_difference > 32):
-        return True
+    elif (target_difference >= 32 and target_difference <= 47):
+        return (rand_hit_num < 10) #100% for regular hits, but not for status ailments
+    elif (target_difference > 48):
+        return (rand_hit_num < 11) #likewise
 
 def choose_element(attacker, targets):
     low_score = 101
@@ -199,6 +201,7 @@ def damage(attacker, defender, attack_element, terrain, time_of_day):
     kiss = 0
     if attack_type == 'petrify':
         defender.is_petrified = True
+        defender.has_status_ailment = True
         dam_output = "{0} has been petrified".format(defender.name)
     if attack_type == 'pumpkin':
         if stun_recovery(attacker,defender,time_of_day):
@@ -209,7 +212,8 @@ def damage(attacker, defender, attack_element, terrain, time_of_day):
         return damage,dam_output
     if attack_type == 'stun':
         defender.is_stunned = True
-        dam_output = "{0} has been stunned".format(defender.name)
+        sorted_targets = get_sorted_targets(attacker, possible_targets)
+        dam_output = "{0} has been stunned".format(defender.name) #TODO make these print
         return 0,dam_output
     #TODO kiss
     #damage formula from Deathlike2's unit analysis gamefaq
@@ -231,6 +235,25 @@ def damage(attacker, defender, attack_element, terrain, time_of_day):
         print("{0} wakes up".format(defender.name))
     dam_output = "{0} hits {1} with {2} for {3}".format(attacker.name,defender.name,attack_element,damage)
     return int(damage),dam_output
+
+def get_sorted_targets(attacker, possible_targets):
+    tactic = attacker.tactic
+    if tactic == 'strong':
+        return possible_targets.sort(key=lambda x: x.hp, reverse=True)
+    elif tactic == 'weak':
+        return possible_targets.sort(key=lambda x: x.hp, reverse=False)
+    elif tactic == 'best':
+        #not totally sure how this should work. this prioritizes non disabled, then high hp.
+        non_ailment_chars = []
+        ailment_chars = []
+        for char in possible_targets:
+            if char.has_status_ailment:
+                ailment_chars.append(char)
+            else:
+                non_ailment_chars.append(char)
+        ailment_chars.sort(key=lambda x: x.hp, reverse=True)
+        non_ailment_chars.sort(key=lambda x: x.hp, reverse=True)
+        return non_ailment_chars + ailment_chars
 
 def choose_target(attacker, defending_unit, attacking_unit):
     #TODO include tactic
@@ -270,6 +293,7 @@ def choose_target(attacker, defending_unit, attacking_unit):
     tactic = attacker.tactic
     if len(possible_targets) == 0:
         return []
+    sorted_targets = get_sorted_targets(attacker, possible_targets)
     for character in possible_targets:
         if character.is_alive == False:
             pass
@@ -280,7 +304,7 @@ def choose_target(attacker, defending_unit, attacking_unit):
         elif character.hp > highest and tactic == 'strong':
             highest = character.hp
             current_target = character
-    target.append(current_target)
+    target.append(sorted_targets[0])
     return target
 
 def draw_attack_recs(attacker,defender):
@@ -369,8 +393,8 @@ def battle():
     level = 25
     char1_1 = PlatinumDragon("platinum 1_1",level,"blue",bottom_right,"back",1)
     unit1_charlist.append(char1_1)
-    #char1_5 = PlatinumDragon("platinum 1_5",level,"blue",bottom_right,"back",2)
-    #unit1_charlist.append(char1_5)
+    char1_5 = PlatinumDragon("platinum 1_5",level,"blue",bottom_right,"back",2)
+    unit1_charlist.append(char1_5)
     char1_2 = Muse("muse 1_1",level,"blue",bottom_right,"back",0)
     unit1_charlist.append(char1_2)
     #char1_3 = Devil("devil 1_2",level,"blue",bottom_right,"back",1)
@@ -395,9 +419,9 @@ def battle():
     unit2_charlist = []
     char2_1 = Lich("Lich 2_1",level,"red",top_left,"back",2)
     unit2_charlist.append(char2_1)
-    char2_2 = Lich("Lich 2_2",level,"red",top_left,"back",1)
+    char2_2 = Cockatris("Cockatris 2_2",level,"red",top_left,"back",1)
     unit2_charlist.append(char2_2)
-    char2_3 = Lich("Lich 2_3",level,"red",top_left,"back",0)
+    char2_3 = Cockatris("Cockatris 2_3",level,"red",top_left,"back",0)
     unit2_charlist.append(char2_3)
     #char2_3 = Seraphim("seraphim 2_3",level,"red",top_left,"back",0)
     #unit2_charlist.append(char2_3)
@@ -409,13 +433,13 @@ def battle():
     #unit2_charlist.append(char2_4)
     #char2_5 = Sylph("sylph 2_5",level,"red",top_left,"back",2)
     #unit2_charlist.append(char2_5)
-    char2_3 = Halloween("NHalloween 2_3",level,"red",top_left,"front",0)
-    unit2_charlist.append(char2_3)
-    char2_4 = Halloween("SHalloween 2_4",level,"red",top_left,"front",1)
-    unit2_charlist.append(char2_4)
+    #char2_3 = Halloween("NHalloween 2_3",level,"red",top_left,"front",0)
+    #unit2_charlist.append(char2_3)
+    #char2_4 = Halloween("SHalloween 2_4",level,"red",top_left,"front",1)
+    #unit2_charlist.append(char2_4)
 
     unit1 = Unit("blue",unit1_charlist)
-    unit2 = Unit("red",unit2_charlist,'strong')
+    unit2 = Unit("red",unit2_charlist,'best')
     all_chars = unit1_charlist + unit2_charlist
     draw_stuff(unit1,unit2,terrain)
     draw_hp_text(unit1,unit2)
