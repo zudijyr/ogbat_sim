@@ -95,7 +95,9 @@ def does_it_hit(attacker, defender, terrain, attack_element):
 
     att_move_bonus = calc_movement_bonus(attacker,terrain)
     def_move_bonus = calc_movement_bonus(defender,terrain)
-    friend_factor = 0 #TODO charm status, special attacks
+    friend_bonus = 0 
+    if attacker.side == defender.side:
+        friend_bonus = 10
     if (defender.is_undead and attack_element != 'white' and attack_type not in ('healing','petrify','pumpkin')):
         return False
     if (attack_type == 'healing' and attacker.side == defender.side):
@@ -103,12 +105,12 @@ def does_it_hit(attacker, defender, terrain, attack_element):
 
     #hit formula from Deathlike2's unit mechanics gamefaq
     hit_success = attack_speed + attacker.luck/2 + att_move_bonus + random.randint(0,7)
-    evasion_success = defend_speed + defender.luck/2 + def_move_bonus + friend_factor + random.randint(0,7)
+    evasion_success = defend_speed + defender.luck/2 + def_move_bonus + friend_bonus + random.randint(0,7)
     target_difference = hit_success - evasion_success
     rand_hit_num = random.randint(0,9)
     if attack_type in ('pumpkin','petrify','stun','charm'):
         hit_success = attack_speed + attacker.luck/2 + random.randint(3,10)
-        evasion_success = defend_speed + defender.luck/2 + friend_factor + random.randint(3,10)
+        evasion_success = defend_speed + defender.luck/2 + friend_bonus + random.randint(3,10)
         target_difference = hit_success - evasion_success
     if attack_type == 'pumpkin':
         rand_hit_num += 1
@@ -224,6 +226,11 @@ def damage(attacker, defender, attack_element, terrain, time_of_day):
         defender.has_status_ailment = True
         dam_output = "{0} petrifies {1} for {2}".format(attacker.name,defender.name, damage)
         return damage,dam_output
+    elif attack_type == 'charm':
+        defender.is_charmed = True
+        defender.has_status_ailment = True
+        dam_output = "{0} charms {1}".format(attacker.name,defender.name)
+        return 0,dam_output
     elif attack_type == 'pumpkin':
         if stun_recovery(attacker,defender,time_of_day):
             defender.is_stunned = False
@@ -270,10 +277,15 @@ def choose_target(attacker, defending_unit, attacking_unit):
     highest = 0
     possible_targets = []
     target = []
-    if attacker.attack_type == 'healing': #TODO charmed attacks
+    if attacker.attack_type == 'healing' and attacker.is_charmed == False:
         target_unit = attacking_unit
-    else:
+    elif attacker.attack_type == 'healing' and attacker.is_charmed == True:
         target_unit = defending_unit
+    elif attacker.attack_type != 'healing' and attacker.is_charmed == False:
+        target_unit = defending_unit
+    elif attacker.attack_type != 'healing' and attacker.is_charmed == True:
+        target_unit = attacking_unit
+
     if attacker.hit == 'all':
         for char in target_unit.characters:
             if char.is_alive:
@@ -445,7 +457,7 @@ def battle():
     #unit2_charlist.append(char2_5)
     char2_3 = Halloween("Halloween 2_3",level,"red",top_left,"front",0)
     unit2_charlist.append(char2_3)
-    char2_4 = Monk("SMonk 2_4",level,"red",top_left,"back",1)
+    char2_4 = Vampyre("Vampyre 2_4",level,"red",top_left,"back",1)
     unit2_charlist.append(char2_4)
 
     unit1 = Unit("blue",unit1_charlist)

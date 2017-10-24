@@ -49,6 +49,7 @@ class Character:
     has_status_ailment = False
     is_petrified = False
     is_stunned = False
+    is_charmed = False
     def __init__(self, name, level, side, location, row, position):
         self.name = name
         self.level = level
