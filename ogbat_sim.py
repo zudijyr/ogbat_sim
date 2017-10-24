@@ -176,7 +176,7 @@ def stun_recovery(attacker, defender, time_of_day):
     elif (threshold >= 49):
         return (rand_hit_num < 5)
 
-def damage(attacker, defender, attack_element, terrain, time_of_day):
+def basic_damage(attacker, defender, attack_element, terrain, time_of_day):
     attacker_tactic = attacker.tactic
     defender_tactic = defender.tactic
     attack_type = attacker.attack_type
@@ -186,55 +186,64 @@ def damage(attacker, defender, attack_element, terrain, time_of_day):
     elif attack_type == 'intelligence':
         attack_power = attacker.intelligence
         defend_power = defender.intelligence
-    elif attack_type == 'healing':
-        time_penalty = calc_time_penalty(attacker, time_of_day)
-        healing = (attacker.intelligence + attacker.alignment/2 - time_penalty/4 + random.randint(0,7))/4
-        healing = int(min(healing, defender.max_hp - defender.hp))
-        dam_output = "{0} heals {1} for {2}".format(attacker.name,defender.name,healing)
-        return -1*healing,dam_output #TODO actual healing calculation 
-
+    else:
+        return 0 #other types handles in damage method
     att_tac_bonus,def_tac_bonus = calc_tac_bonuses(attacker_tactic, defender_tactic)
     att_move_bonus = calc_movement_bonus(attacker,terrain)
     def_move_bonus = calc_movement_bonus(defender,terrain)
     att_time_penalty = calc_time_penalty(attacker,time_of_day)
     def_time_penalty = calc_time_penalty(defender,time_of_day)
     kiss = 0
-    if attack_type == 'petrify':
-        defender.is_petrified = True
-        defender.has_status_ailment = True
-        dam_output = "{0} has been petrified".format(defender.name)
-    if attack_type == 'pumpkin':
-        if stun_recovery(attacker,defender,time_of_day):
-            defender.is_stunned = False
-            print("{0} wakes up".format(defender.name))
-        damage = int(defender.hp/2)
-        dam_output = "{0} hits {1} with {2} for {3}".format(attacker.name,defender.name,attack_element,damage)
-        return damage,dam_output
-    if attack_type == 'stun':
-        defender.is_stunned = True
-        sorted_targets = get_sorted_targets(attacker, possible_targets)
-        dam_output = "{0} has been stunned".format(defender.name) #TODO make these print
-        return 0,dam_output
     #TODO kiss
+
     #damage formula from Deathlike2's unit analysis gamefaq
     raw_damage = attack_power/2 + att_move_bonus*2 - att_time_penalty/5 + att_tac_bonus + kiss + random.randint(1,8)
-    attack_multiplier = 1 #TODO special attacks like ianuki
+    resistance = defender.resistances[attack_element]
+    absorption = ((defend_power/2 + def_move_bonus*2 - def_time_penalty/5 + kiss + random.randint(3,10)) * resistance/100) + def_tac_bonus
+    damage = max(raw_damage - absorption,1) #TODO quake
+    damage = int(min(damage,defender.hp))
     if attack_type == 'iainuki':
         attack_multiplier = 1.5
         blowback = int(0.5 * raw_damage)
         blowback = min(blowback,attacker.hp)
         print("{0} suffers {1} from iainuki blowback".format(attacker.name,blowback))
         attacker.hp -= blowback
-    raw_damage = raw_damage*attack_multiplier
-    resistance = defender.resistances[attack_element]
-    absorption = ((defend_power/2 + def_move_bonus*2 - def_time_penalty/5 + kiss + random.randint(3,10)) * resistance/100) + def_tac_bonus
-    damage = max(raw_damage - absorption,1) #TODO quake
-    damage = min(damage,defender.hp)
+    return damage
+
+def damage(attacker, defender, attack_element, terrain, time_of_day):
+    damage = basic_damage(attacker, defender, attack_element, terrain, time_of_day)
+    attack_type = attacker.attack_type
+    if attack_type == 'healing':
+        time_penalty = calc_time_penalty(attacker, time_of_day)
+        healing = (attacker.intelligence + attacker.alignment/2 - time_penalty/4 + random.randint(0,7))/4
+        healing = int(min(healing, defender.max_hp - defender.hp))
+        dam_output = "{0} heals {1} for {2}".format(attacker.name,defender.name,healing)
+        return -1*healing,dam_output
+    elif attack_type == 'petrify':
+        defender.is_petrified = True
+        defender.has_status_ailment = True
+        dam_output = "{0} petrifies {1} for {2}".format(attacker.name,defender.name, damage)
+        return damage,dam_output
+    elif attack_type == 'pumpkin':
+        if stun_recovery(attacker,defender,time_of_day):
+            defender.is_stunned = False
+            print("{0} wakes up".format(defender.name))
+        damage = int(defender.hp/2)
+        dam_output = "{0} hits {1} with {2} for {3}".format(attacker.name,defender.name,attack_element,damage)
+        return damage,dam_output
+    elif attack_type == 'stun':
+        defender.is_stunned = True
+        sorted_targets = get_sorted_targets(attacker, possible_targets)
+        dam_output = "{0} has been stunned".format(defender.name) #TODO make these print
+        return 0,dam_output
+
     if stun_recovery(attacker,defender,time_of_day):
         defender.is_stunned = False
         print("{0} wakes up".format(defender.name))
+
+    #regular (non-status) attacks get to here
     dam_output = "{0} hits {1} with {2} for {3}".format(attacker.name,defender.name,attack_element,damage)
-    return int(damage),dam_output
+    return damage,dam_output
 
 def get_sorted_targets(attacker, possible_targets):
     tactic = attacker.tactic
@@ -334,7 +343,6 @@ def attack(attacker, defender, terrain, attack_element, time_of_day):
     hit = does_it_hit(attacker, defender, terrain, attack_element)
     if (hit):
         dam,dam_output = damage(attacker,defender,attack_element,terrain,time_of_day)
-        dam_output = "{0} hits {1} with {2} for {3}".format(attacker.name,defender.name,attack_element,dam)
         print(dam_output)
         message.setText(dam_output)
         defender.hp -= dam
@@ -435,13 +443,13 @@ def battle():
     #unit2_charlist.append(char2_4)
     #char2_5 = Sylph("sylph 2_5",level,"red",top_left,"back",2)
     #unit2_charlist.append(char2_5)
-    char2_3 = NinjaMaster("NNinjaMaster 2_3",level,"red",top_left,"front",0)
+    char2_3 = Halloween("Halloween 2_3",level,"red",top_left,"front",0)
     unit2_charlist.append(char2_3)
-    char2_4 = NinjaMaster("SNinjaMaster 2_4",level,"red",top_left,"front",1)
+    char2_4 = Monk("SMonk 2_4",level,"red",top_left,"back",1)
     unit2_charlist.append(char2_4)
 
     unit1 = Unit("blue",unit1_charlist)
-    unit2 = Unit("red",unit2_charlist,'weak')
+    unit2 = Unit("red",unit2_charlist,'best')
     all_chars = unit1_charlist + unit2_charlist
     draw_stuff(unit1,unit2,terrain)
     draw_hp_text(unit1,unit2)
