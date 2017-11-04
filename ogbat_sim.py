@@ -17,7 +17,7 @@ from classes.undead_types import *
 
 blue_damage = 0
 red_damage = 0
-win = GraphWin('Ogre Battle Fight Sim', 700, 500)
+win = GraphWin('Ogre Battle Fight Sim', 872, 756)
 message = Text(Point(win.getWidth()/2, 30), '')
 current_rec = Rectangle(Point(0,0),Point(1,1))
 target_rec = Rectangle(Point(0,0),Point(1,1))
@@ -409,8 +409,9 @@ def turn_order(all_chars, terrain):
 def battle():
     terrain = 'city' #TODO set this somehow
     time_of_day = 50 #0 to 100 in multiples of 25. 0 is midnight, evil
-    top_left = Point(int(win.width/7), int(win.height/3))
-    bottom_right = Point(int(3*win.width/7), int(2*win.height/3))
+    top_left = Point(int(win.width/8), int(2.5*win.height/6))
+    bottom_right = Point(int(4*win.width/7), int(2*win.height/3))
+    #TODO make the positions more exact
     unit1_charlist = []
     level = 25
     char1_1 = PlatinumDragon("platinum 1_1",level,"blue",bottom_right,"back",1)
@@ -425,8 +426,10 @@ def battle():
     #unit1_charlist.append(char1_4)
     #char1_3 = Salamand("salamand 1_1",level,"blue",bottom_right,"back",2)
     #unit1_charlist.append(char1_3)
-    #char1_2 = Ravenman("ravenman 1_2",level,"blue",bottom_right,"front",1.5)
-    #unit1_charlist.append(char1_2)
+    char1_3 = Ravenman("ravenman 1_3",level,"blue",bottom_right,"front",2)
+    unit1_charlist.append(char1_3)
+    char1_4 = Ravenman("ravenman 1_4",level,"blue",bottom_right,"front",0)
+    unit1_charlist.append(char1_4)
     #char1_3 = Lich("lich 1_3",level,"blue",bottom_right,"back",0)
     #unit1_charlist.append(char1_3)
     #char1_3 = DollMaster("dollmaster 1_3",level,"blue",bottom_right,"back",0)
@@ -457,6 +460,8 @@ def battle():
     #unit2_charlist.append(char2_5)
     char2_3 = Halloween("Halloween 2_3",level,"red",top_left,"front",0)
     unit2_charlist.append(char2_3)
+    char2_7 = Halloween("Halloween 2_7",level,"red",top_left,"front",2)
+    unit2_charlist.append(char2_7)
     char2_4 = Vampyre("Vampyre 2_4",level,"red",top_left,"back",1)
     unit2_charlist.append(char2_4)
 
@@ -490,7 +495,7 @@ def battle():
 
 def draw_stuff(unit1,unit2,terrain):
     p2 = Point(win.width/2,win.height/2)
-    background = Image(p2,'images/city_blank.gif')
+    background = Image(p2,'images/road_night.gif')
     background.draw(win)
 
     message.setTextColor('gray')

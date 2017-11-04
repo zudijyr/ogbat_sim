@@ -65,9 +65,10 @@ class Character:
         self.position = position
         clone_loc = location.clone()
         if (row == "front" and side == "red") or (row == "back" and side == "blue"):
-            clone_loc.move(60+70*position,70-30*position)
+            clone_loc.move(100+70*position,60-30*position)
         else:
             clone_loc.move(70*position,-30*position)
+        #TODO make the positions more exact
         if row == "front":
             self.num_attacks = self.front_num_attacks
             self.attack_type = self.front_attack_type
