@@ -1,0 +1,11 @@
+city
+50
+PlatinumDragon("platinum 1_1",25,"blue",bottom_right,"back",1)
+PlatinumDragon("platinum 1_5",25,"blue",bottom_right,"back",2)
+Muse("muse 1_1",25,"blue",bottom_right,"back",0)
+end unit1
+Lich("Lich 2_1",25,"red",top_left,"back",2)
+Cockatris("Cockatris 2_3",25,"red",top_left,"back",0)
+Halloween("Halloween 2_7",25,"red",top_left,"front",2)
+Witch("Witch 2_4",25,"red",top_left,"back",1)
+end unit2

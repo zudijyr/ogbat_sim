@@ -89,7 +89,7 @@ def does_it_hit(attacker, defender, terrain, attack_element):
     if attack_type in ('strength','iainuki','petrify','pumpkin'):
         attack_speed = attacker.agility
         defend_speed = defender.agility
-    elif attack_type in ('intelligence','charm'):
+    elif attack_type in ('intelligence','charm','stun'):
         attack_speed = attacker.intelligence
         defend_speed = defender.intelligence
 
@@ -166,17 +166,17 @@ def stun_recovery(attacker, defender, time_of_day):
         return False
     time_penalty = calc_time_penalty(defender, time_of_day)
     stun_recov = defender.strength + defender.luck/2 - time_penalty + random.randint(3,10)
-    threshold = random.randint(0,9)
-    if (threshold <= -48 ):
-        return (rand_hit_num < 1)
-    elif (threshold >= -47 and target_difference <= -32):
-        return (rand_hit_num < 2)
-    elif (threshold >= -31 and target_difference <= 0):
-        return (rand_hit_num < 3)
-    elif (threshold >= 1 and target_difference <= 48):
-        return (rand_hit_num < 4)
-    elif (threshold >= 49):
-        return (rand_hit_num < 5)
+    recovery = random.randint(0,9)
+    if (stun_recov <= -48 ):
+        return (recovery < 1)
+    elif (stun_recov >= -47 and stun_recov <= -32):
+        return (recovery < 2)
+    elif (stun_recov >= -31 and stun_recov <= 0):
+        return (recovery < 3)
+    elif (stun_recov >= 1 and stun_recov <= 48):
+        return (recovery < 4)
+    elif (stun_recov >= 49):
+        return (recovery < 5)
 
 def basic_damage(attacker, defender, attack_element, terrain, time_of_day):
     attacker_tactic = attacker.tactic
@@ -232,21 +232,13 @@ def damage(attacker, defender, attack_element, terrain, time_of_day):
         dam_output = "{0} charms {1}".format(attacker.name,defender.name)
         return 0,dam_output
     elif attack_type == 'pumpkin':
-        if stun_recovery(attacker,defender,time_of_day):
-            defender.is_stunned = False
-            print("{0} wakes up".format(defender.name))
         damage = int(defender.hp/2)
         dam_output = "{0} hits {1} with {2} for {3}".format(attacker.name,defender.name,attack_element,damage)
         return damage,dam_output
     elif attack_type == 'stun':
         defender.is_stunned = True
-        sorted_targets = get_sorted_targets(attacker, possible_targets)
-        dam_output = "{0} has been stunned".format(defender.name) #TODO make these print
+        dam_output = "{0} stuns {1}".format(attacker.name, defender.name) #TODO make these print
         return 0,dam_output
-
-    if stun_recovery(attacker,defender,time_of_day):
-        defender.is_stunned = False
-        print("{0} wakes up".format(defender.name))
 
     #regular (non-status) attacks get to here
     dam_output = "{0} hits {1} with {2} for {3}".format(attacker.name,defender.name,attack_element,damage)
@@ -272,7 +264,6 @@ def get_sorted_targets(attacker, possible_targets):
         return non_ailment_chars + ailment_chars
 
 def choose_target(attacker, defending_unit, attacking_unit):
-    #TODO include tactic
     lowest = 9999
     highest = 0
     possible_targets = []
@@ -357,6 +348,10 @@ def attack(attacker, defender, terrain, attack_element, time_of_day):
         dam,dam_output = damage(attacker,defender,attack_element,terrain,time_of_day)
         print(dam_output)
         message.setText(dam_output)
+        if dam > 0:
+            if stun_recovery(attacker,defender,time_of_day):
+                defender.is_stunned = False
+                print("{0} wakes up".format(defender.name))
         defender.hp -= dam
         if attacker.side == "blue" and attacker.attack_type != 'healing':
             blue_damage += dam
@@ -407,29 +402,42 @@ def turn_order(all_chars, terrain):
     return all_chars
 
 def battle():
-    terrain = 'city' #TODO set this somehow
-    time_of_day = 50 #0 to 100 in multiples of 25. 0 is midnight, evil
+
     top_left = Point(int(win.width/8), int(2.5*win.height/6))
     bottom_right = Point(int(4*win.width/7), int(2*win.height/3))
     #TODO make the positions more exact
     unit1_charlist = []
-    level = 25
-    char1_1 = PlatinumDragon("platinum 1_1",level,"blue",bottom_right,"back",1)
-    unit1_charlist.append(char1_1)
-    char1_5 = PlatinumDragon("platinum 1_5",level,"blue",bottom_right,"back",2)
-    unit1_charlist.append(char1_5)
-    char1_2 = Muse("muse 1_1",level,"blue",bottom_right,"back",0)
-    unit1_charlist.append(char1_2)
+    unit2_charlist = []
+    file = open("units.txt", "r") 
+    with open("units.txt") as f:
+        content = f.read().splitlines()
+        terrain = content[0] #must be first line of file
+        time_of_day = int(content[1]) #second line of file. 0 to 100 in multiples of 25. 0 is midnight, evil
+    for line in content:
+        if "blue" in line:
+            char1 = eval(line)
+            unit1_charlist.append(char1)
+        if "red" in line:
+            char2 = eval(line)
+            unit2_charlist.append(char2)
+         
+    #level = 25
+    #char1_1 = PlatinumDragon("platinum 1_1",level,"blue",bottom_right,"back",1)
+    #unit1_charlist.append(char1_1)
+    #char1_5 = PlatinumDragon("platinum 1_5",level,"blue",bottom_right,"back",2)
+    #unit1_charlist.append(char1_5)
+    #char1_2 = Muse("muse 1_1",level,"blue",bottom_right,"back",0)
+    #unit1_charlist.append(char1_2)
     #char1_3 = Devil("devil 1_2",level,"blue",bottom_right,"back",1)
     #unit1_charlist.append(char1_3)
     #char1_4 = Devil("devil 1_3",level,"blue",bottom_right,"back",2)
     #unit1_charlist.append(char1_4)
     #char1_3 = Salamand("salamand 1_1",level,"blue",bottom_right,"back",2)
     #unit1_charlist.append(char1_3)
-    char1_3 = Ravenman("ravenman 1_3",level,"blue",bottom_right,"front",2)
-    unit1_charlist.append(char1_3)
-    char1_4 = Ravenman("ravenman 1_4",level,"blue",bottom_right,"front",0)
-    unit1_charlist.append(char1_4)
+    #char1_3 = Ravenman("ravenman 1_3",level,"blue",bottom_right,"front",2)
+    #unit1_charlist.append(char1_3)
+    #char1_4 = Ravenman("ravenman 1_4",level,"blue",bottom_right,"front",0)
+    #unit1_charlist.append(char1_4)
     #char1_3 = Lich("lich 1_3",level,"blue",bottom_right,"back",0)
     #unit1_charlist.append(char1_3)
     #char1_3 = DollMaster("dollmaster 1_3",level,"blue",bottom_right,"back",0)
@@ -441,13 +449,12 @@ def battle():
     #char1_5 = BeastTamer("beast tamer 1_5",level,"blue",bottom_right,"back",2)
     #unit1_charlist.append(char1_5)
 
-    unit2_charlist = []
-    char2_1 = Lich("Lich 2_1",level,"red",top_left,"back",2)
-    unit2_charlist.append(char2_1)
+    #char2_1 = Lich("Lich 2_1",level,"red",top_left,"back",2)
+    #unit2_charlist.append(char2_1)
     #char2_2 = Vampyre("Vampyre 2_2",level,"red",top_left,"back",1)
     #unit2_charlist.append(char2_2)
-    char2_3 = Cockatris("Cockatris 2_3",level,"red",top_left,"back",0)
-    unit2_charlist.append(char2_3)
+    #char2_3 = Cockatris("Cockatris 2_3",level,"red",top_left,"back",0)
+    #unit2_charlist.append(char2_3)
     #char2_3 = Seraphim("seraphim 2_3",level,"red",top_left,"back",0)
     #unit2_charlist.append(char2_3)
     #char2_4 = Cleric("cleric 2_4",level,"red",top_left,"back",1)
@@ -458,12 +465,12 @@ def battle():
     #unit2_charlist.append(char2_4)
     #char2_5 = Sylph("sylph 2_5",level,"red",top_left,"back",2)
     #unit2_charlist.append(char2_5)
-    char2_3 = Halloween("Halloween 2_3",level,"red",top_left,"front",0)
-    unit2_charlist.append(char2_3)
-    char2_7 = Halloween("Halloween 2_7",level,"red",top_left,"front",2)
-    unit2_charlist.append(char2_7)
-    char2_4 = Vampyre("Vampyre 2_4",level,"red",top_left,"back",1)
-    unit2_charlist.append(char2_4)
+    #char2_3 = Halloween("Halloween 2_3",level,"red",top_left,"front",0)
+    #unit2_charlist.append(char2_3)
+    #char2_7 = Halloween("Halloween 2_7",level,"red",top_left,"front",2)
+    #unit2_charlist.append(char2_7)
+    #char2_4 = Vampyre("Vampyre 2_4",level,"red",top_left,"back",1)
+    #unit2_charlist.append(char2_4)
 
     unit1 = Unit("blue",unit1_charlist)
     unit2 = Unit("red",unit2_charlist,'best')
