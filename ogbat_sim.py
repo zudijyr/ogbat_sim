@@ -312,7 +312,6 @@ def choose_target(attacker, defending_unit, attacking_unit):
         if character.is_alive == False:
             pass
         elif character.hp < lowest and tactic == 'weak':
-            print('weak')
             lowest = character.hp
             current_target = character
         elif character.hp > highest and tactic == 'strong':
@@ -408,6 +407,7 @@ def battle():
     #TODO make the positions more exact
     unit1_charlist = []
     unit2_charlist = []
+    unit1_tactic = unit2_tactic = 'weak' #default tactics
     file = open("units.txt", "r") 
     with open("units.txt") as f:
         content = f.read().splitlines()
@@ -420,6 +420,10 @@ def battle():
         if "red" in line:
             char2 = eval(line)
             unit2_charlist.append(char2)
+        if line.startswith("unit1 tactic:"):
+            unit1_tactic = line[14:]
+        if line.startswith("unit2 tactic:"):
+            unit2_tactic = line[14:]
          
     #level = 25
     #char1_1 = PlatinumDragon("platinum 1_1",level,"blue",bottom_right,"back",1)
@@ -472,8 +476,8 @@ def battle():
     #char2_4 = Vampyre("Vampyre 2_4",level,"red",top_left,"back",1)
     #unit2_charlist.append(char2_4)
 
-    unit1 = Unit("blue",unit1_charlist)
-    unit2 = Unit("red",unit2_charlist,'best')
+    unit1 = Unit("blue",unit1_charlist,unit1_tactic)
+    unit2 = Unit("red",unit2_charlist,unit2_tactic)
     all_chars = unit1_charlist + unit2_charlist
     draw_stuff(unit1,unit2,terrain)
     draw_hp_text(unit1,unit2)

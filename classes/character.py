@@ -44,7 +44,6 @@ class Character:
     target = 'one'
     order_value = 0
     hptext = Text(Point(0,0),"")
-    #same attack type regardless of row
     is_alive = True
     has_status_ailment = False
     is_petrified = False
